@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AstroVeda â€” Ancient Code. Modern Life.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0a0508; --deep:#12080d; --maroon:#2a0d14;
+  --gold:#e0b04a; --gold-lt:#f7dc9a; --saffron:#ff8c2b;
+  --cream:#f6ecd9; --muted:#b9a68c;
+  --pink:#ff5f8a; --violet:#8b5cf6;
+  --line:rgba(224,176,74,.18);
+  --serif:'Cinzel', serif;
+  --dev:'Tiro Devanagari Sanskrit', serif;
+  --sans:'Outfit', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);overflow-x:clip;line-height:1.6;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden;height:100vh}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+::selection{background:var(--gold);color:var(--ink)}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:#0a0508}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--saffron));border-radius:9px}
+
+/* ============ AMBIENT ============ */
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 12% -5%, rgba(255,140,43,.10), transparent 60%),
+    radial-gradient(800px 700px at 92% 12%, rgba(139,92,246,.09), transparent 60%),
+    radial-gradient(1000px 800px at 50% 110%, rgba(224,176,74,.10), transparent 60%);}
+.bg-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.32;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");}
+#dust{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.75}
+
+/* ============ LOADER ============ */
+#loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 45%, #1c0a10 0%, #0a0508 65%);
+  transition:opacity .9s ease, visibility .9s;}
+#loader.done{opacity:0;visibility:hidden}
+.loader-inner{display:flex;flex-direction:column;align-items:center;gap:26px;padding:20px}
+.chakra-wrap{position:relative;width:min(58vw,250px);aspect-ratio:1}
+.chakra-svg{width:100%;height:100%;animation:spin 9s linear infinite;filter:drop-shadow(0 0 26px rgba(224,176,74,.45))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring-outer{fill:none;stroke:var(--gold);stroke-width:2;opacity:.85}
+.ring-mid{fill:none;stroke:var(--saffron);stroke-width:1;opacity:.5}
+.spoke{stroke:var(--gold);stroke-width:2.4;stroke-linecap:round;opacity:.9}
+.hub{fill:none;stroke:var(--gold-lt);stroke-width:2}
+.chakra-dot{fill:var(--saffron)}
+.om{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--dev);font-size:clamp(38px,9vw,60px);color:var(--gold-lt);
+  text-shadow:0 0 34px rgba(255,140,43,.9),0 0 70px rgba(255,140,43,.5);animation:pulseOm 2.4s ease-in-out infinite;}
+@keyframes pulseOm{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.08);opacity:1}}
+.mantra{font-family:var(--dev);font-size:clamp(14px,3.4vw,19px);letter-spacing:.05em;color:var(--gold-lt);text-align:center;}
+.mantra span{display:inline-block;opacity:0;animation:letterIn .5s forwards}
+@keyframes letterIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.loader-bar{width:min(78vw,320px);height:2px;background:rgba(224,176,74,.18);border-radius:99px;overflow:hidden;position:relative;}
+.loader-bar span{position:absolute;inset:0 100% 0 0;background:linear-gradient(90deg,var(--saffron),var(--gold-lt));box-shadow:0 0 14px var(--gold);transition:right .25s ease;}
+.loader-pct{font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+
+/* ============ NAV ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:14px clamp(16px,4vw,46px);backdrop-filter:blur(16px);
+  background:linear-gradient(180deg,rgba(10,5,8,.9),rgba(10,5,8,.35));
+  border-bottom:1px solid rgba(224,176,74,.12);transform:translateY(-110%);transition:transform .8s cubic-bezier(.2,.8,.2,1);}
+.nav.show{transform:translateY(0)}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--dev);font-size:20px;color:var(--gold-lt);
+  background:radial-gradient(circle at 35% 30%,#4a1a22,#1a0a0f);border:1px solid rgba(224,176,74,.45);
+  box-shadow:0 0 22px rgba(224,176,74,.28), inset 0 0 14px rgba(255,140,43,.18);}
+.brand-name{font-family:var(--serif);font-weight:800;letter-spacing:.16em;font-size:15px;color:var(--cream);}
+.brand-name em{color:var(--gold);font-style:normal}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-size:13.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;position:relative;padding-bottom:4px;transition:color .3s;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:0;background:linear-gradient(90deg,var(--gold),var(--saffron));transition:width .35s;}
+.nav-links a:hover{color:var(--gold-lt)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:10px 20px;border-radius:99px;
+  border:1px solid rgba(224,176,74,.5);color:var(--gold-lt);background:rgba(224,176,74,.06);transition:.35s;white-space:nowrap;}
+.nav-cta:hover{background:var(--gold);color:#1a0a0f;box-shadow:0 0 26px rgba(224,176,74,.5)}
+@media(max-width:900px){.nav-links{display:none}}
+
+/* =========================================================
+   BOOK EXPERIENCE
+   ========================================================= */
+.book-xp{position:relative;z-index:5}
+.book-runway{position:relative}
+.book-pin{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(8px,1.8vh,22px);padding:clamp(66px,9vh,100px) 14px clamp(14px,2.4vh,28px);overflow:hidden;}
+.book-top{text-align:center;flex-shrink:0}
+.book-top .eyebrow{font-size:10.5px;letter-spacing:.52em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px;}
+.book-heading{font-family:var(--serif);font-weight:600;font-size:clamp(15px,2.4vw,24px);letter-spacing:.04em;color:var(--cream);}
+.book-heading em{font-style:normal;font-family:var(--dev);font-weight:400;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.book-stage{perspective:2600px;perspective-origin:50% 42%;flex:0 1 auto;display:grid;place-items:center;width:100%;min-height:0;}
+.book{position:relative;width: min(92vw, 860px, calc((100svh - 270px) * 1.5));aspect-ratio: 3 / 2;
+  transform: rotateX(7deg) scale(.94);opacity:0;transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.8,.2,1);}
+.book.ready{opacity:1;transform: rotateX(7deg) scale(1);}
+@media (max-width: 640px){.book{width:96vw;transform:rotateX(4deg) scale(.94)}.book.ready{transform:rotateX(4deg) scale(1)}}
+.book-base{position:absolute;inset:0;z-index:0;border-radius:8px;box-shadow:0 40px 80px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(224,176,74,.14);}
+.base-half{position:absolute;top:0;height:100%;width:50%;background:linear-gradient(105deg,#efe2c6,#dcc8a3);box-shadow:inset 0 0 44px rgba(120,80,20,.28);}
+.base-right{right:0;border-radius:0 7px 7px 0}
+.base-left{left:0;border-radius:7px 0 0 7px;opacity:0;transition:opacity .35s linear}
+.base-spine{position:absolute;left:50%;top:-1.5%;bottom:-1.5%;width:18px;transform:translateX(-50%);
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(70,38,12,.5) 35%,rgba(30,14,4,.62) 50%,rgba(70,38,12,.5) 65%,rgba(0,0,0,0));z-index:2;pointer-events:none;}
+.leaves{position:absolute;inset:0;z-index:1;perspective: 2400px;perspective-origin: 50% 45%;}
+.leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform;}
+.leaf-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:linear-gradient(105deg,#f7ecd6 0%,#ecdcbd 52%,#ddc9a3 100%);box-shadow:inset 0 0 42px rgba(120,80,20,.22);}
+.leaf-face.front{border-radius:0 7px 7px 0}
+.leaf-face.back{transform:rotateY(180deg);border-radius:7px 0 0 7px}
+.leaf-face::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(90,55,10,.22),transparent 16%,transparent 84%,rgba(90,55,10,.12));}
+.page-inner{container-type:inline-size;position:relative;width:100%;height:100%;
+  padding:clamp(10px,6.5%,28px) clamp(10px,7%,30px);display:flex;flex-direction:column;overflow:hidden;color:#4b2c08;}
+.pg-num{font-family:var(--serif);font-weight:800;font-size:clamp(9px,2.6cqw,13px);letter-spacing:.34em;color:rgba(150,105,35,.72);margin-bottom:clamp(3px,.8cqw,7px);}
+.pg-sanskrit{font-family:var(--dev);font-size:clamp(11px,3.4cqw,18px);color:#8a5410;letter-spacing:.05em;line-height:1.3;margin-bottom:clamp(2px,.5cqw,5px);}
+.pg-title{font-family:var(--serif);font-weight:800;font-size:clamp(12px,4.4cqw,22px);line-height:1.18;color:#3d2205;letter-spacing:-.005em;margin-bottom:clamp(2px,.6cqw,6px);}
+.pg-sub{font-size:clamp(8px,2.1cqw,10.5px);letter-spacing:.16em;text-transform:uppercase;color:rgba(140,95,30,.85);font-weight:500;margin-bottom:clamp(5px,1.4cqw,11px);}
+.pg-rule{height:1px;width:62%;margin-bottom:clamp(6px,1.8cqw,14px);background:linear-gradient(90deg,rgba(150,105,35,.65),rgba(150,105,35,.05));}
+.pg-text{font-size:clamp(8.5px,2.55cqw,13px);line-height:1.66;color:#5b3a12;font-weight:300;flex:1;overflow:hidden;}
+.pg-hook{margin-top:clamp(5px,1.5cqw,12px);font-family:var(--serif);font-weight:600;font-size:clamp(8px,2.35cqw,12px);line-height:1.45;color:#8a4a0c;
+  border-left:2px solid rgba(224,176,74,.7);padding-left:clamp(5px,1.4cqw,11px);font-style:italic;}
+.pg-orn{position:absolute;bottom:clamp(4px,1.4cqw,10px);left:50%;transform:translateX(-50%);font-family:var(--dev);font-size:clamp(9px,2.4cqw,13px);color:rgba(150,105,35,.45);}
+.page-right-inner{align-items:center;justify-content:center;gap:clamp(3px,1cqw,8px);text-align:center;}
+.pg-art{width:min(78%,320px);aspect-ratio:1;display:grid;place-items:center;flex-shrink:1;}
+.pg-art svg{width:100%;height:100%;overflow:visible}
+.pg-name{font-family:var(--serif);font-weight:600;font-size:clamp(10px,3cqw,16px);letter-spacing:.22em;text-transform:uppercase;color:#6b3d0c;}
+.pg-name-rule{width:44px;height:1px;background:rgba(150,105,35,.55);}
+.cover-page{width:100%;height:100%;
+  background:radial-gradient(circle at 26% 18%, rgba(255,140,43,.24), transparent 55%),linear-gradient(150deg,#4a1219 0%,#2a0d14 45%,#170609 100%);
+  display:grid;place-items:center;padding:6%;}
+.cover-frame{width:100%;height:100%;border:1px solid rgba(224,176,74,.6);border-radius:3px;
+  box-shadow:inset 0 0 0 5px rgba(224,176,74,.08), inset 0 0 50px rgba(0,0,0,.6);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1.4cqw,12px);position:relative;}
+.cover-frame::before,.cover-frame::after{content:'â‹';position:absolute;left:50%;transform:translateX(-50%);color:rgba(224,176,74,.55);font-size:clamp(7px,1.6cqw,11px);}
+.cover-frame::before{top:10px}.cover-frame::after{bottom:10px}
+.cover-om{font-family:var(--dev);font-size:clamp(24px,9cqw,54px);color:var(--gold-lt);text-shadow:0 0 30px rgba(255,140,43,.9);line-height:1;}
+.cover-title{font-family:var(--dev);font-size:clamp(18px,7.5cqw,44px);color:var(--gold);letter-spacing:.05em;line-height:1.1;text-shadow:0 0 24px rgba(224,176,74,.65);}
+.cover-sub{font-family:var(--serif);font-size:clamp(6px,1.7cqw,10px);letter-spacing:.4em;text-transform:uppercase;color:rgba(247,220,154,.62);}
+.cover-hint{position:absolute;bottom:clamp(18px,6cqw,44px);font-size:clamp(6px,1.5cqw,9px);letter-spacing:.34em;text-transform:uppercase;color:rgba(247,220,154,.45);animation:hintPulse 2.4s ease-in-out infinite;}
+@keyframes hintPulse{0%,100%{opacity:.35}50%{opacity:.9}}
+.back-cover{width:100%;height:100%;background:linear-gradient(255deg,#efe0c2,#dcc8a3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(5px,2cqw,14px);text-align:center;padding:8%;}
+.bc-om{font-family:var(--dev);font-size:clamp(20px,7cqw,40px);color:#a8701c;}
+.bc-line{font-family:var(--dev);font-size:clamp(10px,3.2cqw,17px);color:#6b3d0c;}
+.bc-sub{font-size:clamp(7px,1.9cqw,10px);letter-spacing:.24em;text-transform:uppercase;color:rgba(120,80,25,.7);}
+.book-foot{width:min(92vw, 860px);display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
+.book-progress{height:2px;border-radius:99px;background:rgba(224,176,74,.16);position:relative;overflow:hidden;}
+.book-progress span{position:absolute;inset:0 100% 0 0;background:linear-gradient(90deg,var(--saffron),var(--gold-lt));box-shadow:0 0 12px rgba(224,176,74,.8);}
+.book-meta{display:flex;justify-content:space-between;gap:14px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.book-meta b{color:var(--gold-lt);font-weight:600}
+
+/* =========================================================
+   SPIRAL BRACELET
+   ========================================================= */
+#braceletTracker{
+  position:fixed;inset:0;
+  z-index:50;
+  pointer-events:none;
+  display:grid;place-items:center;
+  opacity:0;
+  transition:opacity .2s linear;
+}
+#braceletTracker.on{opacity:1}
+.bracelet-fixed{
+  width:min(46vw,340px);
+  aspect-ratio:1;
+  will-change:transform,opacity;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.55)) drop-shadow(0 0 40px rgba(224,176,74,.4));
+}
+.bracelet-fixed svg{width:100%;height:100%;display:block;overflow:visible}
+
+/* ============ INTRO ============ */
+.intro{position:relative;z-index:5;text-align:center;padding:clamp(70px,10vw,140px) 20px clamp(50px,7vw,90px);}
+.intro .eyebrow{font-size:11.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:18px;}
+.intro h1{font-family:var(--serif);font-weight:800;font-size:clamp(26px,6vw,60px);line-height:1.1;letter-spacing:-.01em;margin-bottom:20px;max-width:900px;margin-inline:auto;}
+.intro h1 em{font-style:normal;font-family:var(--dev);font-weight:400;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 22px rgba(224,176,74,.35));}
+.lede{font-size:clamp(14px,2.2vw,17.5px);color:var(--muted);max-width:620px;margin:0 auto 32px;font-weight:300;}
+.lede b{color:var(--cream);font-weight:500}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:15px 32px;border-radius:99px;
+  font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:.4s cubic-bezier(.2,.8,.2,1);position:relative;}
+.btn-gold{background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;box-shadow:0 12px 36px -12px rgba(224,176,74,.75);}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 20px 50px -12px rgba(255,140,43,.85)}
+.btn-ghost{border:1px solid rgba(224,176,74,.4);color:var(--gold-lt);background:rgba(224,176,74,.05);}
+.btn-ghost:hover{background:rgba(224,176,74,.14);transform:translateY(-3px)}
+
+/* ============ MARQUEE ============ */
+.marquee{position:relative;z-index:5;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:linear-gradient(90deg,rgba(224,176,74,.05),rgba(255,140,43,.05));padding:16px 0;overflow:hidden;white-space:nowrap;}
+.marquee-track{display:inline-flex;gap:52px;animation:marq 34s linear infinite;padding-left:52px}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marquee span{font-family:var(--dev);font-size:15px;color:rgba(247,220,154,.62);letter-spacing:.06em;display:inline-flex;align-items:center;gap:52px;}
+.marquee span::after{content:'âœ¦';color:var(--saffron);font-size:9px}
+
+/* ============ SECTION SHELL ============ */
+section{position:relative;z-index:5}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,130px) clamp(16px,4vw,40px)}
+.sec-head{max-width:760px;margin-bottom:clamp(38px,5vw,64px)}
+.kicker{font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.kicker::before{content:'';width:34px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.sec-head h2{font-family:var(--serif);font-weight:800;font-size:clamp(24px,4.6vw,46px);line-height:1.14;letter-spacing:-.01em;}
+.sec-head h2 em{font-style:normal;font-family:var(--dev);font-weight:400;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.sec-head p{color:var(--muted);font-weight:300;margin-top:16px;font-size:clamp(13.5px,2vw,16px);max-width:620px}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ COUNCIL ============ */
+.council-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px}
+.voice{position:relative;border:1px solid var(--line);border-radius:22px;padding:30px 26px 28px;
+  background:linear-gradient(165deg,rgba(38,15,21,.85),rgba(12,6,9,.92));overflow:hidden;transition:.5s cubic-bezier(.2,.8,.2,1);}
+.voice::before{content:'';position:absolute;top:-60px;right:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 68%);opacity:.5;transition:.5s;}
+.voice:hover{transform:translateY(-9px);border-color:rgba(224,176,74,.45);box-shadow:0 34px 70px -34px rgba(224,176,74,.4)}
+.voice:hover::before{opacity:.9;transform:scale(1.15)}
+.voice[data-c="pandit"]{--glow:rgba(255,140,43,.32)}
+.voice[data-c="sci"]{--glow:rgba(96,165,250,.28)}
+.voice[data-c="genz"]{--glow:rgba(255,95,138,.30)}
+.avatar{width:96px;height:96px;border-radius:50%;margin-bottom:18px;position:relative;
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.16),rgba(0,0,0,.5));
+  border:1px solid rgba(224,176,74,.3);display:grid;place-items:center;box-shadow:0 0 0 6px rgba(224,176,74,.05);}
+.avatar svg{width:100%;height:100%;border-radius:50%}
+.voice-role{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--saffron);font-weight:600;margin-bottom:7px;}
+.voice-name{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:4px}
+.voice-handle{font-size:12px;color:var(--muted);margin-bottom:20px;font-weight:300}
+.bubble{position:relative;border-radius:16px;padding:20px 18px;font-size:14.5px;line-height:1.68;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);color:#e8dcc8;font-weight:300;}
+.bubble::before{content:'';position:absolute;top:-8px;left:26px;width:15px;height:15px;transform:rotate(45deg);
+  background:rgba(255,255,255,.035);border-left:1px solid rgba(255,255,255,.07);border-top:1px solid rgba(255,255,255,.07);}
+.bubble b{color:var(--gold-lt);font-weight:600}
+.bubble i{color:var(--pink);font-style:normal;font-weight:500}
+.voice-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:99px;font-weight:500;
+  border:1px solid rgba(224,176,74,.28);color:var(--gold-lt);background:rgba(224,176,74,.06);}
+.voice[data-c="sci"] .tag{border-color:rgba(96,165,250,.32);color:#a8cdfb;background:rgba(96,165,250,.07)}
+.voice[data-c="genz"] .tag{border-color:rgba(255,95,138,.32);color:#ffa6c0;background:rgba(255,95,138,.07)}
+
+/* =========================================================
+   FEATURED PRODUCT (bracelet landing zone)
+   ========================================================= */
+#shop .wrap{padding-top:clamp(50px,7vw,90px)}
+.featured{
+  display:grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap:clamp(24px,4vw,56px);
+  align-items:center;
+  border:1px solid rgba(224,176,74,.28);
+  border-radius:28px;
+  padding:clamp(26px,4vw,54px);
+  margin-bottom:clamp(56px,8vw,110px);
+  background:
+    radial-gradient(600px 380px at 20% 10%, rgba(255,140,43,.16), transparent 65%),
+    radial-gradient(600px 380px at 88% 100%, rgba(139,92,246,.15), transparent 65%),
+    linear-gradient(160deg, rgba(38,15,21,.92), rgba(10,5,8,.96));
+  position:relative;
+  overflow:hidden;
+}
+.featured::before{
+  content:'âœ¦';position:absolute;top:22px;right:26px;color:rgba(224,176,74,.5);font-size:14px;
+  animation:hintPulse 3s ease-in-out infinite;
+}
+.featured-visual{
+  position:relative;
+  aspect-ratio:1;
+  display:grid;place-items:center;
+  width:100%;
+}
+.bracelet-slot{
+  width:min(100%,440px);
+  aspect-ratio:1;
+  position:relative;
+  display:grid;place-items:center;
+  opacity:0;
+  transition:opacity .15s linear;
+}
+.bracelet-slot svg{
+  width:100%;height:100%;display:block;overflow:visible;
+  filter:drop-shadow(0 22px 40px rgba(0,0,0,.55)) drop-shadow(0 0 34px rgba(224,176,74,.45));
+}
+.bracelet-slot::before{
+  content:'';position:absolute;inset:-6%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(224,176,74,.22),transparent 62%);
+  pointer-events:none;
+  animation:pulseSlot 4s ease-in-out infinite;
+}
+@keyframes pulseSlot{0%,100%{transform:scale(.96);opacity:.55}50%{transform:scale(1.04);opacity:1}}
+
+.featured-info .kicker{margin-bottom:14px}
+.featured-info .kicker::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.featured-info h2{
+  font-family:var(--serif);font-weight:800;
+  font-size:clamp(24px,3.6vw,40px);line-height:1.14;letter-spacing:-.01em;
+  margin-bottom:14px;
+}
+.featured-info h2 em{
+  font-style:normal;font-family:var(--dev);font-weight:400;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.featured-info p.desc{color:var(--muted);font-weight:300;font-size:15px;line-height:1.68;margin-bottom:24px;max-width:520px}
+.featured-info .bead-legend{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;
+}
+.bead-legend span{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:7px 13px;border-radius:99px;font-weight:500;
+  border:1px solid rgba(224,176,74,.24);color:var(--gold-lt);
+  background:rgba(224,176,74,.05);
+}
+.bead-legend i{width:9px;height:9px;border-radius:50%;display:block;box-shadow:0 0 8px currentColor}
+.featured-price{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:26px;
+}
+.featured-price .now{font-family:var(--serif);font-weight:800;font-size:clamp(28px,3.4vw,38px);color:var(--gold-lt)}
+.featured-price .was{font-size:15px;color:#7d6a55;text-decoration:line-through}
+.featured-price .off{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  padding:5px 11px;border-radius:99px;
+  background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f;
+}
+.featured-actions{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width: 820px){
+  .featured{grid-template-columns:1fr;padding:clamp(20px,5vw,32px);gap:18px}
+  .bracelet-slot{width:min(92%,320px)}
+}
+
+/* ============ PRODUCTS ============ */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
+.chip{font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:500;padding:9px 20px;border-radius:99px;color:var(--muted);
+  border:1px solid rgba(224,176,74,.16);transition:.35s;}
+.chip:hover{color:var(--gold-lt);border-color:rgba(224,176,74,.45)}
+.chip.active{background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;border-color:transparent;font-weight:700}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:22px}
+.card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:linear-gradient(170deg,rgba(36,14,20,.9),rgba(10,5,8,.95));transition:.5s cubic-bezier(.2,.8,.2,1);}
+.card:hover{transform:translateY(-9px);border-color:rgba(224,176,74,.5);box-shadow:0 36px 70px -34px rgba(224,176,74,.45)}
+.card-top{position:relative;padding:32px 20px 22px;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 30%,rgba(224,176,74,.12),transparent 66%);border-bottom:1px solid rgba(224,176,74,.1);}
+.badge{position:absolute;top:14px;left:14px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:5px 11px;border-radius:99px;}
+.badge.hot{background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f}
+.badge.new{background:rgba(96,165,250,.16);color:#a8cdfb;border:1px solid rgba(96,165,250,.35)}
+.badge.lab{background:rgba(52,211,153,.14);color:#7ee2b8;border:1px solid rgba(52,211,153,.32)}
+.gem{width:118px;height:118px;border-radius:50%;position:relative;display:grid;place-items:center;font-family:var(--dev);font-size:40px;color:#ffeab5;
+  background:radial-gradient(circle at 33% 27%,rgba(255,232,170,.55),rgba(255,140,43,.20) 46%,rgba(0,0,0,0) 72%);text-shadow:0 0 26px rgba(255,180,80,.9);}
+.gem::before{content:'';position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(224,176,74,.42);animation:spin 22s linear infinite;}
+.gem::after{content:'';position:absolute;inset:14px;border-radius:50%;border:1px solid rgba(224,176,74,.18);animation:spin 14s linear infinite reverse;}
+.card-body{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1;gap:9px}
+.card-cat{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--saffron);font-weight:600}
+.card-title{font-family:var(--serif);font-weight:600;font-size:18px;line-height:1.28}
+.card-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.62;flex:1}
+.card-meta{display:flex;align-items:baseline;gap:9px;margin-top:4px}
+.price{font-family:var(--serif);font-weight:800;font-size:21px;color:var(--gold-lt)}
+.price-old{font-size:13px;color:#7d6a55;text-decoration:line-through}
+.save{font-size:10.5px;color:#7ee2b8;font-weight:600;letter-spacing:.06em}
+.buy{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:9px;padding:13px 18px;border-radius:99px;
+  font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  border:1px solid rgba(224,176,74,.42);color:var(--gold-lt);background:rgba(224,176,74,.05);transition:.4s;}
+.buy svg{transition:transform .4s}
+.buy:hover{background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;border-color:transparent;box-shadow:0 14px 34px -12px rgba(255,140,43,.8)}
+.buy:hover svg{transform:translateX(4px)}
+
+/* ============ RECEIPTS ============ */
+.receipts{background:linear-gradient(180deg,transparent,rgba(224,176,74,.045),transparent)}
+.receipt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.receipt{border:1px solid var(--line);border-radius:18px;padding:26px 24px;background:rgba(255,255,255,.018);transition:.45s;}
+.receipt:hover{background:rgba(224,176,74,.05);transform:translateY(-6px);border-color:rgba(224,176,74,.4)}
+.receipt-num{font-family:var(--serif);font-weight:800;font-size:34px;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;}
+.receipt h4{font-size:15px;font-weight:600;margin-bottom:9px}
+.receipt p{font-size:13px;color:var(--muted);font-weight:300;line-height:1.65}
+.receipt cite{display:block;margin-top:12px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(224,176,74,.6);font-style:normal;}
+
+/* ============ CTA ============ */
+.cta-band{position:relative;overflow:hidden;border-radius:26px;border:1px solid rgba(224,176,74,.3);
+  padding:clamp(38px,6vw,72px) clamp(24px,5vw,64px);
+  background:
+    radial-gradient(700px 340px at 12% 0%,rgba(255,140,43,.20),transparent 62%),
+    radial-gradient(700px 340px at 88% 100%,rgba(139,92,246,.20),transparent 62%),
+    linear-gradient(150deg,#2a0d14,#12080d);
+  text-align:center;}
+.cta-band h2{font-family:var(--serif);font-weight:800;font-size:clamp(23px,4.4vw,44px);line-height:1.14;margin-bottom:16px;}
+.cta-band h2 em{font-style:normal;font-family:var(--dev);font-weight:400;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.cta-band p{color:var(--muted);max-width:560px;margin:0 auto 30px;font-weight:300;font-size:15px}
+
+/* ============ FOOTER ============ */
+footer{position:relative;z-index:5;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(224,176,74,.04));}
+.foot-grid{max-width:1240px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(16px,4vw,40px) 30px;display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:38px;}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.foot-brand p{color:var(--muted);font-size:13.5px;font-weight:300;margin-top:16px;max-width:320px}
+.foot-col h5{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600;}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.foot-col a{font-size:13.5px;color:var(--muted);font-weight:300;transition:.3s}
+.foot-col a:hover{color:var(--gold-lt);padding-left:5px}
+.foot-bottom{max-width:1240px;margin:0 auto;padding:22px clamp(16px,4vw,40px) 34px;border-top:1px solid rgba(224,176,74,.1);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:#7d6a55;}
+.foot-bottom span{font-family:var(--dev)}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body class="locked">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="auraGold"><stop offset="0" stop-color="#ff8c2b" stop-opacity=".5"/><stop offset="1" stop-color="#ff8c2b" stop-opacity="0"/></radialGradient>
+    <radialGradient id="auraRose"><stop offset="0" stop-color="#ff5f8a" stop-opacity=".45"/><stop offset="1" stop-color="#ff5f8a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="auraViolet"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".45"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
+    <radialGradient id="auraBlue"><stop offset="0" stop-color="#60a5fa" stop-opacity=".42"/><stop offset="1" stop-color="#60a5fa" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<div class="bg-fx"></div>
+<div class="bg-grain"></div>
+<canvas id="dust"></canvas>
+
+<!-- ================= LOADER ================= -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="chakra-wrap">
+      <svg class="chakra-svg" viewBox="0 0 240 240" aria-hidden="true">
+        <circle class="ring-outer" cx="120" cy="120" r="113"/>
+        <circle class="ring-mid" cx="120" cy="120" r="98"/>
+        <g id="spokes"></g>
+        <circle class="hub" cx="120" cy="120" r="27"/>
+      </svg>
+      <div class="om">à¥</div>
+    </div>
+    <div class="mantra" id="mantra"></div>
+    <div class="loader-bar"><span id="bar"></span></div>
+    <div class="loader-pct"><span id="pct">0</span>% Â· Invoking</div>
+  </div>
+</div>
+
+<!-- ================= SPIRAL BRACELET (fixed layer) ================= -->
+<div id="braceletTracker" aria-hidden="true">
+  <div class="bracelet-fixed" id="braceletFixed"></div>
+</div>
+
+<!-- ================= NAV ================= -->
+<nav class="nav" id="nav">
+  <a href="../nageshguruji.html" class="brand">
+    <span class="brand-mark">à¥</span>
+    <span class="brand-name">ASTRO<em>VEDA</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="kundali.html">Free Kundali</a></li>
+    <li><a href="horoscope.html">Horoscope</a></li>
+    <li><a href="services.html">Puja Services</a></li>
+    <li><a href="consultation.html">Consult Guruji</a></li>
+    <li><a href="shop.html">Gemstones</a></li>
+  </ul>
+  <a href="cart.html" class="nav-cta">Cart Â· 0</a>
+</nav>
+
+<!-- ================= BOOK ================= -->
+<section class="book-xp" id="bookSection">
+  <div class="book-runway" id="bookRunway">
+    <div class="book-pin">
+      <div class="book-top">
+        <p class="eyebrow">The Book of Time</p>
+        <h2 class="book-heading">Scroll to turn <em>the page</em></h2>
+      </div>
+      <div class="book-stage">
+        <div class="book" id="book">
+          <div class="book-base">
+            <div class="base-half base-right"></div>
+            <div class="base-half base-left" id="baseLeft"></div>
+            <div class="base-spine"></div>
+          </div>
+          <div class="leaves" id="leaves"></div>
+        </div>
+      </div>
+      <div class="book-foot">
+        <div class="book-progress"><span id="bookBar"></span></div>
+        <div class="book-meta">
+          <span id="bookCounter">Cover Â· Scroll to open</span>
+          <span id="bookTitle"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTRO ================= -->
+<section class="intro" id="top">
+  <p class="eyebrow">Ancient Code Â· Modern Life</p>
+  <h1>Puja <em>Services</em></h1>
+  <p class="lede">
+    Vedic tools engineered for the scroll generation. Every gem is <b>lab-certified</b>,
+    every mantra is <b>research-backed</b>, and every story is <b>5,000 years old</b> â€”
+    and still hits different.
+  </p>
+  <div class="hero-actions">
+    <a href="#shop" class="btn btn-gold">Explore the Vault â†’</a>
+    <a href="kundali.html" class="btn btn-ghost">Get Free Kundali</a>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqTrack"></div>
+</div>
+
+<!-- ================= COUNCIL ================= -->
+<section id="council">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Three Voices Â· One Truth</p>
+      <h2>Every product, told <em>three</em> ways.</h2>
+      <p>Tradition, data, and the timeline. Our council breaks down exactly what you're buying â€” and why it actually works.</p>
+    </div>
+
+    <div class="council-grid">
+      <article class="voice reveal" data-c="pandit">
+        <div class="avatar">
+          <svg viewBox="0 0 100 100" aria-label="Pandit Arjun">
+            <circle cx="50" cy="50" r="50" fill="#3a1116"/>
+            <path d="M29 43c0-13 9-22 21-22s21 9 21 22" fill="none" stroke="#f7dc9a" stroke-width="3"/>
+            <circle cx="50" cy="34" r="4" fill="#ff8c2b"/>
+            <circle cx="50" cy="54" r="16" fill="#e8b98a"/>
+            <path d="M34 60c0 12 7 20 16 20s16-8 16-20c0 8-32 8-32 0z" fill="#f2f0ec"/>
+            <path d="M42 50c2-2 5-2 6 0M52 50c1-2 4-2 6 0" stroke="#4a2c14" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M30 82c6-6 13-9 20-9s14 3 20 9v18H30z" fill="#ff8c2b"/>
+            <path d="M44 74l6 8 6-8" fill="none" stroke="#f7dc9a" stroke-width="2"/>
+          </svg>
+        </div>
+        <p class="voice-role">The Lineage Keeper</p>
+        <h3 class="voice-name">Pandit Arjun Shastri</h3>
+        <p class="voice-handle">32 yrs of practice Â· Varanasi â†’ Vashi</p>
+        <div class="bubble">
+          "<b>In the Shiva PurÄá¹‡a</b>, Rudraksha was born from Shiva's tears when he saw
+          humanity suffering. Each bead is a teardrop turned to wood. The <b>5-mukhi</b>
+          rules the throat â€” the seat of truth. Wear it and you stop lying to yourself first."
+        </div>
+        <div class="voice-tags"><span class="tag">Story</span><span class="tag">Scripture</span><span class="tag">Ritual</span></div>
+      </article>
+
+      <article class="voice reveal" data-c="sci">
+        <div class="avatar">
+          <svg viewBox="0 0 100 100" aria-label="Dr Meera Iyer">
+            <circle cx="50" cy="50" r="50" fill="#0e1c2e"/>
+            <circle cx="50" cy="24" r="12" fill="#1c1c22"/>
+            <circle cx="50" cy="52" r="17" fill="#d9a578"/>
+            <path d="M33 52c0-11 8-18 17-18s17 7 17 18" fill="#1c1c22"/>
+            <path d="M33 52c-3 0-5 2-5 5s2 5 5 5M67 52c3 0 5 2 5 5s-2 5-5 5" fill="#1c1c22"/>
+            <rect x="36" y="46" width="12" height="10" rx="4" fill="none" stroke="#7ee2b8" stroke-width="2"/>
+            <rect x="52" y="46" width="12" height="10" rx="4" fill="none" stroke="#7ee2b8" stroke-width="2"/>
+            <line x1="48" y1="51" x2="52" y2="51" stroke="#7ee2b8" stroke-width="2"/>
+            <circle cx="42" cy="51" r="1.8" fill="#123"/>
+            <circle cx="58" cy="51" r="1.8" fill="#123"/>
+            <path d="M45 62c3 2 7 2 10 0" stroke="#a86a4a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M28 84c6-7 14-10 22-10s16 3 22 10v16H28z" fill="#f2f4f7"/>
+            <circle cx="62" cy="88" r="3" fill="#7ee2b8"/>
+          </svg>
+        </div>
+        <p class="voice-role">The Data Priestess</p>
+        <h3 class="voice-name">Dr. Meera Iyer</h3>
+        <p class="voice-handle">Astrophysics PhD Â· Jyotiá¹£a researcher</p>
+        <div class="bubble">
+          "<b>Elaeocarpus ganitrus</b> beads are dielectric â€” they hold surface charge, which is
+          why they warm to the skin. But the real mechanism is <b>paced rhythmic touch</b>:
+          japa at ~6 breaths/min raises HRV and drops cortisol. It's a wearable metronome
+          for your nervous system."
+        </div>
+        <div class="voice-tags"><span class="tag">Peer-reviewed</span><span class="tag">HRV Data</span><span class="tag">Material Science</span></div>
+      </article>
+
+      <article class="voice reveal" data-c="genz">
+        <div class="avatar">
+          <svg viewBox="0 0 100 100" aria-label="Cosmic Riya">
+            <circle cx="50" cy="50" r="50" fill="#2b1030"/>
+            <path d="M28 46c0-14 10-24 22-24s22 10 22 24v14c0 4-3 6-6 6H34c-3 0-6-2-6-6z" fill="#5b2b6b"/>
+            <circle cx="50" cy="52" r="16" fill="#e8b98a"/>
+            <path d="M34 48c2-12 8-18 16-18s14 6 16 18c-4-6-10-8-16-8s-12 2-16 8z" fill="#8b5cf6"/>
+            <path d="M50 30c6 0 10 4 11 10-6-4-16-4-22 0 1-6 5-10 11-10z" fill="#ff5f8a"/>
+            <circle cx="43" cy="52" r="2" fill="#241016"/>
+            <circle cx="57" cy="52" r="2" fill="#241016"/>
+            <path d="M45 61c3 2 7 2 10 0" stroke="#a86a4a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M28 84c6-6 14-9 22-9s16 3 22 9v16H28z" fill="#8b5cf6"/>
+            <path d="M40 76h20l-3 8H43z" fill="#1c0f22"/>
+            <path d="M26 44a24 24 0 0048 0" fill="none" stroke="#ff5f8a" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="26" cy="44" r="5" fill="#ff5f8a"/>
+            <circle cx="74" cy="44" r="5" fill="#ff5f8a"/>
+          </svg>
+        </div>
+        <p class="voice-role">The Scroll Sorcerer</p>
+        <h3 class="voice-name">Riya Â· @cosmicriya</h3>
+        <p class="voice-handle">2.4M followers Â· AstroTok</p>
+        <div class="bubble">
+          "Not gonna lie, I bought the mala for the <i>aesthetic</i>. Then I started wearing it
+          to exams and my anxiety went from 100 to likeâ€¦ 12. <b>Also it goes with literally
+          every fit</b>. It's giving ancestral main character energy. ðŸ”¥"
+        </div>
+        <div class="voice-tags"><span class="tag">Gen Z Approved</span><span class="tag">Aesthetic</span><span class="tag">Real Reviews</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHOP ================= -->
+<section id="shop">
+  <div class="wrap">
+
+    <!-- FEATURED BRACELET (landing zone for the spiral) -->
+    <article class="featured" id="featured">
+      <div class="featured-visual">
+        <div class="bracelet-slot" id="braceletSlot"></div>
+      </div>
+      <div class="featured-info">
+        <p class="kicker">Featured Â· New Arrival</p>
+        <h2>The <em>Navagraha</em><br>Mixed-Stone Bracelet</h2>
+        <p class="desc">
+          Nine planetary energies hand-strung on one elastic band. Tiger eye for courage.
+          Black obsidian for protection. Moonstone for intuition. Jade for growth.
+          Sunstone for vitality. Worn together, they form a quiet circuit â€” the kind of
+          thing you don't explain at parties, but everyone notices.
+        </p>
+        <div class="bead-legend">
+          <span><i style="background:#C8963E;color:#C8963E"></i>Tiger Eye</span>
+          <span><i style="background:#3A3A3A;color:#3A3A3A"></i>Obsidian</span>
+          <span><i style="background:#E8E0C8;color:#E8E0C8"></i>Moonstone</span>
+          <span><i style="background:#A8C89E;color:#A8C89E"></i>Jade</span>
+          <span><i style="background:#E89878;color:#E89878"></i>Sunstone</span>
+        </div>
+        <div class="featured-price">
+          <span class="now">â‚¹1,899</span>
+          <span class="was">â‚¹2,999</span>
+          <span class="off">37% off</span>
+        </div>
+        <div class="featured-actions">
+          <a href="product-bracelet.html" class="btn btn-gold">View &amp; Buy â†’</a>
+          <a href="product-bracelet.html#lab" class="btn btn-ghost">Lab Report</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="sec-head reveal">
+      <p class="kicker">The Vault</p>
+      <h2>Everything you need to <em>align</em>.</h2>
+      <p>Certified, energised, and shipped in plastic-free packaging. Tap any item to see its full story, ritual guide and lab report.</p>
+    </div>
+
+    <div class="filters reveal">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="gems">Gemstones</button>
+      <button class="chip" data-filter="malas">MÄlÄs &amp; Beads</button>
+      <button class="chip" data-filter="yantra">Yantras</button>
+      <button class="chip" data-filter="reports">Reports</button>
+    </div>
+
+    <div class="product-grid" id="productGrid">
+
+      <article class="card reveal" data-cat="malas">
+        <div class="card-top"><span class="badge hot">Bestseller</span><div class="gem">à¤°à¥</div></div>
+        <div class="card-body">
+          <p class="card-cat">MÄlÄ Â· Nepal Origin</p>
+          <h3 class="card-title">Siddha Rudraksha MÄlÄ Â· 5 Mukhi</h3>
+          <p class="card-desc">108 hand-strung beads, lab-verified <em>Elaeocarpus ganitrus</em>. Energised in Kashi with full mantra vidhi.</p>
+          <div class="card-meta"><span class="price">â‚¹2,499</span><span class="price-old">â‚¹3,999</span><span class="save">38% off</span></div>
+          <a href="product-rudraksha.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="gems">
+        <div class="card-top"><span class="badge lab">Lab Certified</span><div class="gem">à¤ª</div></div>
+        <div class="card-body">
+          <p class="card-cat">Ratna Â· Mercury (Budh)</p>
+          <h3 class="card-title">Panna Â· Colombian Emerald 4.2ct</h3>
+          <p class="card-desc">Natural, untreated, IGI-certified. Set in Panchdhatu. Boosts communication, focus &amp; exam performance.</p>
+          <div class="card-meta"><span class="price">â‚¹8,999</span><span class="price-old">â‚¹12,500</span><span class="save">28% off</span></div>
+          <a href="product-panna.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="yantra">
+        <div class="card-top"><span class="badge new">New Drop</span><div class="gem">à¤¯</div></div>
+        <div class="card-body">
+          <p class="card-cat">Yantra Â· Navagraha</p>
+          <h3 class="card-title">Navagraha Yantra Plate Â· Copper</h3>
+          <p class="card-desc">Hand-etched 99.4% pure copper with all nine planetary bija mantras. For home &amp; workspace harmonising.</p>
+          <div class="card-meta"><span class="price">â‚¹3,299</span><span class="price-old">â‚¹4,800</span><span class="save">31% off</span></div>
+          <a href="product-navagraha.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="malas">
+        <div class="card-top"><span class="badge hot">Bestseller</span><div class="gem">ðŸ”±</div></div>
+        <div class="card-body">
+          <p class="card-cat">Bracelet Â· Mixed Stones</p>
+          <h3 class="card-title">Navagraha Mixed-Stone Bracelet</h3>
+          <p class="card-desc">Tiger eye, obsidian, moonstone, jade &amp; sunstone. The one you saw spiral in â€” 8mm beads, elastic fit.</p>
+          <div class="card-meta"><span class="price">â‚¹1,899</span><span class="price-old">â‚¹2,999</span><span class="save">37% off</span></div>
+          <a href="product-bracelet.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="gems">
+        <div class="card-top"><span class="badge lab">Lab Certified</span><div class="gem">à¤¸à¥à¤«</div></div>
+        <div class="card-body">
+          <p class="card-cat">Crystal Â· Moon (Chandra)</p>
+          <h3 class="card-title">Sphatik Crystal Lingam</h3>
+          <p class="card-desc">Himalayan clear quartz, 4-inch, hand-polished. Piezoelectric â€” used in meditation for mental clarity &amp; sleep.</p>
+          <div class="card-meta"><span class="price">â‚¹1,899</span><span class="price-old">â‚¹2,700</span><span class="save">30% off</span></div>
+          <a href="product-sphatik.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="reports">
+        <div class="card-top"><span class="badge hot">Trending</span><div class="gem">à¤•à¥</div></div>
+        <div class="card-body">
+          <p class="card-cat">Report Â· 40 Pages</p>
+          <h3 class="card-title">Vedic Kundali + Life Roadmap</h3>
+          <p class="card-desc">Your full birth chart decoded in plain English. Dasha timeline, career windows, compatibility + a 30-min live call.</p>
+          <div class="card-meta"><span class="price">â‚¹999</span><span class="price-old">â‚¹2,499</span><span class="save">60% off</span></div>
+          <a href="product-kundali.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="malas">
+        <div class="card-top"><div class="gem">à¤šà¤‚</div></div>
+        <div class="card-body">
+          <p class="card-cat">MÄlÄ Â· Japa</p>
+          <h3 class="card-title">108 Chandan Japa MÄlÄ</h3>
+          <p class="card-desc">Mysore sandalwood, naturally fragrant for years. The classic for daily japa â€” cools the mind, grounds the breath.</p>
+          <div class="card-meta"><span class="price">â‚¹1,499</span><span class="price-old">â‚¹2,100</span><span class="save">29% off</span></div>
+          <a href="product-chandan.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="yantra">
+        <div class="card-top"><span class="badge new">New Drop</span><div class="gem">à¤¤à¤¾</div></div>
+        <div class="card-body">
+          <p class="card-cat">Ritual Â· Surya</p>
+          <h3 class="card-title">Surya TÄmra Jal Lota</h3>
+          <p class="card-desc">Hand-beaten copper vessel for storing water overnight. Oligodynamic copper ions â€” the original antibacterial tech.</p>
+          <div class="card-meta"><span class="price">â‚¹1,299</span><span class="price-old">â‚¹1,899</span><span class="save">32% off</span></div>
+          <a href="product-tamra.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-cat="reports">
+        <div class="card-top"><div class="gem">à¤ªà¤‚</div></div>
+        <div class="card-body">
+          <p class="card-cat">Almanac Â· 2026</p>
+          <h3 class="card-title">Panchang Wall Calendar 2026</h3>
+          <p class="card-desc">Tithi, nakshatra, rahu kaal &amp; shubh muhurat â€” designed to look like a gallery print, not your dadi's calendar.</p>
+          <div class="card-meta"><span class="price">â‚¹699</span><span class="price-old">â‚¹999</span><span class="save">30% off</span></div>
+          <a href="product-panchang.html" class="buy">View &amp; Buy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= RECEIPTS ================= -->
+<section class="receipts" id="receipts">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Show Me The Receipts</p>
+      <h2>Mysticism with a <em>methodology</em>.</h2>
+      <p>We don't ask you to believe. We ask you to look at the data, then decide.</p>
+    </div>
+    <div class="receipt-grid">
+      <div class="receipt reveal">
+        <div class="receipt-num">24Ã—</div>
+        <h4>Chakra Spokes = 24 Hours</h4>
+        <p>The SudarÅ›ana Chakra's 24 spokes map to the 24 hours of the day â€” an ancient timekeeping device encoded as theology.</p>
+        <cite>Vedic Astronomy Â· á¹šg Veda 1.50</cite>
+      </div>
+      <div class="receipt reveal">
+        <div class="receipt-num">6/min</div>
+        <h4>Breath Rate in Japa</h4>
+        <p>Slow mantra repetition at ~6 breaths per minute measurably increases heart-rate variability and lowers cortisol.</p>
+        <cite>Bernardi et al., BMJ 2001</cite>
+      </div>
+      <div class="receipt reveal">
+        <div class="receipt-num">19.5Â°</div>
+        <h4>The Metonic Cycle</h4>
+        <p>The 19-year lunar-solar cycle used in the Hindu Panchang matches the cycle used by Babylonian and Greek astronomers.</p>
+        <cite>Journal of Astronomical History, 2019</cite>
+      </div>
+      <div class="receipt reveal">
+        <div class="receipt-num">Cuâº</div>
+        <h4>Copper's Oligodynamic Effect</h4>
+        <p>Water stored overnight in copper vessels shows reduced bacterial load â€” ionic copper disrupts microbial cell membranes.</p>
+        <cite>Applied &amp; Environmental Microbiology</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Your chart is a map.<br><em>Not a prison.</em></h2>
+      <p>Get a free 3-minute Kundali snapshot â€” your Moon sign, current Dasha, and one thing the stars are actually asking you to do this month.</p>
+      <a href="kundali.html" class="btn btn-gold">Get My Free Kundali â†’</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="../nageshguruji.html" class="brand">
+        <span class="brand-mark">à¥</span>
+        <span class="brand-name">ASTRO<em>VEDA</em></span>
+      </a>
+      <p>Ancient code, modern life. Certified Vedic tools shipped across India and 40+ countries.</p>
+      <p style="font-family:var(--dev);color:var(--gold);margin-top:14px;font-size:14px">à¥¥ à¤¸à¤°à¥à¤µà¥‡ à¤­à¤µà¤¨à¥à¤¤à¥ à¤¸à¥à¤–à¤¿à¤¨à¤ƒ à¥¥</p>
+    </div>
+    <div class="foot-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="shop-gems.html">Gemstones</a></li>
+        <li><a href="shop-malas.html">MÄlÄs &amp; Beads</a></li>
+        <li><a href="shop-yantra.html">Yantras</a></li>
+        <li><a href="shop-reports.html">Reports</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Learn</h5>
+      <ul>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="science.html">The Science</a></li>
+        <li><a href="kundali.html">Free Kundali</a></li>
+        <li><a href="glossary.html">Sanskrit Glossary</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="shipping.html">Shipping</a></li>
+        <li><a href="returns.html">Returns</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>Â© 2026 AstroVeda Â· Made with ðŸ”” in Bharat</span>
+    <span>à¥¥ à¤•à¤¾à¤²à¤ƒ à¤•à¥à¤°à¥€à¤¡à¤¤à¤¿ à¤—à¤šà¥à¤›à¤¤à¤¿ à¥¥</span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   0. UTILITIES
+   ========================================================= */
+const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+const smooth  = t => t * t * (3 - 2 * t);
+const $ = s => document.querySelector(s);
+
+/* =========================================================
+   1. CHAKRA / MANTRA / MARQUEE
+   ========================================================= */
+(function buildChakra(){
+  const g = $('#spokes'); const NS='http://www.w3.org/2000/svg';
+  for (let i=0;i<24;i++){
+    const a=i*15;
+    const line=document.createElementNS(NS,'line');
+    line.setAttribute('x1',120);line.setAttribute('y1',30);
+    line.setAttribute('x2',120);line.setAttribute('y2',92);
+    line.setAttribute('transform',`rotate(${a} 120 120)`);
+    line.setAttribute('class','spoke');g.appendChild(line);
+    const dot=document.createElementNS(NS,'circle');
+    dot.setAttribute('cx',120);dot.setAttribute('cy',24);dot.setAttribute('r',2.4);
+    dot.setAttribute('transform',`rotate(${a} 120 120)`);
+    dot.setAttribute('class','chakra-dot');g.appendChild(dot);
+  }
+})();
+(function mantra(){
+  const text='à¥ à¤¨à¤®à¥‹ à¤­à¤—à¤µà¤¤à¥‡ à¤µà¤¾à¤¸à¥à¤¦à¥‡à¤µà¤¾à¤¯'; const el=$('#mantra');
+  [...text].forEach((ch,i)=>{
+    const s=document.createElement('span');
+    s.textContent = ch===' '?'\u00A0':ch;
+    s.style.animationDelay=(0.55+i*0.055)+'s'; el.appendChild(s);
+  });
+})();
+(function marquee(){
+  const words=['à¤œà¥à¤¯à¥‹à¤¤à¤¿à¤·','à¤•à¥à¤£à¥à¤¡à¤²à¥€','à¤°à¤¤à¥à¤¨','à¤®à¤¨à¥à¤¤à¥à¤°','à¤¯à¤¨à¥à¤¤à¥à¤°','à¤¨à¤•à¥à¤·à¤¤à¥à¤°','à¤—à¥à¤°à¤¹','à¤§à¥à¤¯à¤¾à¤¨','à¤ªà¤žà¥à¤šà¤¾à¤™à¥à¤—','à¤†à¤¯à¥à¤°à¥à¤µà¥‡à¤¦'];
+  const track=$('#marqTrack'); let html='';
+  for(let r=0;r<2;r++) words.forEach(w=>html+=`<span>${w}</span>`);
+  track.innerHTML=html;
+})();
+
+/* =========================================================
+   2. STORY DATA (10 chapters)
+   ========================================================= */
+const STORIES = [
+  {n:'01',sk:'à¤šà¤•à¥à¤°à¤µà¥à¤¯à¥‚à¤¹',title:'The Boy Who Broke the Wheel',sub:'Abhimanyu Â· sixteen years old',
+   text:'He was taught how to enter the chakravyuha but never how to get out â€” the lesson was cut short before he was born. At sixteen he walked into the spinning formation anyway, alone, and held off the entire Kaurava army until the sun went down on him.',
+   hook:'Half-taught is more dangerous than untaught.',name:'Abhimanyu',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <path d="M100 26 A74 74 0 1 1 26 100" fill="none" stroke="#e0b04a" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+     <path d="M100 44 A56 56 0 1 0 156 100" fill="none" stroke="#e0b04a" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+     <path d="M100 62 A38 38 0 1 1 62 100" fill="none" stroke="#e0b04a" stroke-width="2" opacity=".4" stroke-linecap="round"/>
+     <circle cx="100" cy="100" r="6" fill="#ff8c2b"/>
+     <circle cx="100" cy="76" r="10" fill="#e8b98a"/>
+     <path d="M90 75a10 10 0 0 1 20 0z" fill="#c0392b"/>
+     <path d="M100 86 L84 134 L100 124 L116 134 Z" fill="#e0b04a"/>
+     <path d="M84 134 L76 158 M116 134 L124 158" stroke="#e0b04a" stroke-width="5" stroke-linecap="round"/>`},
+  {n:'02',sk:'à¤à¤•à¤²à¤µà¥à¤¯',title:'The Thumb That Made a Master',sub:'Ekalavya Â· NishÄda hunter',
+   text:'Refused as a student, he built a clay statue of the teacher who rejected him and trained alone in the forest until his aim beat the prince\'s. When the guru finally came to find him, the fee he demanded was Ekalavya\'s right thumb.',
+   hook:'Devotion is not a transaction. Power always asks for one anyway.',name:'Ekalavya',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <path d="M40 168 v-52" stroke="#6b8f5a" stroke-width="4" stroke-linecap="round"/>
+     <path d="M40 130 l-16 -16 M40 138 l16 -16 M40 118 l-11 -13" stroke="#6b8f5a" stroke-width="3" stroke-linecap="round"/>
+     <rect x="116" y="130" width="28" height="38" rx="7" fill="#8a5a3a" opacity=".8"/>
+     <circle cx="130" cy="122" r="11" fill="#8a5a3a" opacity=".8"/>
+     <path d="M74 40 Q50 100 74 160" fill="none" stroke="#e0b04a" stroke-width="3" stroke-linecap="round"/>
+     <line x1="74" y1="40" x2="74" y2="160" stroke="#f7dc9a" stroke-width="1.2" opacity=".7"/>
+     <line x1="74" y1="100" x2="162" y2="100" stroke="#f7dc9a" stroke-width="2"/>
+     <path d="M162 100 l-12 -5 v10 z" fill="#ff8c2b"/>`},
+  {n:'03',sk:'à¤•à¤°à¥à¤£',title:'The Son Returned to Sender',sub:'Kará¹‡a Â· SÅ«taputra of Anga',
+   text:'Born with golden armour and sun-earrings, he was set adrift in a river the same night. Raised by a charioteer, mocked as low-born, he still became the finest archer alive â€” and gave away his armour the moment a stranger in disguise asked for it.',
+   hook:'They mocked his birth and ignored his greatness.',name:'Kará¹‡a',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <circle cx="100" cy="52" r="22" fill="none" stroke="#ff8c2b" stroke-width="2.5"/>
+     <g stroke="#ff8c2b" stroke-width="2" stroke-linecap="round" opacity=".75">
+       <line x1="100" y1="18" x2="100" y2="26"/><line x1="100" y1="78" x2="100" y2="86"/>
+       <line x1="66" y1="52" x2="74" y2="52"/><line x1="126" y1="52" x2="134" y2="52"/>
+       <line x1="76" y1="28" x2="82" y2="34"/><line x1="118" y1="70" x2="124" y2="76"/>
+       <line x1="124" y1="28" x2="118" y2="34"/><line x1="82" y1="70" x2="76" y2="76"/>
+     </g>
+     <circle cx="100" cy="112" r="12" fill="#e8b98a"/>
+     <path d="M88 110a12 12 0 0 1 24 0z" fill="#3a2a1a"/>
+     <path d="M100 124 L78 168 L100 158 L122 168 Z" fill="none" stroke="#e0b04a" stroke-width="2.5" stroke-linejoin="round"/>
+     <circle cx="80" cy="122" r="5" fill="#f7dc9a"/><circle cx="120" cy="122" r="5" fill="#f7dc9a"/>`},
+  {n:'04',sk:'à¤¦à¥à¤°à¥Œà¤ªà¤¦à¥€',title:'The Sari That Would Not End',sub:'DraupadÄ« Â· Princess of PaÃ±chÄla',
+   text:'Dragged into a court by her hair, surrounded by men who said nothing, she stopped begging for help and called on Krishna instead. He answered with cloth that had no end â€” because dignity is not a thing you can unroll and take back.',
+   hook:'Silence in the room is also a choice.',name:'DraupadÄ«',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <path d="M100 96 C58 96 44 130 44 168 M100 96 C142 96 156 130 156 168" fill="none" stroke="#ff5f8a" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>
+     <path d="M100 96 C66 100 56 134 58 170 M100 96 C134 100 144 134 142 170" fill="none" stroke="#e0b04a" stroke-width="1.7" stroke-linecap="round" opacity=".65"/>
+     <path d="M100 96 C74 104 68 138 72 172 M100 96 C126 104 132 138 128 172" fill="none" stroke="#f7dc9a" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+     <circle cx="100" cy="70" r="14" fill="#e8b98a"/>
+     <path d="M86 68a14 14 0 0 1 28 0z" fill="#2a0d14"/>
+     <circle cx="100" cy="70" r="14" fill="none" stroke="#e0b04a" stroke-width="1.4"/>
+     <path d="M100 86 L84 100 L100 108 L116 100 Z" fill="#e0b04a" opacity=".85"/>`},
+  {n:'05',sk:'à¤­à¥€à¤·à¥à¤®',title:'The Vow That Outlived Everyone',sub:'BhÄ«á¹£ma Â· GangÄputra',
+   text:'He was a teenager when he promised his father a throne and gave up his own claim forever. That single promise ruled him for eighty years â€” through two generations, an empire, and a bed of arrows he chose not to leave until the war was over.',
+   hook:'A promise made at sixteen should not govern you at eighty.',name:'BhÄ«á¹£ma',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <g stroke="#e0b04a" stroke-width="2.2" stroke-linecap="round" opacity=".85">
+       <line x1="26" y1="150" x2="174" y2="150"/>
+       <line x1="30" y1="136" x2="170" y2="164"/>
+       <line x1="30" y1="164" x2="170" y2="136"/>
+       <line x1="42" y1="122" x2="158" y2="178"/>
+     </g>
+     <g stroke="#f7dc9a" stroke-width="1.8" stroke-linecap="round" opacity=".65">
+       <line x1="34" y1="143" x2="166" y2="157"/>
+       <line x1="34" y1="157" x2="166" y2="143"/>
+     </g>
+     <circle cx="100" cy="96" r="12" fill="#e8b98a"/>
+     <path d="M88 94a12 12 0 0 1 24 0z" fill="#cfd6dd"/>
+     <path d="M100 108 L86 146 L114 146 Z" fill="#e0b04a" opacity=".75"/>`},
+  {n:'06',sk:'à¤œà¤¯à¤¦à¥à¤°à¤¥',title:'The Sunset That Lied',sub:'Jayadratha Â· King of Sindhu',
+   text:'Arjuna swore he would kill him before sunset or burn himself alive. So Jayadratha hid behind an entire army. Then the sun dipped, the field went dark, and Jayadratha stood up to celebrate â€” one second too early. The darkness was the plan.',
+   hook:'Krishna faked the sunset. Protection always has an expiry date.',name:'Jayadratha',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <path d="M26 130 A74 74 0 0 1 174 130" fill="none" stroke="#ff8c2b" stroke-width="2.5" opacity=".8"/>
+     <line x1="20" y1="130" x2="180" y2="130" stroke="#e0b04a" stroke-width="1.5" opacity=".55"/>
+     <circle cx="100" cy="130" r="30" fill="#ff8c2b" opacity=".26"/>
+     <circle cx="100" cy="130" r="30" fill="none" stroke="#ff8c2b" stroke-width="2"/>
+     <circle cx="118" cy="118" r="30" fill="#0a0508" opacity=".93"/>
+     <circle cx="118" cy="118" r="30" fill="none" stroke="#8b5cf6" stroke-width="1.6" opacity=".7"/>
+     <path d="M58 58 L142 58" stroke="#f7dc9a" stroke-width="2" stroke-linecap="round" opacity=".45"/>`},
+  {n:'07',sk:'à¤¶à¤•à¥à¤¨à¤¿',title:'The Dice That Ate a Kingdom',sub:'Åšakuni Â· Prince of GÄndhÄra',
+   text:'He lost his kingdom to a game he was forced to play, and decided the whole world should lose with him. Loaded dice. One match. Five brothers became thirteen years of exile in a single night â€” and a war nobody could stop.',
+   hook:'The house always wins. Shakuni built the house.',name:'Åšakuni',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <g transform="rotate(-14 100 100)">
+       <rect x="50" y="58" width="54" height="54" rx="11" fill="none" stroke="#e0b04a" stroke-width="2.4"/>
+       <circle cx="65" cy="73" r="4.6" fill="#ff8c2b"/><circle cx="89" cy="97" r="4.6" fill="#ff8c2b"/>
+       <circle cx="89" cy="73" r="4.6" fill="#ff8c2b"/><circle cx="65" cy="97" r="4.6" fill="#ff8c2b"/>
+       <circle cx="77" cy="85" r="4.6" fill="#ff8c2b"/>
+     </g>
+     <g transform="rotate(13 100 100)">
+       <rect x="96" y="94" width="54" height="54" rx="11" fill="none" stroke="#f7dc9a" stroke-width="2.4"/>
+       <circle cx="111" cy="109" r="4" fill="#e0b04a"/>
+       <circle cx="135" cy="133" r="4" fill="#e0b04a"/>
+       <circle cx="135" cy="109" r="4" fill="#e0b04a"/>
+     </g>`},
+  {n:'08',sk:'à¤˜à¤Ÿà¥‹à¤¤à¥à¤•à¤š',title:'The Giant Who Fell for Family',sub:'Ghaá¹­otkacha Â· RÄká¹£asa of the forest',
+   text:'Bhima met a rakshasi in the forest and left before his son was born. Years later, when the war came, that son â€” a giant who grew taller whenever he was angry â€” dropped out of the sky the instant he was called. He asked for nothing back.',
+   hook:'The ones you overlook are often the ones who show up.',name:'Ghaá¹­otkacha',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <path d="M100 24 C60 60 70 110 60 176 L140 176 C130 110 140 60 100 24 Z" fill="#8b5cf6" opacity=".18" stroke="#8b5cf6" stroke-width="2"/>
+     <circle cx="100" cy="62" r="18" fill="#8b5cf6" opacity=".5"/>
+     <circle cx="92" cy="58" r="3" fill="#f7dc9a"/><circle cx="108" cy="58" r="3" fill="#f7dc9a"/>
+     <path d="M88 74 Q100 84 112 74" fill="none" stroke="#f7dc9a" stroke-width="2" stroke-linecap="round"/>
+     <path d="M70 176 L54 190 M130 176 L146 190" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+     <path d="M18 150 q14 -12 28 0 q12 -14 26 0" fill="none" stroke="#e0b04a" stroke-width="1.6" opacity=".5"/>
+     <path d="M128 150 q14 -12 28 0 q12 -14 26 0" fill="none" stroke="#e0b04a" stroke-width="1.6" opacity=".5"/>`},
+  {n:'09',sk:'à¤¯à¥à¤§à¤¿à¤·à¥à¤ à¤¿à¤°',title:'The Dog at the Gate',sub:'Yudhiá¹£á¹­hira Â· DharmarÄja',
+   text:'At the end of everything he walked toward heaven with his brothers and his wife â€” and a stray dog that had followed him the whole way. One by one the others fell. The dog did not. At the gate, he refused to enter without it.',
+   hook:'The dog was Dharma. It always is.',name:'Yudhiá¹£á¹­hira',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <path d="M50 172 L50 96 A50 50 0 0 1 150 96 L150 172" fill="none" stroke="#e0b04a" stroke-width="2.6"/>
+     <path d="M62 172 L62 100 A38 38 0 0 1 138 100 L138 172" fill="none" stroke="#e0b04a" stroke-width="1.4" opacity=".55"/>
+     <line x1="30" y1="172" x2="170" y2="172" stroke="#f7dc9a" stroke-width="2" opacity=".5"/>
+     <path d="M74 170 q-5 -24 12 -26 q17 -2 19 11 q2 11 -7 15" fill="none" stroke="#f7dc9a" stroke-width="2.6" stroke-linecap="round"/>
+     <circle cx="76" cy="146" r="8.5" fill="none" stroke="#f7dc9a" stroke-width="2.4"/>
+     <path d="M70 140 l-5 -8 M82 140 l5 -8" stroke="#f7dc9a" stroke-width="2.2" stroke-linecap="round"/>
+     <circle cx="73" cy="146" r="1.6" fill="#f7dc9a"/>
+     <circle cx="130" cy="130" r="9" fill="#e8b98a"/>
+     <path d="M130 139 L119 170 L141 170 Z" fill="#e0b04a" opacity=".8"/>`},
+  {n:'10',sk:'à¤¹à¤¨à¥à¤®à¤¾à¤¨à¥',title:'The Flag That Screamed',sub:'HanumÄn Â· VÄyuputra',
+   text:'Hanuman promised to sit on Arjuna\'s banner for the whole war. Every time the flag roared, Kaurava horses broke formation and chariots swerved. Arjuna took the credit for eighteen days. The chariot, it turns out, had a passenger.',
+   hook:'Ego is loud. Strength is quiet.',name:'HanumÄn',
+   art:`<circle cx="100" cy="100" r="74" fill="none" stroke="rgba(224,176,74,.2)"/>
+     <line x1="74" y1="24" x2="74" y2="178" stroke="#e0b04a" stroke-width="3" stroke-linecap="round"/>
+     <path d="M74 32 L148 50 L74 68 Z" fill="#ff8c2b" opacity=".88" stroke="#f7dc9a" stroke-width="1.6" stroke-linejoin="round"/>
+     <circle cx="94" cy="50" r="7" fill="#0a0508" opacity=".55"/>
+     <circle cx="122" cy="150" r="25" fill="none" stroke="#e0b04a" stroke-width="2.4"/>
+     <g stroke="#e0b04a" stroke-width="1.5" opacity=".65">
+       <line x1="122" y1="125" x2="122" y2="175"/>
+       <line x1="97" y1="150" x2="147" y2="150"/>
+       <line x1="104" y1="132" x2="140" y2="168"/>
+       <line x1="140" y1="132" x2="104" y2="168"/>
+     </g>
+     <circle cx="122" cy="150" r="5" fill="#f7dc9a"/>
+     <line x1="44" y1="58" x2="44" y2="152" stroke="#f7dc9a" stroke-width="3" stroke-linecap="round" opacity=".45"/>`}
+];
+
+/* =========================================================
+   3. BUILD BOOK
+   ========================================================= */
+(function buildBook(){
+  const leavesEl = $('#leaves');
+  const coverFront = `
+    <div class="cover-page">
+      <div class="cover-frame">
+        <div class="cover-om">à¥</div>
+        <div class="cover-title">à¤®à¤¹à¤¾à¤­à¤¾à¤°à¤¤</div>
+        <div class="cover-sub">The Book of Time</div>
+        <div class="cover-hint">Scroll to open</div>
+      </div>
+    </div>`;
+  const coverBack = `
+    <div class="back-cover">
+      <div class="bc-om">à¥</div>
+      <p class="bc-line">à¥¥ à¤¯à¤¤à¥‹ à¤§à¤°à¥à¤®à¤¸à¥à¤¤à¤¤à¥‹ à¤œà¤¯à¤ƒ à¥¥</p>
+      <p class="bc-sub">Where dharma is, there is victory</p>
+    </div>`;
+  const storyLeft = s => `
+    <div class="page-inner">
+      <div class="pg-num">CHAPTER ${s.n}</div>
+      <div class="pg-sanskrit">${s.sk}</div>
+      <h3 class="pg-title">${s.title}</h3>
+      <p class="pg-sub">${s.sub}</p>
+      <div class="pg-rule"></div>
+      <p class="pg-text">${s.text}</p>
+      <p class="pg-hook">â€œ${s.hook}â€</p>
+      <div class="pg-orn">â‹</div>
+    </div>`;
+  const storyRight = s => `
+    <div class="page-inner page-right-inner">
+      <div class="pg-art">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="100" cy="100" r="88" fill="url(#auraGold)" opacity=".55"/>
+          ${s.art}
+        </svg>
+      </div>
+      <div class="pg-name-rule"></div>
+      <div class="pg-name">${s.name}</div>
+    </div>`;
+
+  const specs = [];
+  specs.push({front:coverFront, back:storyLeft(STORIES[0])});
+  for (let i=1;i<STORIES.length;i++) specs.push({front:storyRight(STORIES[i-1]), back:storyLeft(STORIES[i])});
+  specs.push({front:storyRight(STORIES[STORIES.length-1]), back:coverBack});
+
+  specs.forEach((spec,i)=>{
+    const leaf=document.createElement('div');
+    leaf.className='leaf'; leaf.dataset.index=i;
+    leaf.innerHTML=`
+      <div class="leaf-face front">${spec.front}</div>
+      <div class="leaf-face back">${spec.back}</div>`;
+    leavesEl.appendChild(leaf);
+  });
+})();
+
+/* =========================================================
+   4. BOOK ENGINE
+   ========================================================= */
+const BookEngine = (function(){
+  const runway=$('#bookRunway'), book=$('#book');
+  const leaves=Array.from(document.querySelectorAll('.leaf'));
+  const baseLeft=$('#baseLeft'), bookBar=$('#bookBar');
+  const counter=$('#bookCounter'), titleEl=$('#bookTitle');
+  const L=leaves.length, UNIT_VH=68, HOLD=0.38;
+  runway.style.height=(L*UNIT_VH+100)+'vh';
+  let startY=0, range=1, current=0, target=0, opened=false;
+
+  function measure(){
+    const r=runway.getBoundingClientRect();
+    startY=r.top+window.scrollY;
+    range=Math.max(1, runway.offsetHeight-window.innerHeight);
+  }
+  function setOpened(state){
+    if (opened===state) return;
+    opened=state; book.classList.toggle('ready',state);
+  }
+  function update(force){
+    target = clamp01((window.scrollY-startY)/range);
+    current += (target-current)*(force?1:0.18);
+    if (Math.abs(target-current)<0.0004) current=target;
+    const t = current*L;
+    for (let i=0;i<L;i++){
+      const local=clamp01(t-i);
+      const turn = local<=HOLD?0:(local-HOLD)/(1-HOLD);
+      const eased=smooth(turn);
+      const el=leaves[i];
+      el.style.transform = `rotateY(${(-180*eased).toFixed(2)}deg)`;
+      let z;
+      if (turn<=0.001) z=L-i;
+      else if (turn>=0.999) z=i+1;
+      else z=L+30;
+      el.style.zIndex=z;
+    }
+    baseLeft.style.opacity = clamp01((t-0.15)/0.85).toFixed(3);
+    bookBar.style.right = (100-current*100).toFixed(2)+'%';
+    const idx = Math.min(STORIES.length-1, Math.max(0, Math.round(t)-1));
+    if (t<0.5){ counter.textContent='Cover Â· Scroll to open'; titleEl.textContent=''; }
+    else {
+      counter.innerHTML = `<b>${STORIES[idx].n}</b> / ${String(STORIES.length).padStart(2,'0')}`;
+      titleEl.textContent = STORIES[idx].title;
+    }
+    if (!opened){
+      const br=book.getBoundingClientRect();
+      if (br.top<window.innerHeight*0.9 && br.bottom>0) setOpened(true);
+    }
+  }
+  window.addEventListener('resize',()=>{measure();update(true);});
+  window.addEventListener('load',()=>{measure();update(true);});
+  measure();
+  return {update, measure, reveal:()=>setOpened(true)};
+})();
+
+/* =========================================================
+   5. BRACELET â€” build SVG + spiral animation
+   ========================================================= */
+
+/* ---- 5a. Build the bracelet SVG ---- */
+function buildBraceletSVG(){
+  const NS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox','0 0 400 400');
+  svg.setAttribute('aria-hidden','true');
+
+  const defs=document.createElementNS(NS,'defs');
+
+  // outer glow
+  const glow=document.createElementNS(NS,'radialGradient');
+  glow.setAttribute('id','brGlowOuter');
+  glow.innerHTML='<stop offset="0" stop-color="#ff8c2b" stop-opacity=".35"/><stop offset="1" stop-color="#ff8c2b" stop-opacity="0"/>';
+  defs.appendChild(glow);
+
+  // shadow blur filter
+  const f=document.createElementNS(NS,'filter');
+  f.setAttribute('id','brShadowBlur');
+  f.setAttribute('x','-30%'); f.setAttribute('y','-30%');
+  f.setAttribute('width','160%'); f.setAttribute('height','160%');
+  const fb=document.createElementNS(NS,'feGaussianBlur');
+  fb.setAttribute('stdDeviation','3.5');
+  f.appendChild(fb);
+  defs.appendChild(f);
+
+  // bead gradients â€” matching the photo
+  const beadTypes = {
+    tiger:    ['#3D2410','#D4A64A','#F0D890'],  // brown â†’ gold â†’ highlight
+    obsidian: ['#050505','#3D3D3D','#6A6A6A'],  // deep black â†’ grey â†’ grey sheen
+    moon:     ['#B8AC90','#F0E6D0','#FFFBF0'],  // warm cream â†’ white
+    jade:     ['#6B906B','#B8D4B0','#E0EFD6'],  // forest â†’ pale green
+    sun:      ['#B86040','#E89878','#F5D0B8'],  // deep peach â†’ sunstone
+  };
+
+  Object.keys(beadTypes).forEach(k=>{
+    const [c1,c2,c3]=beadTypes[k];
+    const g=document.createElementNS(NS,'radialGradient');
+    g.setAttribute('id','bt-'+k);
+    g.setAttribute('cx','35%'); g.setAttribute('cy','28%'); g.setAttribute('r','78%');
+    g.innerHTML=`
+      <stop offset="0" stop-color="${c3}"/>
+      <stop offset="0.35" stop-color="${c2}"/>
+      <stop offset="0.75" stop-color="${c1}"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".55"/>`;
+    defs.appendChild(g);
+
+    // glossy highlight
+    const hg=document.createElementNS(NS,'radialGradient');
+    hg.setAttribute('id','hi-'+k);
+    hg.setAttribute('cx','30%'); hg.setAttribute('cy','22%'); hg.setAttribute('r','32%');
+    hg.innerHTML=`
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>`;
+    defs.appendChild(hg);
+  });
+
+  svg.appendChild(defs);
+
+  // outer glow circle
+  const glowCircle=document.createElementNS(NS,'circle');
+  glowCircle.setAttribute('cx','200'); glowCircle.setAttribute('cy','200'); glowCircle.setAttribute('r','190');
+  glowCircle.setAttribute('fill','url(#brGlowOuter)');
+  svg.appendChild(glowCircle);
+
+  // bead pattern â€” 22 beads, organic mix like the photo
+  const pattern = [
+    'jade','moon','tiger','obsidian','tiger',
+    'obsidian','sun','moon','jade','tiger',
+    'obsidian','sun','jade','tiger','obsidian',
+    'moon','jade','sun','tiger','obsidian','moon','jade'
+  ];
+
+  const N = pattern.length;
+  const R = 138;
+  const baseR = 23;
+  const cx=200, cy=200;
+
+  // Back-half shadow pass â€” beads behind get darker rims
+  pattern.forEach((type,i)=>{
+    const angle=(i/N)*Math.PI*2 - Math.PI/2;
+    const isBack = Math.sin(angle) < 0;
+    const size = baseR * (0.9 + Math.sin(i*2.3)*0.09);
+    const x=cx + Math.cos(angle)*R;
+    const y=cy + Math.sin(angle)*R;
+
+    // contact shadow
+    const shadow=document.createElementNS(NS,'ellipse');
+    shadow.setAttribute('cx', x);
+    shadow.setAttribute('cy', y+5);
+    shadow.setAttribute('rx', size*0.9);
+    shadow.setAttribute('ry', size*0.55);
+    shadow.setAttribute('fill','rgba(0,0,0,.55)');
+    shadow.setAttribute('filter','url(#brShadowBlur)');
+    svg.appendChild(shadow);
+  });
+
+  // Main bead pass
+  pattern.forEach((type,i)=>{
+    const angle=(i/N)*Math.PI*2 - Math.PI/2;
+    const isBack = Math.sin(angle) < 0;
+    const size = baseR * (0.9 + Math.sin(i*2.3)*0.09);
+    const x=cx + Math.cos(angle)*R;
+    const y=cy + Math.sin(angle)*R;
+
+    // bead body
+    const bead=document.createElementNS(NS,'circle');
+    bead.setAttribute('cx',x); bead.setAttribute('cy',y);
+    bead.setAttribute('r',size);
+    bead.setAttribute('fill',`url(#bt-${type})`);
+    bead.setAttribute('stroke','rgba(0,0,0,.35)');
+    bead.setAttribute('stroke-width','0.9');
+    if (isBack) bead.setAttribute('opacity','.92');
+    svg.appendChild(bead);
+
+    // glossy highlight
+    const hi=document.createElementNS(NS,'circle');
+    hi.setAttribute('cx', x-size*0.32);
+    hi.setAttribute('cy', y-size*0.36);
+    hi.setAttribute('r', size*0.42);
+    hi.setAttribute('fill',`url(#hi-${type})`);
+    svg.appendChild(hi);
+
+    // tiny sparkle on some beads (tiger/obsidian/sun)
+    if (type==='tiger' || type==='obsidian' || type==='sun'){
+      const sp=document.createElementNS(NS,'circle');
+      sp.setAttribute('cx', x-size*0.45);
+      sp.setAttribute('cy', y-size*0.45);
+      sp.setAttribute('r', size*0.08);
+      sp.setAttribute('fill','#ffffff');
+      sp.setAttribute('opacity','.85');
+      svg.appendChild(sp);
+    }
+  });
+
+  // subtle inner shadow ring for depth
+  const innerRing=document.createElementNS(NS,'circle');
+  innerRing.setAttribute('cx',cx); innerRing.setAttribute('cy',cy);
+  innerRing.setAttribute('r',R-24);
+  innerRing.setAttribute('fill','none');
+  innerRing.setAttribute('stroke','rgba(0,0,0,.28)');
+  innerRing.setAttribute('stroke-width','10');
+  innerRing.setAttribute('filter','url(#brShadowBlur)');
+  innerRing.setAttribute('opacity','.55');
+  svg.appendChild(innerRing);
+
+  return svg;
+}
+
+/* ---- 5b. Inject bracelet into fixed layer + slot ---- */
+(function injectBracelet(){
+  const fixed = document.getElementById('braceletFixed');
+  const slot  = document.getElementById('braceletSlot');
+  if (fixed) fixed.appendChild(buildBraceletSVG());
+  if (slot)  slot.appendChild(buildBraceletSVG());
+})();
+
+/* ---- 5c. Spiral scroll animation ---- */
+const BraceletSpiral = (function(){
+  const tracker = document.getElementById('braceletTracker');
+  const fixed   = document.getElementById('braceletFixed');
+  const slot    = document.getElementById('braceletSlot');
+  const introEl = document.querySelector('.intro');
+  const shopEl  = document.getElementById('shop');
+  if (!tracker || !fixed || !slot || !introEl || !shopEl) return {update(){}};
+
+  // cached scroll anchors (recomputed on resize)
+  let startScroll = 0, endScroll = 0;
+
+  function measure(){
+    const introTop = introEl.getBoundingClientRect().top + window.scrollY;
+    const slotRect = slot.getBoundingClientRect();
+    const slotCenter = slotRect.top + window.scrollY + slotRect.height / 2;
+    // start when intro is about 20% from top of viewport
+    startScroll = introTop - window.innerHeight * 0.2;
+    // end when the slot's center is roughly at 55% of the viewport
+    endScroll = slotCenter - window.innerHeight * 0.55;
+  }
+
+  function update(){
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce){
+      tracker.classList.remove('on');
+      slot.style.opacity = '1';
+      return;
+    }
+
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    const sy = window.scrollY;
+    const range = Math.max(1, endScroll - startScroll);
+    const p = clamp01((sy - startScroll) / range);
+
+    // Hide completely outside the animation window
+    if (sy < startScroll - vh * 0.25 || sy > endScroll + vh * 0.35){
+      tracker.classList.remove('on');
+      fixed.style.opacity = '0';
+      // slot visible only when we're past the end (docked)
+      slot.style.opacity = sy > endScroll - vh * 0.2 ? '1' : '0';
+      return;
+    }
+
+    tracker.classList.add('on');
+
+    // --- spiral path ---
+    // 2.25 turns, radius shrinks from 34vw to ~5vw
+    const angle = p * Math.PI * 4.5;
+    const radiusVw = 34 * (1 - p * 0.85);
+    const spiralX = Math.cos(angle) * radiusVw * (vw / 100); // px
+    // vertical: from -75vh (above) to +60vh (below center)
+    const spiralY = -vh * 0.75 + p * vh * 1.35;             // px
+
+    // --- target (docked position in the featured slot) ---
+    const rect = slot.getBoundingClientRect();
+    const targetX = rect.left + rect.width / 2 - vw / 2;
+    const targetY = rect.top + rect.height / 2 - vh / 2;
+
+    // --- blend toward target in the final 25% of progress ---
+    const blendStart = 0.72;
+    const blendT = clamp01((p - blendStart) / (1 - blendStart));
+    const blend = smooth(blendT);
+
+    const x = spiralX * (1 - blend) + targetX * blend;
+    const y = spiralY * (1 - blend) + targetY * blend;
+
+    // --- scale: start large, spiral, land at slot size ---
+    const slotW = rect.width || 320;
+    const targetScale = slotW / 340; // .bracelet-fixed is min(46vw, 340px)
+    const spiralScale = 1.25 - p * 0.55; // 1.25 â†’ 0.70
+    const scale = spiralScale * (1 - blend) + targetScale * blend;
+
+    // --- rotation: spins through spiral, decelerates on landing ---
+    const rot = p * 720 * (1 - blend * 0.85);
+
+    // --- fade ---
+    const fadeIn  = clamp01(p / 0.06);
+    const fadeOut = 1 - blend; // fixed bracelet fades out as slot fades in
+    fixed.style.opacity = String(fadeIn * fadeOut);
+
+    fixed.style.transform =
+      `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${scale})`;
+
+    slot.style.opacity = String(blend);
+  }
+
+  function remeasure(){ measure(); update(); }
+
+  window.addEventListener('resize', remeasure);
+  window.addEventListener('load',   remeasure);
+  measure();
+
+  return { update, measure };
+})();
+
+/* =========================================================
+   6. LOADER SEQUENCE
+   ========================================================= */
+(function loaderSequence(){
+  const loader=document.getElementById('loader');
+  const bar=document.getElementById('bar'), pct=document.getElementById('pct');
+  const nav=document.getElementById('nav');
+
+  let p=0;
+  const tick=setInterval(()=>{
+    p += Math.random()*9 + 4;
+    if (p>=100){ p=100; clearInterval(tick); setTimeout(finish, 420); }
+    bar.style.right=(100-p)+'%';
+    pct.textContent=Math.floor(p);
+  }, 95);
+
+  function finish(){
+    loader.classList.add('done');
+    document.body.classList.remove('locked');
+    nav.classList.add('show');
+    BookEngine.measure(); BookEngine.reveal(); BookEngine.update(true);
+    BraceletSpiral.measure();
+  }
+})();
+
+/* =========================================================
+   7. SMOOTH SCROLL (desktop)
+   ========================================================= */
+(function smoothScroll(){
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine=window.matchMedia('(pointer: fine)').matches;
+  const enabled = !reduce && fine && window.innerWidth>900;
+  const maxScroll=()=>Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+  let target=window.scrollY, current=window.scrollY;
+
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const id=a.getAttribute('href');
+      if (id.length<2) return;
+      const el=document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      const y=el.getBoundingClientRect().top+window.scrollY-70;
+      if (enabled) target=Math.max(0,Math.min(y,maxScroll()));
+      else window.scrollTo({top:y,behavior:'smooth'});
+    });
+  });
+
+  if (!enabled) return;
+
+  window.addEventListener('wheel',e=>{
+    if (document.body.classList.contains('locked')){e.preventDefault();return;}
+    e.preventDefault();
+    const d = e.deltaMode===1 ? e.deltaY*18 : e.deltaY;
+    target=Math.max(0,Math.min(target+d*1.05,maxScroll()));
+  },{passive:false});
+
+  window.addEventListener('scroll',()=>{
+    if (Math.abs(window.scrollY-current)>2) current=target=window.scrollY;
+  },{passive:true});
+
+  window.addEventListener('resize',()=>{target=Math.min(target,maxScroll());});
+
+  (function raf(){
+    current += (target-current)*0.1;
+    if (Math.abs(target-current)<0.4) current=target;
+    window.scrollTo(0,current);
+    requestAnimationFrame(raf);
+  })();
+})();
+
+/* =========================================================
+   8. MASTER RAF â€” book + bracelet + dust
+   ========================================================= */
+(function masterLoop(){
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const c=document.getElementById('dust');
+  let ctx=null,W=0,H=0,parts=[];
+
+  if (c && !reduce){
+    ctx=c.getContext('2d');
+    const resize=()=>{W=c.width=window.innerWidth;H=c.height=window.innerHeight;};
+    resize();
+    window.addEventListener('resize',resize);
+    const count = window.innerWidth<700 ? 26 : 54;
+    for (let i=0;i<count;i++){
+      parts.push({
+        x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*1.5+0.35,
+        s:Math.random()*0.26+0.05,
+        a:Math.random()*0.5+0.12,
+        p:Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  function loop(){
+    BookEngine.update(false);
+    BraceletSpiral.update();
+
+    if (ctx){
+      ctx.clearRect(0,0,W,H);
+      for (const p of parts){
+        p.y -= p.s; p.p += 0.012; p.x += Math.sin(p.p)*0.28;
+        if (p.y<-12){ p.y=H+12; p.x=Math.random()*W; }
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,6.3);
+        ctx.fillStyle=`rgba(224,176,74,${p.a})`;
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* =========================================================
+   9. REVEALS
+   ========================================================= */
+(function reveals(){
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay=(i%4)*0.08+'s';
+    io.observe(el);
+  });
+})();
+
+/* =========================================================
+   10. PRODUCT FILTERS
+   ========================================================= */
+(function filters(){
+  const chips=document.querySelectorAll('.chip');
+  const cards=document.querySelectorAll('#productGrid .card');
+  chips.forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      chips.forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      const f=chip.dataset.filter;
+      cards.forEach(card=>{
+        const show = (f==='all' || card.dataset.cat===f);
+        card.style.transition='opacity .4s ease, transform .4s ease';
+        if (show){
+          card.style.display='';
+          requestAnimationFrame(()=>{card.style.opacity='1';card.style.transform='none';});
+        } else {
+          card.style.opacity='0'; card.style.transform='scale(.94)';
+          setTimeout(()=>{card.style.display='none';},380);
+        }
+      });
+    });
+  });
+})();
+
+/* =========================================================
+   11. CARD TILT
+   ========================================================= */
+(function tilt(){
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.card, .voice').forEach(el=>{
+    el.addEventListener('mousemove',e=>{
+      const r=el.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-0.5;
+      const y=(e.clientY-r.top)/r.height-0.5;
+      el.style.transform=`translateY(-9px) perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`;
+    });
+    el.addEventListener('mouseleave',()=>{el.style.transform='';});
+  });
+})();
+</script>
+</body>
+</html>

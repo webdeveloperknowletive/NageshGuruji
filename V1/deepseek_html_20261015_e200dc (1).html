@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AstroVeda — परंपरेतून मार्गदर्शन • श्रद्धेतून समाधान</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Outfit:wght@200;300;400;500;600;700;800&family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0a0508; --deep:#12080d; --maroon:#2a0d14; --maroon-2:#3d1219;
+  --gold:#e0b04a; --gold-lt:#f7dc9a; --gold-dk:#a8701c;
+  --saffron:#ff8c2b; --cream:#f6ecd9;
+  --muted:#b9a68c; --muted-2:#7d6a55;
+  --pink:#ff5f8a; --violet:#8b5cf6; --green:#7ee2b8;
+  --line:rgba(224,176,74,.18); --line-2:rgba(224,176,74,.08);
+  --serif:'Cinzel', serif; --dev:'Tiro Devanagari Sanskrit', serif;
+  --mrt:'Mukta', system-ui, sans-serif; --sans:'Outfit', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip;scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);overflow-x:clip;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+::selection{background:var(--gold);color:var(--ink)}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:#0a0508}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--saffron));border-radius:9px}
+
+.bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(900px 600px at 12% -5%, rgba(255,140,43,.10), transparent 60%),
+    radial-gradient(800px 700px at 92% 12%, rgba(139,92,246,.08), transparent 60%),
+    radial-gradient(1000px 800px at 50% 110%, rgba(224,176,74,.10), transparent 60%);}
+.bg-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.28;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");}
+
+/* TOP BAR */
+.top-bar{position:relative;z-index:60;
+  background:linear-gradient(90deg, rgba(224,176,74,.14), rgba(255,140,43,.10), rgba(224,176,74,.14));
+  border-bottom:1px solid var(--line);padding:9px clamp(16px,4vw,46px);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12px;color:rgba(247,220,154,.75);letter-spacing:.04em;}
+.top-bar .tb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top-bar .tb-left span{display:inline-flex;align-items:center;gap:6px}
+.top-bar .tb-left span::before{content:'◆';color:var(--saffron);font-size:8px}
+.top-bar .tb-right{display:flex;align-items:center;gap:16px}
+.top-bar a:hover{color:var(--gold-lt)}
+.top-bar .wa{color:#25D366;font-weight:600}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:12px clamp(16px,4vw,46px);
+  background:rgba(10,5,8,.86);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(224,176,74,.14);}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-mark{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--dev);font-size:22px;color:var(--gold-lt);
+  background:radial-gradient(circle at 35% 30%,#4a1a22,#1a0a0f);
+  border:1px solid rgba(224,176,74,.45);
+  box-shadow:0 0 22px rgba(224,176,74,.28), inset 0 0 14px rgba(255,140,43,.18);}
+.brand-name{font-family:var(--serif);font-weight:800;letter-spacing:.16em;font-size:16px;color:var(--cream);line-height:1}
+.brand-name em{color:var(--gold);font-style:normal}
+.brand-tag{font-family:var(--mrt);font-size:9.5px;color:var(--muted);letter-spacing:.12em;display:block;margin-top:3px}
+
+.nav-links{display:flex;gap:22px;list-style:none;align-items:center;flex-wrap:wrap}
+.nav-links a{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:500;
+  position:relative;padding:8px 0;transition:color .3s;white-space:nowrap;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:2px;height:1px;width:0;
+  background:linear-gradient(90deg,var(--gold),var(--saffron),var(--violet));
+  transition:width .4s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(224,176,74,.6);}
+.nav-links a:hover{color:var(--gold-lt)}
+.nav-links a:hover::after{width:100%}
+
+.nav-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.icon-btn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(224,176,74,.28);background:rgba(224,176,74,.04);
+  color:var(--muted);transition:.3s;position:relative;}
+.icon-btn:hover{color:var(--gold-lt);border-color:rgba(224,176,74,.55);background:rgba(224,176,74,.12)}
+.icon-btn svg{width:16px;height:16px}
+.icon-btn .badge{position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;padding:0 4px;border-radius:99px;
+  background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f;font-size:9.5px;font-weight:800;
+  display:grid;place-items:center;font-family:var(--sans);}
+.btn-book{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  padding:11px 20px;border-radius:99px;background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;
+  box-shadow:0 10px 28px -10px rgba(224,176,74,.75);transition:.35s;white-space:nowrap;}
+.btn-book:hover{transform:translateY(-2px);box-shadow:0 16px 36px -10px rgba(255,140,43,.9)}
+
+.hamburger{display:none}
+@media(max-width:1180px){.nav-links{display:none}.hamburger{display:grid}}
+@media(max-width:520px){.top-bar{justify-content:center}.top-bar .tb-right span:not(.wa){display:none}.brand-tag{display:none}}
+
+.mobile-drawer{position:fixed;top:0;right:-320px;bottom:0;width:300px;z-index:999;
+  background:linear-gradient(180deg,#1c0a10,#0a0508);border-left:1px solid var(--line);
+  padding:80px 26px 40px;transition:right .4s cubic-bezier(.2,.8,.2,1);overflow-y:auto;}
+.mobile-drawer.open{right:0;box-shadow:-30px 0 80px rgba(0,0,0,.7)}
+.mobile-drawer ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+.mobile-drawer a{display:block;padding:14px 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;border-bottom:1px solid rgba(224,176,74,.08);transition:.3s;}
+.mobile-drawer a:hover{color:var(--gold-lt);padding-left:14px;border-color:rgba(224,176,74,.35)}
+.drawer-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;border:1px solid rgba(224,176,74,.4);color:var(--gold-lt);}
+.drawer-overlay{position:fixed;inset:0;z-index:998;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
+  opacity:0;visibility:hidden;transition:.35s;}
+.drawer-overlay.show{opacity:1;visibility:visible}
+
+/* HERO */
+.hero{position:relative;z-index:5;padding:clamp(60px,9vw,120px) clamp(16px,4vw,46px) clamp(50px,7vw,100px);overflow:hidden;}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.15fr 1fr;
+  gap:clamp(30px,5vw,70px);align-items:center;}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;gap:36px}}
+.hero-halo{position:absolute;top:20%;left:8%;width:min(90vw,780px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle, rgba(224,176,74,.16), transparent 62%);pointer-events:none;}
+.hero-copy .eyebrow{font-size:11.5px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;
+  margin-bottom:18px;display:inline-flex;align-items:center;gap:14px;}
+.hero-copy .eyebrow::before{content:'';width:36px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.hero-copy h1{font-family:var(--mrt);font-weight:700;font-size:clamp(30px,5.6vw,62px);line-height:1.14;letter-spacing:-.01em;margin-bottom:18px;}
+.hero-copy h1 em{font-style:normal;background:linear-gradient(100deg,var(--gold-lt),var(--saffron),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(224,176,74,.35));}
+.hero-copy .sub{font-family:var(--mrt);font-weight:500;font-size:clamp(15px,2.2vw,20px);color:var(--muted);margin-bottom:22px;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+@media(max-width:900px){.hero-pills{justify-content:center}}
+.hero-pills span{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:8px 15px;border-radius:99px;
+  font-weight:600;background:rgba(224,176,74,.08);border:1px solid rgba(224,176,74,.28);color:var(--gold-lt);}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero-actions{justify-content:center}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:99px;
+  font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  transition:.4s cubic-bezier(.2,.8,.2,1);position:relative;white-space:nowrap;}
+.btn-gold{background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;box-shadow:0 12px 36px -12px rgba(224,176,74,.75);}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 20px 50px -12px rgba(255,140,43,.85)}
+.btn-ghost{border:1px solid rgba(224,176,74,.42);color:var(--gold-lt);background:rgba(224,176,74,.05);}
+.btn-ghost:hover{background:rgba(224,176,74,.14);transform:translateY(-3px)}
+
+.hero-visual{
+  position:relative;
+  aspect-ratio:1;
+  width:100%;
+  max-width:520px;
+  margin-inline:auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 50% 50%, rgba(255,140,43,.18), transparent 62%);
+}
+.hero-visual .mandala,
+.hero-visual .mandala-rev{
+  position:absolute;
+  top:50%;left:50%;
+  width:100%;height:100%;
+  transform:translate(-50%,-50%);
+  overflow:visible;
+}
+.hero-visual .mandala{animation:spinCentered 90s linear infinite}
+.hero-visual .mandala-rev{
+  width:84%;height:84%;
+  animation:spinCentered 60s linear infinite reverse;
+}
+@keyframes spinCentered{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+.hero-visual .center-om{
+  position:relative;
+  z-index:3;
+  font-family:var(--dev);
+  font-size:clamp(60px,11vw,120px);
+  line-height:1;
+  color:var(--gold-lt);
+  text-shadow:0 0 40px rgba(255,140,43,.9), 0 0 100px rgba(255,140,43,.5);
+  animation:pulseOm 3.6s ease-in-out infinite;
+}
+@keyframes pulseOm{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.06);opacity:1}}
+
+.hero-floating-chips{position:absolute;inset:0;pointer-events:none}
+.hero-chip{position:absolute;background:linear-gradient(160deg, rgba(38,15,21,.95), rgba(10,5,8,.98));
+  border:1px solid rgba(224,176,74,.4);border-radius:14px;padding:9px 14px;
+  font-size:11px;letter-spacing:.06em;font-weight:600;color:var(--gold-lt);
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 14px 30px -12px rgba(0,0,0,.85), 0 0 24px -8px rgba(224,176,74,.3);
+  animation:chipFloat 5s ease-in-out infinite;}
+.hero-chip::before{content:attr(data-icon);font-size:15px}
+.hero-chip.c1{top:6%;left:-2%;animation-delay:0s}
+.hero-chip.c2{top:38%;right:-4%;animation-delay:1.2s}
+.hero-chip.c3{bottom:10%;left:0%;animation-delay:2.4s}
+@keyframes chipFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media(max-width:900px){
+  .hero-chip.c1{top:2%;left:4%}
+  .hero-chip.c2{top:36%;right:4%}
+  .hero-chip.c3{bottom:4%;left:4%}
+  .hero-visual{max-width:400px}
+}
+
+/* SECTIONS */
+section{position:relative;z-index:5}
+.wrap{max-width:1280px;margin:0 auto;padding:clamp(60px,8vw,110px) clamp(16px,4vw,40px)}
+.sec-head{max-width:820px;margin-bottom:clamp(34px,5vw,58px)}
+.sec-head.center{margin-inline:auto;text-align:center}
+.kicker{font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:500;
+  margin-bottom:14px;display:inline-flex;align-items:center;gap:12px;}
+.kicker::before{content:'';width:32px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.sec-head.center .kicker::before{background:linear-gradient(90deg,transparent,var(--gold))}
+.sec-head.center .kicker::after{content:'';width:32px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.sec-head h2{font-family:var(--mrt);font-weight:700;font-size:clamp(24px,4.2vw,42px);line-height:1.18;}
+.sec-head h2 em{font-style:normal;background:linear-gradient(100deg,var(--gold-lt),var(--saffron));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.sec-head p{color:var(--muted);font-weight:300;margin-top:14px;font-size:clamp(13.5px,1.6vw,16px);max-width:680px}
+.sec-head.center p{margin-inline:auto}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* CATEGORY */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.cat-card{position:relative;border:1px solid var(--line);border-radius:22px;padding:28px 24px 26px;
+  background:linear-gradient(165deg, rgba(38,15,21,.85), rgba(10,5,8,.95));overflow:hidden;
+  transition:.5s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:10px;}
+.cat-card::before{content:'';position:absolute;top:-70px;right:-70px;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,140,43,.2), transparent 65%);opacity:.4;transition:.5s;}
+.cat-card:hover{transform:translateY(-8px);border-color:rgba(224,176,74,.5);box-shadow:0 34px 70px -34px rgba(224,176,74,.42);}
+.cat-card:hover::before{opacity:.9;transform:scale(1.15)}
+.cat-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:28px;
+  background:radial-gradient(circle at 35% 30%, rgba(255,140,43,.28), rgba(0,0,0,.5));
+  border:1px solid rgba(224,176,74,.35);margin-bottom:6px;}
+.cat-title{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-lt);position:relative;z-index:2;}
+.cat-desc{font-family:var(--mrt);font-size:13.5px;color:var(--muted);line-height:1.55;flex:1;position:relative;z-index:2;}
+.cat-link{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:700;color:var(--gold);margin-top:6px;position:relative;z-index:2;transition:.35s;}
+.cat-link:hover{color:var(--saffron);gap:12px}
+
+/* PRODUCTS */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:22px}
+.prod-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:linear-gradient(170deg, rgba(36,14,20,.9), rgba(10,5,8,.95));transition:.5s cubic-bezier(.2,.8,.2,1);}
+.prod-card:hover{transform:translateY(-8px);border-color:rgba(224,176,74,.5);box-shadow:0 34px 70px -34px rgba(224,176,74,.45);}
+.prod-img{position:relative;padding:30px 20px 22px;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 30%, rgba(224,176,74,.12), transparent 66%);
+  border-bottom:1px solid rgba(224,176,74,.1);}
+.prod-img svg{width:128px;height:128px;overflow:visible}
+.prod-badge{position:absolute;top:14px;left:14px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:700;padding:5px 11px;border-radius:99px;z-index:2;}
+.badge-hot{background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f}
+.badge-lab{background:rgba(52,211,153,.16);color:#7ee2b8;border:1px solid rgba(52,211,153,.35)}
+.badge-new{background:rgba(96,165,250,.16);color:#a8cdfb;border:1px solid rgba(96,165,250,.35)}
+.wish{position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(10,5,8,.6);border:1px solid rgba(224,176,74,.25);
+  color:var(--muted);transition:.3s;}
+.wish:hover,.wish.on{color:var(--pink);border-color:rgba(255,95,138,.5);background:rgba(255,95,138,.12)}
+.wish svg{width:15px;height:15px}
+.prod-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.prod-cat{font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--saffron);font-weight:600}
+.prod-title{font-family:var(--serif);font-weight:600;font-size:16px;line-height:1.3;color:var(--cream);}
+.prod-desc{font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.58;flex:1}
+.prod-stars{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:2px;}
+.prod-stars .s{color:var(--gold);letter-spacing:-1px}
+.prod-price{display:flex;align-items:baseline;gap:9px;margin-top:4px}
+.prod-price .now{font-family:var(--serif);font-weight:800;font-size:20px;color:var(--gold-lt)}
+.prod-price .was{font-size:12px;color:var(--muted-2);text-decoration:line-through}
+.prod-price .off{font-size:10px;color:var(--green);font-weight:700;letter-spacing:.06em}
+.prod-actions{display:flex;gap:8px;margin-top:10px}
+.btn-add{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 12px;border-radius:99px;
+  font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;transition:.4s;}
+.btn-add:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(255,140,43,.8)}
+.btn-view{padding:11px 14px;border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  border:1px solid rgba(224,176,74,.35);color:var(--gold-lt);background:rgba(224,176,74,.05);transition:.4s;white-space:nowrap;}
+.btn-view:hover{background:rgba(224,176,74,.14);border-color:rgba(224,176,74,.6)}
+
+/* PUJA */
+.puja-section{background:linear-gradient(180deg, transparent, rgba(224,176,74,.035), transparent);}
+.puja-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;}
+.puja-card{border:1px solid var(--line);border-radius:20px;padding:24px 22px 22px;
+  background:linear-gradient(165deg, rgba(38,15,21,.82), rgba(10,5,8,.95));
+  transition:.5s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:10px;}
+.puja-card::after{content:'ॐ';position:absolute;bottom:-20px;right:-4px;font-family:var(--dev);font-size:96px;
+  color:rgba(224,176,74,.06);pointer-events:none;}
+.puja-card:hover{transform:translateY(-7px);border-color:rgba(224,176,74,.48);box-shadow:0 30px 60px -30px rgba(224,176,74,.4);}
+.puja-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:24px;
+  background:radial-gradient(circle at 35% 30%, rgba(255,140,43,.24), rgba(0,0,0,.4));
+  border:1px solid rgba(224,176,74,.32);}
+.puja-title{font-family:var(--mrt);font-weight:600;font-size:16px;color:var(--cream);line-height:1.3;}
+.puja-desc{font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.6;flex:1;}
+.puja-link{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;font-weight:700;color:var(--gold);transition:.35s;}
+.puja-link:hover{color:var(--saffron);gap:11px}
+.puja-cta{margin-top:40px;text-align:center;}
+
+/* JYOTISH */
+.jyotish-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,5vw,64px);align-items:start;}
+@media(max-width:900px){.jyotish-wrap{grid-template-columns:1fr}}
+.jyotish-info .kicker{margin-bottom:14px}
+.jyotish-info h2{font-family:var(--mrt);font-weight:700;font-size:clamp(24px,3.4vw,38px);line-height:1.2;margin-bottom:16px;}
+.jyotish-info h2 em{font-style:normal;background:linear-gradient(100deg,var(--gold-lt),var(--saffron));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.jyotish-info p{font-family:var(--mrt);color:var(--muted);font-size:14.5px;line-height:1.7;margin-bottom:24px;font-weight:300;}
+.jyotish-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.jyotish-tags span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:99px;
+  font-weight:600;background:rgba(224,176,74,.06);border:1px solid rgba(224,176,74,.24);color:var(--gold-lt);}
+
+.form-card{border:1px solid rgba(224,176,74,.28);border-radius:24px;padding:clamp(24px,3vw,36px);
+  background:radial-gradient(500px 300px at 15% 0%, rgba(255,140,43,.14), transparent 62%),
+    radial-gradient(500px 300px at 90% 100%, rgba(139,92,246,.12), transparent 62%),
+    linear-gradient(160deg, rgba(38,15,21,.92), rgba(10,5,8,.98));
+  position:relative;overflow:hidden;}
+.form-card h3{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.02em;margin-bottom:6px;color:var(--cream);}
+.form-card .form-sub{font-size:12.5px;color:var(--muted);margin-bottom:22px;font-weight:300;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:560px){.form-grid{grid-template-columns:1fr}}
+.form-grid .full{grid-column:1 / -1}
+.field label{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:6px;}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;font-family:inherit;font-size:13.5px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(224,176,74,.18);border-radius:12px;color:var(--cream);
+  transition:.3s;outline:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(224,176,74,.6);
+  background:rgba(224,176,74,.06);box-shadow:0 0 0 3px rgba(224,176,74,.14);}
+.field textarea{resize:vertical;min-height:70px}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b9a68c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:36px;}
+.field select option{background:#1c0a10;color:var(--cream)}
+.form-submit{margin-top:20px;width:100%;padding:15px 24px;border-radius:99px;
+  font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;transition:.4s;
+  box-shadow:0 12px 32px -12px rgba(224,176,74,.7);}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 20px 44px -12px rgba(255,140,43,.85)}
+.form-note{margin-top:12px;font-size:11px;color:var(--muted-2);text-align:center;line-height:1.6;}
+
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;}
+.filter-chip{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  padding:9px 18px;border-radius:99px;color:var(--muted);border:1px solid rgba(224,176,74,.16);
+  background:rgba(224,176,74,.02);transition:.35s;}
+.filter-chip:hover{color:var(--gold-lt);border-color:rgba(224,176,74,.45)}
+.filter-chip.active{background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;border-color:transparent;font-weight:800;}
+
+/* WHY */
+.why-section{background:radial-gradient(800px 400px at 50% 0%, rgba(224,176,74,.06), transparent 60%),
+  linear-gradient(180deg, transparent, rgba(224,176,74,.02), transparent);}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+.why-card{border:1px solid var(--line);border-radius:20px;padding:28px 24px;
+  background:linear-gradient(170deg, rgba(38,15,21,.6), rgba(10,5,8,.9));transition:.45s;position:relative;}
+.why-card:hover{border-color:rgba(224,176,74,.45);transform:translateY(-6px);
+  background:linear-gradient(170deg, rgba(224,176,74,.08), rgba(10,5,8,.95));}
+.why-num{font-family:var(--serif);font-weight:800;font-size:38px;
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));
+  -webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;margin-bottom:14px;}
+.why-card h4{font-family:var(--mrt);font-weight:600;font-size:17px;margin-bottom:10px;color:var(--cream);}
+.why-card p{font-size:13px;color:var(--muted);font-weight:300;line-height:1.65}
+
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(30px,5vw,64px);align-items:center;}
+@media(max-width:900px){.about-wrap{grid-template-columns:1fr}}
+.guru-photo{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(224,176,74,.4);
+  background:radial-gradient(circle at 40% 30%, rgba(255,140,43,.24), rgba(10,5,8,.95));
+  display:grid;place-items:center;}
+.guru-photo svg{width:100%;height:100%;overflow:visible}
+.guru-photo::after{content:'';position:absolute;inset:8px;border:1px solid rgba(224,176,74,.3);border-radius:18px;pointer-events:none;}
+.guru-copy .kicker{margin-bottom:14px}
+.guru-copy h2{font-family:var(--mrt);font-weight:700;font-size:clamp(24px,3.4vw,38px);line-height:1.22;margin-bottom:18px;}
+.guru-copy h2 em{font-style:normal;background:linear-gradient(100deg,var(--gold-lt),var(--saffron));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.guru-copy p{font-family:var(--mrt);font-size:14.5px;color:var(--muted);line-height:1.75;margin-bottom:16px;font-weight:300;}
+.guru-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0 26px;padding:22px 0;
+  border-top:1px solid rgba(224,176,74,.14);border-bottom:1px solid rgba(224,176,74,.14);}
+.guru-stats .st{text-align:center}
+.guru-stats .st b{display:block;font-family:var(--serif);font-weight:800;font-size:clamp(22px,2.8vw,30px);
+  background:linear-gradient(100deg,var(--gold-lt),var(--saffron));
+  -webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;margin-bottom:5px;}
+.guru-stats .st span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+
+/* TESTI */
+.testi-section{background:linear-gradient(180deg, transparent, rgba(224,176,74,.035), transparent);}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.testi-card{border:1px solid var(--line);border-radius:20px;padding:26px 24px;
+  background:linear-gradient(165deg, rgba(38,15,21,.6), rgba(10,5,8,.92));transition:.4s;position:relative;}
+.testi-card::before{content:'"';position:absolute;top:8px;right:22px;font-family:var(--serif);font-size:80px;
+  line-height:1;color:rgba(224,176,74,.14);pointer-events:none;}
+.testi-card:hover{border-color:rgba(224,176,74,.42);transform:translateY(-5px)}
+.testi-stars{color:var(--gold);letter-spacing:2px;margin-bottom:12px;font-size:14px}
+.testi-text{font-family:var(--mrt);font-size:14px;color:#e8dcc8;line-height:1.72;font-weight:300;margin-bottom:16px;position:relative;z-index:2;}
+.testi-person{display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid rgba(224,176,74,.1);}
+.testi-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--serif);font-weight:800;font-size:16px;color:var(--gold-lt);
+  background:radial-gradient(circle at 35% 30%, #4a1a22, #1a0a0f);border:1px solid rgba(224,176,74,.35);}
+.testi-info strong{display:block;font-size:13.5px;color:var(--cream);font-weight:600}
+.testi-info span{font-size:11px;color:var(--muted);letter-spacing:.06em}
+
+/* BLOG */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+.blog-card{border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:linear-gradient(170deg, rgba(36,14,20,.85), rgba(10,5,8,.95));
+  transition:.5s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;}
+.blog-card:hover{transform:translateY(-7px);border-color:rgba(224,176,74,.48);box-shadow:0 30px 60px -30px rgba(224,176,74,.4)}
+.blog-thumb{padding:28px 20px;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 40%, rgba(224,176,74,.14), transparent 66%);
+  border-bottom:1px solid rgba(224,176,74,.1);}
+.blog-thumb svg{width:80px;height:80px;overflow:visible}
+.blog-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:9px;flex:1}
+.blog-tag{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--saffron);font-weight:700;}
+.blog-title{font-family:var(--mrt);font-weight:600;font-size:16px;line-height:1.36;color:var(--cream);}
+.blog-excerpt{font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.6;flex:1;}
+.blog-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted-2);margin-top:6px;
+  padding-top:12px;border-top:1px solid rgba(224,176,74,.1);}
+.blog-meta a{color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:10.5px}
+.blog-meta a:hover{color:var(--saffron)}
+
+/* FORMAT PREVIEW */
+.format-preview{border:1px solid rgba(224,176,74,.28);border-radius:26px;padding:clamp(24px,4vw,50px);
+  background:radial-gradient(600px 340px at 20% 0%, rgba(255,140,43,.12), transparent 62%),
+    radial-gradient(600px 340px at 90% 100%, rgba(139,92,246,.10), transparent 62%),
+    linear-gradient(160deg, rgba(38,15,21,.9), rgba(10,5,8,.96));
+  display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(24px,4vw,52px);align-items:start;}
+@media(max-width:820px){.format-preview{grid-template-columns:1fr}}
+.format-visual{aspect-ratio:1;border-radius:20px;border:1px solid rgba(224,176,74,.24);
+  background:radial-gradient(circle at 50% 40%, rgba(224,176,74,.14), rgba(10,5,8,.9));
+  display:grid;place-items:center;position:relative;overflow:hidden;}
+.format-visual svg{width:70%;height:70%;overflow:visible}
+.format-visual .badge-float{position:absolute;top:16px;left:16px;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;font-weight:700;padding:5px 11px;border-radius:99px;
+  background:rgba(52,211,153,.16);color:#7ee2b8;border:1px solid rgba(52,211,153,.35);}
+.format-info h3{font-family:var(--mrt);font-weight:700;font-size:clamp(20px,2.6vw,30px);line-height:1.2;color:var(--cream);margin-bottom:10px;}
+.format-info .price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;}
+.format-info .price-row .p1{font-family:var(--serif);font-weight:800;font-size:clamp(24px,3vw,34px);color:var(--gold-lt);}
+.format-info .price-row .p2{font-size:14px;color:var(--muted-2);text-decoration:line-through}
+.format-info .price-row .p3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+  padding:4px 10px;border-radius:99px;background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f;}
+.format-info .stars{color:var(--gold);letter-spacing:2px;font-size:14px;margin-bottom:16px}
+.format-info .lead{font-family:var(--mrt);font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:20px;}
+.format-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+@media(max-width:560px){.format-details{grid-template-columns:1fr}}
+.format-details .row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;
+  background:rgba(255,255,255,.025);border:1px solid rgba(224,176,74,.1);font-size:12.5px;}
+.format-details .row .k{color:var(--muted);letter-spacing:.05em}
+.format-details .row .v{color:var(--cream);font-weight:600}
+.format-section{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed rgba(224,176,74,.14);}
+.format-section:last-of-type{border-bottom:none}
+.format-section h5{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+.format-section p{font-family:var(--mrt);font-size:13px;color:var(--muted);line-height:1.68;font-weight:300;}
+.format-section .mantra{font-family:var(--dev);font-size:18px;color:var(--gold-lt);
+  text-shadow:0 0 20px rgba(255,140,43,.5);letter-spacing:.03em;}
+.format-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.format-actions .btn{flex:1;justify-content:center;min-width:140px}
+.format-wa{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:12.5px;color:#25D366;font-weight:600;letter-spacing:.06em;}
+.format-wa:hover{color:#4be388}
+.format-wa::before{content:'📲'}
+
+/* CHECKOUT */
+.checkout-section{background:linear-gradient(180deg, transparent, rgba(224,176,74,.03), transparent);}
+.checkout-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;}
+@media(max-width:720px){.checkout-flow{grid-template-columns:1fr 1fr}}
+.checkout-step{border:1px solid var(--line);border-radius:18px;padding:22px 18px;text-align:center;
+  background:linear-gradient(165deg, rgba(38,15,21,.6), rgba(10,5,8,.9));position:relative;}
+.checkout-step .n{font-family:var(--serif);font-weight:800;font-size:26px;color:var(--gold-lt);display:block;margin-bottom:8px;}
+.checkout-step h5{font-family:var(--mrt);font-weight:600;font-size:14px;color:var(--cream);margin-bottom:6px;letter-spacing:.04em;}
+.checkout-step p{font-size:11.5px;color:var(--muted);font-weight:300;line-height:1.5}
+.payment-methods{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px;}
+.payment-methods span{font-size:11.5px;letter-spacing:.08em;font-weight:600;padding:9px 16px;border-radius:99px;
+  background:rgba(224,176,74,.06);border:1px solid rgba(224,176,74,.22);color:var(--gold-lt);}
+
+/* FOOTER */
+footer{position:relative;z-index:5;border-top:1px solid var(--line);background:linear-gradient(180deg, transparent, rgba(224,176,74,.04));}
+.foot-grid{max-width:1280px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(16px,4vw,40px) 30px;
+  display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:38px;}
+@media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr}}
+.foot-brand p{color:var(--muted);font-size:13px;font-weight:300;margin-top:16px;max-width:320px;line-height:1.7;}
+.foot-brand .dev{font-family:var(--dev);color:var(--gold);margin-top:14px;font-size:14px;}
+.foot-social{display:flex;gap:10px;margin-top:20px;}
+.foot-social a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(224,176,74,.28);color:var(--muted);transition:.35s;}
+.foot-social a:hover{color:var(--gold-lt);border-color:var(--gold);background:rgba(224,176,74,.1)}
+.foot-social svg{width:15px;height:15px}
+.foot-col h5{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:700;}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.foot-col a{font-size:13px;color:var(--muted);font-weight:300;transition:.3s;display:inline-flex;align-items:center;gap:6px;}
+.foot-col a:hover{color:var(--gold-lt);padding-left:5px}
+.foot-bottom{max-width:1280px;margin:0 auto;padding:22px clamp(16px,4vw,40px) 34px;
+  border-top:1px solid rgba(224,176,74,.1);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12px;color:var(--muted-2);}
+.foot-bottom span{font-family:var(--dev);color:var(--gold)}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:22px;right:22px;z-index:800;width:56px;height:56px;border-radius:50%;
+  display:grid;place-items:center;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;
+  box-shadow:0 14px 34px -10px rgba(37,211,102,.7), 0 0 0 0 rgba(37,211,102,.5);
+  animation:waPulse 2.4s ease-in-out infinite;transition:.3s;}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:26px;height:26px}
+@keyframes waPulse{0%,100%{box-shadow:0 14px 34px -10px rgba(37,211,102,.7), 0 0 0 0 rgba(37,211,102,.5)}
+  50%{box-shadow:0 14px 34px -10px rgba(37,211,102,.7), 0 0 0 14px rgba(37,211,102,0)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(30px);z-index:1000;
+  padding:12px 22px;border-radius:99px;background:linear-gradient(100deg,var(--gold),var(--saffron));
+  color:#1a0a0f;font-weight:700;font-size:12.5px;letter-spacing:.08em;
+  box-shadow:0 16px 40px -12px rgba(224,176,74,.9);opacity:0;visibility:hidden;transition:.4s;
+  display:flex;align-items:center;gap:10px;pointer-events:none;}
+.toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.toast::before{content:'✓';font-size:16px}
+
+/* PANELS */
+.panel-overlay{position:fixed;inset:0;z-index:997;background:rgba(0,0,0,.72);
+  backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:.35s;}
+.panel-overlay.show{opacity:1;visibility:visible}
+
+.panel{position:fixed;top:0;right:-460px;bottom:0;width:min(460px,100vw);z-index:998;
+  background:linear-gradient(180deg,#1c0a10,#0a0508);border-left:1px solid rgba(224,176,74,.22);
+  display:flex;flex-direction:column;transition:right .42s cubic-bezier(.2,.8,.2,1);}
+.panel.open{right:0;box-shadow:-30px 0 80px rgba(0,0,0,.75)}
+
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;
+  border-bottom:1px solid rgba(224,176,74,.14);flex-shrink:0;}
+.panel-head h3{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-lt);display:flex;align-items:center;gap:10px;}
+.panel-head h3 .count{font-family:var(--sans);font-size:11px;font-weight:700;
+  background:rgba(224,176,74,.16);color:var(--gold-lt);padding:3px 9px;border-radius:99px;letter-spacing:.05em;}
+.panel-close{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(224,176,74,.32);color:var(--gold-lt);transition:.3s;font-size:14px;}
+.panel-close:hover{background:rgba(224,176,74,.14);border-color:var(--gold);transform:rotate(90deg)}
+
+.panel-body{flex:1;overflow-y:auto;padding:8px 20px;min-height:0;}
+.panel-body::-webkit-scrollbar{width:6px}
+.panel-body::-webkit-scrollbar-thumb{background:rgba(224,176,74,.3);border-radius:9px}
+
+.panel-empty{text-align:center;padding:70px 20px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.panel-empty .ico{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 40% 30%, rgba(224,176,74,.18), rgba(0,0,0,.3));
+  border:1px solid rgba(224,176,74,.24);font-size:34px;}
+.panel-empty h4{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--cream);letter-spacing:.06em;}
+.panel-empty p{font-size:12.5px;color:var(--muted);line-height:1.6;max-width:260px;}
+
+.panel-item{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;
+  padding:14px 4px;border-bottom:1px solid rgba(224,176,74,.08);}
+.panel-item:last-child{border-bottom:none}
+.panel-item .thumb{width:64px;height:64px;border-radius:12px;
+  background:radial-gradient(circle at 40% 30%, rgba(224,176,74,.14), rgba(0,0,0,.3));
+  border:1px solid rgba(224,176,74,.18);display:grid;place-items:center;overflow:hidden;}
+.panel-item .thumb svg{width:80%;height:80%}
+.panel-item .info{min-width:0}
+.panel-item .info h4{font-family:var(--mrt);font-weight:600;font-size:13.5px;color:var(--cream);line-height:1.3;margin-bottom:3px;
+  overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.panel-item .info .price{font-family:var(--serif);font-weight:700;font-size:13px;color:var(--gold-lt);}
+.panel-item .qty{display:flex;align-items:center;gap:6px;margin-top:6px;}
+.panel-item .qty button{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;
+  border:1px solid rgba(224,176,74,.3);color:var(--gold-lt);font-size:13px;font-weight:700;line-height:1;transition:.25s;}
+.panel-item .qty button:hover{background:rgba(224,176,74,.14)}
+.panel-item .qty span{min-width:20px;text-align:center;font-size:12.5px;font-weight:700;color:var(--cream);}
+.panel-item .remove{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  color:var(--muted);font-size:15px;transition:.3s;align-self:start;}
+.panel-item .remove:hover{color:var(--pink);background:rgba(255,95,138,.12)}
+.panel-item .move-to-cart{
+  display:inline-flex;align-items:center;gap:6px;margin-top:6px;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  color:var(--gold);border-bottom:1px solid rgba(224,176,74,.3);padding-bottom:2px;transition:.3s;}
+.panel-item .move-to-cart:hover{color:var(--saffron);border-color:var(--saffron)}
+
+.panel-foot{padding:20px 24px 24px;border-top:1px solid rgba(224,176,74,.14);
+  background:rgba(0,0,0,.35);flex-shrink:0;}
+.panel-foot .subtotal{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;}
+.panel-foot .subtotal span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.panel-foot .subtotal b{font-family:var(--serif);font-weight:800;font-size:22px;color:var(--gold-lt);}
+.panel-foot .btn-checkout{width:100%;padding:14px 22px;border-radius:99px;
+  font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;
+  transition:.4s;box-shadow:0 12px 30px -12px rgba(224,176,74,.7);}
+.panel-foot .btn-checkout:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(255,140,43,.9)}
+.panel-foot .keep-shopping{display:block;text-align:center;margin-top:12px;
+  font-size:11.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.panel-foot .keep-shopping:hover{color:var(--gold-lt)}
+
+/* SEARCH */
+.search-overlay{position:fixed;inset:0;z-index:1000;background:rgba(6,3,6,.95);
+  backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:.35s;
+  display:flex;flex-direction:column;align-items:center;
+  padding:clamp(70px,10vw,140px) 20px 40px;overflow-y:auto;}
+.search-overlay.open{opacity:1;visibility:visible}
+.search-close{position:absolute;top:24px;right:24px;width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;border:1px solid rgba(224,176,74,.4);
+  color:var(--gold-lt);font-size:16px;transition:.3s;}
+.search-close:hover{background:rgba(224,176,74,.14);transform:rotate(90deg)}
+.search-inner{width:100%;max-width:680px;}
+.search-title{font-family:var(--serif);font-weight:600;font-size:13px;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:22px;}
+.search-box{position:relative;display:flex;align-items:center;
+  background:linear-gradient(160deg, rgba(38,15,21,.95), rgba(10,5,8,.98));
+  border:1px solid rgba(224,176,74,.4);border-radius:16px;padding:4px 4px 4px 20px;
+  box-shadow:0 20px 60px -20px rgba(0,0,0,.8);transition:.3s;}
+.search-box:focus-within{border-color:var(--gold);box-shadow:0 20px 60px -20px rgba(0,0,0,.8), 0 0 0 4px rgba(224,176,74,.14);}
+.search-box svg.search-ico{width:20px;height:20px;color:var(--muted);flex-shrink:0;}
+.search-box input{flex:1;background:none;border:none;outline:none;padding:16px 14px;
+  font-family:var(--mrt);font-size:16px;color:var(--cream);}
+.search-box input::placeholder{color:var(--muted-2)}
+.search-box button.go{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(100deg,var(--gold),var(--saffron));color:#1a0a0f;transition:.3s;flex-shrink:0;}
+.search-box button.go:hover{transform:scale(1.05)}
+.search-suggest-label{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin:32px 0 14px;}
+.search-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.search-chip{font-size:12px;letter-spacing:.06em;padding:9px 16px;border-radius:99px;
+  background:rgba(224,176,74,.06);border:1px solid rgba(224,176,74,.24);
+  color:var(--gold-lt);transition:.3s;}
+.search-chip:hover{background:rgba(224,176,74,.16);border-color:rgba(224,176,74,.5);transform:translateY(-2px)}
+
+.search-results{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.search-result-item{display:flex;align-items:center;gap:14px;padding:12px;border-radius:14px;
+  background:rgba(255,255,255,.025);border:1px solid rgba(224,176,74,.14);transition:.3s;cursor:pointer;}
+.search-result-item:hover{background:rgba(224,176,74,.08);border-color:rgba(224,176,74,.4)}
+.search-result-item .sr-thumb{width:48px;height:48px;border-radius:10px;flex-shrink:0;
+  background:radial-gradient(circle at 40% 30%, rgba(224,176,74,.14), rgba(0,0,0,.3));
+  border:1px solid rgba(224,176,74,.18);display:grid;place-items:center;}
+.search-result-item .sr-thumb svg{width:80%;height:80%}
+.search-result-item .sr-info{min-width:0;flex:1}
+.search-result-item .sr-info h4{font-size:13px;font-weight:600;color:var(--cream);line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.search-result-item .sr-info span{font-size:11px;color:var(--muted);}
+
+@media(max-width:520px){
+  .panel{width:100vw}
+  .search-overlay{padding-top:90px}
+}
+
+/* =========================================================
+   PRODUCT DETAILS MODAL (View Details)
+   ========================================================= */
+.pd-modal-overlay{
+  position:fixed;inset:0;z-index:1100;
+  background:rgba(4,2,4,.88);backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;transition:.35s;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:clamp(20px,5vh,60px) 16px;overflow-y:auto;
+}
+.pd-modal-overlay.show{opacity:1;visibility:visible}
+.pd-modal{
+  position:relative;width:100%;max-width:1080px;
+  border:1px solid rgba(224,176,74,.35);border-radius:26px;
+  background:
+    radial-gradient(600px 340px at 20% 0%, rgba(255,140,43,.14), transparent 62%),
+    radial-gradient(600px 340px at 90% 100%, rgba(139,92,246,.10), transparent 62%),
+    linear-gradient(160deg, rgba(38,15,21,.98), rgba(10,5,8,.99));
+  display:grid;grid-template-columns:0.9fr 1.1fr;
+  gap:clamp(24px,4vw,52px);
+  padding:clamp(24px,4vw,50px);
+  transform:translateY(30px) scale(.97);
+  transition:.4s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 40px 100px -30px rgba(0,0,0,.9);
+}
+.pd-modal-overlay.show .pd-modal{transform:translateY(0) scale(1)}
+@media(max-width:820px){.pd-modal{grid-template-columns:1fr}}
+.pd-close{
+  position:absolute;top:18px;right:18px;
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid rgba(224,176,74,.4);color:var(--gold-lt);
+  font-size:15px;transition:.3s;z-index:3;
+}
+.pd-close:hover{background:rgba(224,176,74,.14);transform:rotate(90deg)}
+.pd-visual{
+  aspect-ratio:1;border-radius:20px;
+  border:1px solid rgba(224,176,74,.24);
+  background:radial-gradient(circle at 50% 40%, rgba(224,176,74,.14), rgba(10,5,8,.9));
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.pd-visual svg{width:70%;height:70%;overflow:visible}
+.pd-visual .badge-float{
+  position:absolute;top:16px;left:16px;
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  padding:5px 11px;border-radius:99px;
+  background:rgba(52,211,153,.16);color:#7ee2b8;border:1px solid rgba(52,211,153,.35);
+}
+.pd-info h3{font-family:var(--mrt);font-weight:700;font-size:clamp(20px,2.6vw,30px);
+  line-height:1.2;color:var(--cream);margin-bottom:10px;}
+.pd-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.pd-price-row .p1{font-family:var(--serif);font-weight:800;font-size:clamp(24px,3vw,34px);color:var(--gold-lt);}
+.pd-price-row .p2{font-size:14px;color:var(--muted-2);text-decoration:line-through}
+.pd-price-row .p3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+  padding:4px 10px;border-radius:99px;background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f;}
+.pd-stars{color:var(--gold);letter-spacing:2px;font-size:14px;margin-bottom:16px}
+.pd-lead{font-family:var(--mrt);font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:20px;}
+.pd-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+@media(max-width:560px){.pd-details{grid-template-columns:1fr}}
+.pd-details .row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;
+  background:rgba(255,255,255,.025);border:1px solid rgba(224,176,74,.1);font-size:12.5px;}
+.pd-details .row .k{color:var(--muted);letter-spacing:.05em}
+.pd-details .row .v{color:var(--cream);font-weight:600}
+.pd-section{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed rgba(224,176,74,.14);}
+.pd-section:last-of-type{border-bottom:none}
+.pd-section h5{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;}
+.pd-section p{font-family:var(--mrt);font-size:13px;color:var(--muted);line-height:1.68;font-weight:300;}
+.pd-section .mantra{font-family:var(--dev);font-size:18px;color:var(--gold-lt);
+  text-shadow:0 0 20px rgba(255,140,43,.5);letter-spacing:.03em;}
+.pd-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.pd-actions .btn{flex:1;justify-content:center;min-width:140px}
+.pd-wa{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:12.5px;color:#25D366;font-weight:600;letter-spacing:.06em;}
+.pd-wa:hover{color:#4be388}
+.pd-wa::before{content:'📲'}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="auraGold"><stop offset="0" stop-color="#ff8c2b" stop-opacity=".5"/><stop offset="1" stop-color="#ff8c2b" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<div class="bg-fx"></div>
+<div class="bg-grain"></div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="tb-left">
+    <span>परंपरेतून मार्गदर्शन</span>
+    <span>श्रद्धेतून समाधान</span>
+    <span>10,000+ संतुष्ट ग्राहक</span>
+  </div>
+  <div class="tb-right">
+    <a href="tel:+919000000000">📞 +91 90000 00000</a>
+    <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="wa">📲 WhatsApp</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand">
+    <span class="brand-mark">ॐ</span>
+    <span>
+      <span class="brand-name">ASTRO<em>VEDA</em></span>
+      <span class="brand-tag">परंपरा · ज्योतिष · पूजा</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#top">Home</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#puja">Puja Services</a></li>
+    <li><a href="#jyotish">Jyotish</a></li>
+    <li><a href="#rudraksha">Rudraksha</a></li>
+    <li><a href="#ratna">Ratna</a></li>
+    <li><a href="#yantra">Yantra</a></li>
+    <li><a href="#bracelets">Bracelets</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="icon-btn" id="searchBtn" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    </button>
+    <button class="icon-btn" id="wishBtn" aria-label="Wishlist">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 000-7.8z"/></svg>
+      <span class="badge" id="wishCount">0</span>
+    </button>
+    <button class="icon-btn" id="cartBtn" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg>
+      <span class="badge" id="cartCount">0</span>
+    </button>
+    <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp" style="color:#25D366;border-color:rgba(37,211,102,.4)">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9s-.5-.2-.7.2-.8 1-1 1.2-.4.3-.7.1a8 8 0 01-2.4-1.5 9 9 0 01-1.6-2.1c-.2-.3 0-.5.1-.6l.5-.6.3-.5v-.5l-1-2.4c-.2-.6-.5-.5-.7-.5H7a1.4 1.4 0 00-1 .5 4.3 4.3 0 00-1.3 3.2 7.4 7.4 0 001.6 4 17 17 0 006.6 5.8c.9.4 1.6.6 2.2.8a5.3 5.3 0 002.4.1 4 4 0 002.6-1.8 3.2 3.2 0 00.2-1.8c-.1-.2-.3-.3-.6-.4zM12 22a10 10 0 01-5.1-1.4L2 22l1.4-4.8A10 10 0 1112 22z"/></svg>
+    </a>
+    <button class="icon-btn hamburger" id="hamburger" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <a href="#jyotish" class="btn-book">Book Consultation</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-halo"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">Since 1996 · Pune · Maharashtra</p>
+      <h1>परंपरेतून मार्गदर्शन<br><em>श्रद्धेतून समाधान</em></h1>
+      <p class="sub">Puja · Jyotish · Ratna · Rudraksha · Yantra · Spiritual Bracelets — सर्व आध्यात्मिक सेवा एकाच विश्वासू ठिकाणी.</p>
+      <div class="hero-pills">
+        <span>💎 Ratna</span><span>📿 Rudraksha</span><span>🪬 Bracelets</span><span>🔱 Yantra</span><span>🪔 Puja Samagri</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#shop" class="btn btn-gold">Explore Products →</a>
+        <a href="#jyotish" class="btn btn-ghost">Book Jyotish Consultation</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <svg class="mandala" viewBox="0 0 400 400" aria-hidden="true">
+        <circle cx="200" cy="200" r="196" fill="none" stroke="rgba(224,176,74,.28)" stroke-width=".8"/>
+        <circle cx="200" cy="200" r="166" fill="none" stroke="rgba(224,176,74,.22)" stroke-width=".8"/>
+        <circle cx="200" cy="200" r="136" fill="none" stroke="rgba(224,176,74,.16)" stroke-width=".8"/>
+        <circle cx="200" cy="200" r="100" fill="none" stroke="rgba(224,176,74,.12)" stroke-width=".8"/>
+        <g id="petals"></g>
+      </svg>
+      <svg class="mandala-rev" viewBox="0 0 400 400" aria-hidden="true">
+        <circle cx="200" cy="200" r="118" fill="none" stroke="rgba(255,140,43,.26)" stroke-width=".7" stroke-dasharray="3 6"/>
+        <circle cx="200" cy="200" r="88" fill="none" stroke="rgba(255,140,43,.18)" stroke-width=".7" stroke-dasharray="2 5"/>
+      </svg>
+      <div class="center-om">ॐ</div>
+      <div class="hero-floating-chips">
+        <span class="hero-chip c1" data-icon="📿">5 Mukhi Rudraksha</span>
+        <span class="hero-chip c2" data-icon="💎">IGI Certified Gems</span>
+        <span class="hero-chip c3" data-icon="🪔">अभिमंत्रित यंत्र</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP BY CATEGORY -->
+<section id="shop">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="kicker">Shop by Category</span>
+      <h2>तुमच्यासाठी <em>योग्य</em> निवड</h2>
+      <p>प्रत्येक श्रेणी परंपरागत पद्धतीने निवडली गेली आहे — ज्योतिष मार्गदर्शनासह, प्रमाणित स्रोतांकडून.</p>
+    </div>
+    <div class="cat-grid">
+      <a href="#ratna" class="cat-card reveal"><div class="cat-icon">💎</div><h3 class="cat-title">Ratna</h3><p class="cat-desc">ज्योतिषीय मार्गदर्शनानुसार निवडक रत्न — Ruby, Emerald, Blue Sapphire आणि अधिक.</p><span class="cat-link">Explore →</span></a>
+      <a href="#rudraksha" class="cat-card reveal"><div class="cat-icon">📿</div><h3 class="cat-title">Rudraksha</h3><p class="cat-desc">1 ते 21 मुखी रुद्राक्ष, माळा आणि ब्रेसलेट — प्रमाणित व अभिमंत्रित.</p><span class="cat-link">Explore →</span></a>
+      <a href="#bracelets" class="cat-card reveal"><div class="cat-icon">🪬</div><h3 class="cat-title">Bracelets</h3><p class="cat-desc">आध्यात्मिक व पारंपरिक ब्रेसलेट — रत्न, रुद्राक्ष आणि संयोजन.</p><span class="cat-link">Explore →</span></a>
+      <a href="#yantra" class="cat-card reveal"><div class="cat-icon">🔱</div><h3 class="cat-title">Yantra</h3><p class="cat-desc">Shri Yantra, Kuber Yantra, Navgraha Yantra व इतर — अभिमंत्रित तांब्यात.</p><span class="cat-link">Explore →</span></a>
+      <a href="#puja" class="cat-card reveal"><div class="cat-icon">🪔</div><h3 class="cat-title">Puja Samagri</h3><p class="cat-desc">पूजा व धार्मिक विधींसाठी आवश्यक सर्व साहित्य — एकाच ठिकाणी.</p><span class="cat-link">Explore →</span></a>
+      <a href="#shop" class="cat-card reveal"><div class="cat-icon">🎁</div><h3 class="cat-title">Special Collections</h3><p class="cat-desc">विशेष पूजा, सण आणि gift collections — तुमच्या प्रसंगासाठी.</p><span class="cat-link">Explore →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Featured</span>
+      <h2>Our <em>Sacred</em> Collection</h2>
+      <p>सर्वाधिक मागणी असलेली उत्पादने — प्रमाणित, अभिमंत्रित आणि पूर्ण मार्गदर्शनासह.</p>
+    </div>
+    <div class="prod-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<!-- PUJA -->
+<section class="puja-section" id="puja">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="kicker">Puja Services</span>
+      <h2>Traditional <em>Puja</em> Services</h2>
+      <p>परंपरागत विधी, योग्य मंत्रोच्चार, शास्त्रोक्त पद्धती — तुमच्या घरी किंवा ऑनलाइन Sankalp Seva द्वारे.</p>
+    </div>
+    <div class="puja-grid">
+      <div class="puja-card reveal"><div class="puja-icon">🏠</div><h4 class="puja-title">गृहप्रवेश पूजा</h4><p class="puja-desc">नवीन घरात प्रवेश करण्यापूर्वी वास्तुदोष शांती व गृहप्रवेश विधी.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">🔱</div><h4 class="puja-title">वास्तुशांती</h4><p class="puja-desc">वास्तु दोष निवारणासाठी शास्त्रोक्त वास्तुशांती होम व मंत्र जप.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">🕉️</div><h4 class="puja-title">सत्यनारायण पूजा</h4><p class="puja-desc">कुटुंबातील सुख, शांती व समृद्धीसाठी सत्यनारायण कथा व पूजन.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">💧</div><h4 class="puja-title">रुद्राभिषेक</h4><p class="puja-desc">शिवलिंगावर अभिषेक व रुद्र मंत्र जप — आरोग्य व मनःशांतीसाठी.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">🌌</div><h4 class="puja-title">नवग्रह शांती</h4><p class="puja-desc">नऊ ग्रहांच्या अशुभ प्रभावासाठी नवग्रह शांती होम व जप.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">🌊</div><h4 class="puja-title">उदकशांती</h4><p class="puja-desc">जलदोष, पूर किंवा अनावृष्टी निवारणासाठी उदकशांती विधी.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">💐</div><h4 class="puja-title">विवाह संबंधित पूजा</h4><p class="puja-desc">साखरपुडा, लग्न व वरातीशी संबंधित सर्व शास्त्रोक्त विधी.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+      <div class="puja-card reveal"><div class="puja-icon">✨</div><h4 class="puja-title">विशेष अनुष्ठान</h4><p class="puja-desc">तुमच्या विशिष्ट समस्येसाठी कस्टम अनुष्ठान व मंत्र जप.</p><a href="#" class="puja-link">View Puja Details →</a></div>
+    </div>
+    <div class="puja-cta reveal"><a href="#jyotish" class="btn btn-gold">Book a Puja →</a></div>
+  </div>
+</section>
+
+<!-- JYOTISH -->
+<section id="jyotish">
+  <div class="wrap">
+    <div class="jyotish-wrap">
+      <div class="jyotish-info reveal">
+        <span class="kicker">Jyotish Consultation</span>
+        <h2>Personalised <em>Jyotish</em> Guidance</h2>
+        <p>तुमच्या जन्मकुंडलीचा सखोल अभ्यास करून जीवनातील विविध विषयांवर मार्गदर्शन — विवाह, करिअर, व्यवसाय, आर्थिक स्थिती, मुहूर्त, रत्न निवड आणि अधिक.</p>
+        <div class="jyotish-tags">
+          <span>Marriage</span><span>Career</span><span>Business</span><span>Finance</span>
+          <span>Muhurat</span><span>Gemstone Guidance</span><span>General Consultation</span>
+        </div>
+        <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="btn btn-ghost">📲 WhatsApp गुरुजी</a>
+      </div>
+      <form class="form-card reveal" id="consultForm" novalidate>
+        <h3>Book Your Consultation</h3>
+        <p class="form-sub">कृपया खालील माहिती भरा — आम्ही 24 तासांत संपर्क करू.</p>
+        <div class="form-grid">
+          <div class="field full"><label for="f-name">Name · नाव</label><input type="text" id="f-name" placeholder="तुमचे पूर्ण नाव" required></div>
+          <div class="field"><label for="f-dob">Date of Birth</label><input type="date" id="f-dob" required></div>
+          <div class="field"><label for="f-time">Birth Time</label><input type="time" id="f-time"></div>
+          <div class="field full"><label for="f-place">Birth Place</label><input type="text" id="f-place" placeholder="शहर, राज्य" required></div>
+          <div class="field full">
+            <label for="f-topic">Consultation Topic</label>
+            <select id="f-topic" required>
+              <option value="">निवडा...</option>
+              <option>Marriage · विवाह</option><option>Career · करिअर</option>
+              <option>Business · व्यवसाय</option><option>Finance · आर्थिक</option>
+              <option>Muhurat · मुहूर्त</option><option>Gemstone Guidance · रत्न मार्गदर्शन</option>
+              <option>General Consultation · सामान्य सल्ला</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-date">Preferred Date</label><input type="date" id="f-date"></div>
+          <div class="field">
+            <label for="f-mode">Mode</label>
+            <select id="f-mode"><option>Online · ऑनलाइन</option><option>Offline · प्रत्यक्ष</option></select>
+          </div>
+          <div class="field full"><label for="f-msg">Additional Notes (Optional)</label><textarea id="f-msg" placeholder="तुमचा प्रश्न किंवा अतिरिक्त माहिती..."></textarea></div>
+        </div>
+        <button type="submit" class="form-submit">Submit & Book Consultation →</button>
+        <p class="form-note">🔒 तुमची माहिती सुरक्षित आहे. Payment consultation confirm झाल्यावर.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- RUDRAKSHA -->
+<section id="rudraksha">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Rudraksha</span>
+      <h2>रुद्राक्ष <em>Collection</em></h2>
+      <p>प्रत्येक रुद्राक्ष प्रमाणित स्रोतांकडून — मुखीनुसार, आकारानुसार आणि पारंपरिक महत्त्वानुसार.</p>
+    </div>
+    <div class="filter-bar" data-group="rudraksha">
+      <button class="filter-chip active" data-filter="all">All · सर्व</button>
+      <button class="filter-chip" data-filter="m1">1 Mukhi</button>
+      <button class="filter-chip" data-filter="m2">2 Mukhi</button>
+      <button class="filter-chip" data-filter="m3">3 Mukhi</button>
+      <button class="filter-chip" data-filter="m4">4 Mukhi</button>
+      <button class="filter-chip" data-filter="m5">5 Mukhi</button>
+      <button class="filter-chip" data-filter="m6">6 Mukhi</button>
+      <button class="filter-chip" data-filter="m7">7 Mukhi</button>
+      <button class="filter-chip" data-filter="mala">Mala</button>
+      <button class="filter-chip" data-filter="bracelet">Bracelet</button>
+    </div>
+    <div class="prod-grid" id="rudrakshaGrid"></div>
+  </div>
+</section>
+
+<!-- RATNA -->
+<section id="ratna">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Ratna</span>
+      <h2>Choose Your <em>Gemstone</em> With Guidance</h2>
+      <p>प्रत्येक रत्न IGI / GIA प्रमाणित. पण रत्न निवड ही वैयक्तिक बाब आहे — म्हणून आम्ही मार्गदर्शन देतो.</p>
+    </div>
+    <div class="prod-grid" id="ratnaGrid"></div>
+    <div style="margin-top:40px;text-align:center;">
+      <a href="#jyotish" class="btn btn-gold" style="padding:16px 34px;">Not sure which gemstone is right for you? · Get Gemstone Consultation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- YANTRA -->
+<section id="yantra">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Yantra</span>
+      <h2>Sacred <em>Yantra</em> Collection</h2>
+      <p>तांब्यात हस्तनिर्मित यंत्र — अभिमंत्रण, प्राणप्रतिष्ठा व स्थापना मार्गदर्शनासह.</p>
+    </div>
+    <div class="prod-grid" id="yantraGrid"></div>
+  </div>
+</section>
+
+<!-- BRACELETS -->
+<section id="bracelets">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Bracelets</span>
+      <h2>Spiritual <em>Bracelets</em></h2>
+      <p>रुद्राक्ष, रत्न आणि संयोजन ब्रेसलेट — प्रत्येकासाठी धारण मार्गदर्शनासह.</p>
+    </div>
+    <div class="filter-bar" data-group="bracelets">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="rud">Rudraksha Bracelets</button>
+      <button class="filter-chip" data-filter="gem">Gemstone Bracelets</button>
+      <button class="filter-chip" data-filter="spi">Spiritual Bracelets</button>
+      <button class="filter-chip" data-filter="combo">Combination Bracelets</button>
+    </div>
+    <div class="prod-grid" id="braceletGrid"></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why-section">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="kicker">Why Choose Us</span>
+      <h2>आमची <em>वचनबद्धता</em></h2>
+      <p>25 वर्षांहून अधिक अनुभव — परंपरा, प्रामाणिकपणा आणि वैयक्तिक मार्गदर्शन.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal"><div class="why-num">01</div><h4>परंपरेचा अनुभव</h4><p>पूजा व ज्योतिष परंपरेशी जोडलेले मार्गदर्शन — तीन पिढ्यांचा अनुभव आणि शास्त्राधारित पद्धती.</p></div>
+      <div class="why-card reveal"><div class="why-num">02</div><h4>Personalised Guidance</h4><p>प्रत्येक व्यक्तीच्या गरजेनुसार सल्ला — जन्मकुंडलीचा अभ्यास करून वैयक्तिक शिफारस.</p></div>
+      <div class="why-card reveal"><div class="why-num">03</div><h4>Authentic Information</h4><p>प्रत्येक product सोबत स्पष्ट माहिती, प्रमाणपत्रे, मुख-आकार-महत्त्व आणि धारण पद्धत.</p></div>
+      <div class="why-card reveal"><div class="why-num">04</div><h4>Complete Spiritual Services</h4><p>पूजा, ज्योतिष, रत्न, रुद्राक्ष, यंत्र आणि Bracelets — सर्व एकाच ठिकाणी, एकाच विश्वासाने.</p></div>
+      <div class="why-card reveal"><div class="why-num">05</div><h4>After-Purchase Guidance</h4><p>Product घेतल्यानंतर वापर, धारण, पूजन आणि care instructions बद्दल संपूर्ण मार्गदर्शन.</p></div>
+      <div class="why-card reveal"><div class="why-num">06</div><h4>10,000+ संतुष्ट ग्राहक</h4><p>महाराष्ट्र, गुजरात, कर्नाटक आणि परदेशातील हजारो कुटुंबांचा विश्वास.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-wrap">
+      <div class="guru-photo reveal">
+        <svg viewBox="0 0 400 500" aria-hidden="true">
+          <defs><radialGradient id="guruAura" cx="50%" cy="40%" r="60%">
+            <stop offset="0" stop-color="#ff8c2b" stop-opacity=".4"/>
+            <stop offset="1" stop-color="#ff8c2b" stop-opacity="0"/>
+          </radialGradient></defs>
+          <rect width="400" height="500" fill="#1c0a10"/>
+          <circle cx="200" cy="200" r="180" fill="url(#guruAura)"/>
+          <path d="M100 500 Q100 340 200 320 Q300 340 300 500 Z" fill="#e0b04a"/>
+          <path d="M200 320 L180 500 L220 500 Z" fill="#f7dc9a" opacity=".5"/>
+          <circle cx="200" cy="230" r="60" fill="#e8b98a"/>
+          <path d="M140 220 Q140 150 200 150 Q260 150 260 220 Q240 175 200 175 Q160 175 140 220 Z" fill="#3a2010"/>
+          <circle cx="200" cy="140" r="20" fill="#3a2010"/>
+          <path d="M200 190 L192 220 L208 220 Z" fill="#c0392b"/>
+          <line x1="200" y1="220" x2="200" y2="245" stroke="#c0392b" stroke-width="3"/>
+          <ellipse cx="180" cy="235" rx="5" ry="6" fill="#2a0d14"/>
+          <ellipse cx="220" cy="235" rx="5" ry="6" fill="#2a0d14"/>
+          <path d="M185 260 Q200 272 215 260" stroke="#8a5410" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M170 280 Q200 320 230 280 Q240 310 220 340 Q200 360 180 340 Q160 310 170 280 Z" fill="#cfd6dd" opacity=".85"/>
+          <g fill="#8a5410" stroke="#e0b04a" stroke-width="1">
+            <circle cx="200" cy="330" r="9"/><circle cx="180" cy="345" r="9"/>
+            <circle cx="220" cy="345" r="9"/><circle cx="165" cy="365" r="9"/><circle cx="235" cy="365" r="9"/>
+          </g>
+        </svg>
+      </div>
+      <div class="guru-copy reveal">
+        <span class="kicker">About Guruji</span>
+        <h2>पं. रवींद्र शास्त्री <em>जोशी</em></h2>
+        <p>गेली 25 वर्षे पुणे व महाराष्ट्रात परंपरागत पूजा-विधी, ज्योतिष आणि आध्यात्मिक मार्गदर्शनाचे कार्य करत आहे. वडिलांकडून वारशाने मिळालेले ज्ञान आणि आधुनिक जीवनशैलीशी जुळवून घेणारा सल्ला — हीच आमची खासियत.</p>
+        <p>जन्मकुंडली अभ्यास, वास्तुशांती, रुद्राभिषेक, नवग्रह शांती आणि रत्न निवड — प्रत्येक सेवेत शास्त्राचा आदर आणि व्यक्तीच्या गरजेचा विचार केला जातो.</p>
+        <div class="guru-stats">
+          <div class="st"><b>25+</b><span>Years Experience</span></div>
+          <div class="st"><b>10K+</b><span>Consultations</span></div>
+          <div class="st"><b>5000+</b><span>Pujas Performed</span></div>
+        </div>
+        <a href="#jyotish" class="btn btn-gold">Book Consultation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="kicker">Testimonials</span>
+      <h2>What Our <em>Clients</em> Say</h2>
+      <p>प्रत्येक अभिप्राय खरा आहे — फसवे reviews आम्ही ठेवत नाही.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Puja arrangement was very systematic. Panditji arrived on time, all samagri was prepared properly, and the entire vidhi was explained step by step. Highly recommended."</p><div class="testi-person"><div class="testi-avatar">A</div><div class="testi-info"><strong>Anjali Deshmukh</strong><span>Pune · गृहप्रवेश पूजा</span></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Consultation was explained very clearly. Guruji took time to study my kundali and explained everything in simple language. No unnecessary fear-mongering."</p><div class="testi-person"><div class="testi-avatar">R</div><div class="testi-info"><strong>Rohit Kulkarni</strong><span>Mumbai · Career Consultation</span></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Rudraksha quality and guidance were excellent. Got proper certification and clear instructions on how to wear and care. Very authentic experience."</p><div class="testi-person"><div class="testi-avatar">S</div><div class="testi-info"><strong>Shweta Joshi</strong><span>Nashik · 5 Mukhi Rudraksha</span></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Ordered a Shri Yantra with pran-pratishtha. The follow-up guidance call after delivery was a wonderful touch. Truly a premium spiritual service."</p><div class="testi-person"><div class="testi-avatar">V</div><div class="testi-info"><strong>Vikram Patil</strong><span>Thane · Shri Yantra</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Knowledge Centre</span>
+      <h2>Blog &amp; <em>Learn</em></h2>
+      <p>रुद्राक्ष, रत्न, यंत्र आणि पूजा यांविषयी सखोल माहिती — शास्त्राधारित, सोप्या भाषेत.</p>
+    </div>
+    <div class="blog-grid">
+      <a href="#" class="blog-card reveal">
+        <div class="blog-thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="url(#auraGold)" opacity=".5"/><circle cx="50" cy="50" r="26" fill="none" stroke="#e0b04a" stroke-width="2"/><text x="50" y="60" text-anchor="middle" font-family="'Tiro Devanagari Sanskrit',serif" font-size="24" fill="#f7dc9a">रु</text></svg></div>
+        <div class="blog-body"><span class="blog-tag">Rudraksha</span><h3 class="blog-title">5 मुखी रुद्राक्षाचे पारंपरिक महत्त्व</h3><p class="blog-excerpt">शिवाच्या अश्रूंपासून जन्मलेला 5 मुखी रुद्राक्ष — कल्याण, शांती आणि सत्याचे प्रतीक.</p><div class="blog-meta"><span>5 min read</span><a href="#">Read More →</a></div></div>
+      </a>
+      <a href="#" class="blog-card reveal">
+        <div class="blog-thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="url(#auraGold)" opacity=".5"/><polygon points="50,20 80,45 70,80 30,80 20,45" fill="none" stroke="#7ee2b8" stroke-width="2"/><text x="50" y="58" text-anchor="middle" font-family="'Tiro Devanagari Sanskrit',serif" font-size="20" fill="#7ee2b8">प</text></svg></div>
+        <div class="blog-body"><span class="blog-tag">Ratna</span><h3 class="blog-title">रत्न निवडताना काय पाहावे?</h3><p class="blog-excerpt">प्रत्येक रत्न सर्वांसाठी योग्य नसते. कुंडली, ग्रह स्थिती आणि जीवनशैली विचारात घेऊन रत्न कसे निवडावे.</p><div class="blog-meta"><span>7 min read</span><a href="#">Read More →</a></div></div>
+      </a>
+      <a href="#" class="blog-card reveal">
+        <div class="blog-thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="url(#auraGold)" opacity=".5"/><rect x="20" y="20" width="60" height="60" fill="none" stroke="#e0b04a" stroke-width="2"/><line x1="20" y1="20" x2="80" y2="80" stroke="#e0b04a" stroke-width="1.5"/><line x1="80" y1="20" x2="20" y2="80" stroke="#e0b04a" stroke-width="1.5"/></svg></div>
+        <div class="blog-body"><span class="blog-tag">Yantra</span><h3 class="blog-title">श्री यंत्र म्हणजे काय?</h3><p class="blog-excerpt">लक्ष्मीचे प्रतीक श्री यंत्र — कसे तयार होते, कसे स्थापित करावे आणि घरात कुठे ठेवावे.</p><div class="blog-meta"><span>6 min read</span><a href="#">Read More →</a></div></div>
+      </a>
+      <a href="#" class="blog-card reveal">
+        <div class="blog-thumb"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="url(#auraGold)" opacity=".5"/><path d="M50 30 L30 70 L70 70 Z" fill="none" stroke="#ff8c2b" stroke-width="2"/><circle cx="50" cy="55" r="4" fill="#ff8c2b"/></svg></div>
+        <div class="blog-body"><span class="blog-tag">Puja</span><h3 class="blog-title">रुद्राभिषेकाचे महत्त्व</h3><p class="blog-excerpt">आरोग्य, मनःशांती आणि आध्यात्मिक उन्नतीसाठी रुद्राभिषेक का केला जातो — शास्त्र आणि पद्धत.</p><div class="blog-meta"><span>4 min read</span><a href="#">Read More →</a></div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT FORMAT -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Product Page Example</span>
+      <h2>प्रत्येक product मध्ये <em>स्पष्ट माहिती</em></h2>
+      <p>आमच्या प्रत्येक product page वर ही सर्व माहिती असते — जेणेकरून तुम्ही माहितीपूर्ण निर्णय घेऊ शकता.</p>
+    </div>
+    <div class="format-preview reveal">
+      <div class="format-visual">
+        <span class="badge-float">✓ Lab Certified</span>
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="url(#auraGold)" opacity=".5"/><circle cx="100" cy="100" r="58" fill="none" stroke="#e0b04a" stroke-width="1.6" opacity=".55"/><g fill="#8a5410" stroke="#e0b04a" stroke-width="1.2"><circle cx="100" cy="42" r="11"/><circle cx="130" cy="52" r="11"/><circle cx="152" cy="76" r="11"/><circle cx="158" cy="106" r="11"/><circle cx="148" cy="134" r="11"/><circle cx="126" cy="152" r="11"/><circle cx="100" cy="158" r="11"/><circle cx="74" cy="152" r="11"/><circle cx="52" cy="134" r="11"/><circle cx="42" cy="106" r="11"/><circle cx="48" cy="76" r="11"/><circle cx="70" cy="52" r="11"/></g><text x="100" y="112" text-anchor="middle" font-family="'Tiro Devanagari Sanskrit',serif" font-size="34" fill="#f7dc9a">रु</text></svg>
+      </div>
+      <div class="format-info">
+        <h3>5 Mukhi Rudraksha</h3>
+        <div class="price-row"><span class="p1">₹2,499</span><span class="p2">₹3,999</span><span class="p3">38% off</span></div>
+        <div class="stars">★★★★★ <span style="color:var(--muted);font-size:12px;font-family:var(--sans);letter-spacing:0">4.9 · 247 reviews</span></div>
+        <p class="lead">नेपाळमधील प्रमाणित स्रोताकडून आणलेले 5 मुखी रुद्राक्ष — कल्याणकारी, शांतिदायक आणि कुटुंबातील सुख-समृद्धीसाठी पारंपरिक महत्त्वाचे.</p>
+        <div class="format-details">
+          <div class="row"><span class="k">Mukhi</span><span class="v">5</span></div>
+          <div class="row"><span class="k">Size</span><span class="v">18 mm</span></div>
+          <div class="row"><span class="k">Origin</span><span class="v">Nepal</span></div>
+          <div class="row"><span class="k">Certification</span><span class="v">Available</span></div>
+        </div>
+        <div class="format-section"><h5>Traditional Significance</h5><p>5 मुखी रुद्राक्ष कल्याण, शांती आणि सत्याचे प्रतीक आहे. शिवाच्या पाच मुखांचे प्रतिनिधित्व करते.</p></div>
+        <div class="format-section"><h5>How to Wear</h5><p>सोमवार किंवा शिवरात्रीला सकाळी स्नान करून, तांब्याच्या पात्रात दूध-गंगाजलाने शुद्ध करून, "ॐ ह्रीं नमः" मंत्राने 108 वेळा अभिमंत्रित करून धारण करावे.</p></div>
+        <div class="format-section"><h5>Mantra</h5><p class="mantra">ॐ ह्रीं नमः</p></div>
+        <div class="format-section"><h5>Care Instructions</h5><p>पाण्यात भिजवू नका, रासायनिक साबण वापरू नका. महिन्यातून एकदा गंगाजलाने शुद्ध करा.</p></div>
+        <div class="format-section"><h5>Shipping &amp; Returns</h5><p>48 तासांत डिस्पॅच · 7 दिवसांत easy returns · संपूर्ण भारतात मोफत शिपिंग (₹999 वर).</p></div>
+        <div class="format-actions">
+          <button class="btn btn-gold" data-add="5 Mukhi Rudraksha" data-price="2499">Add to Cart</button>
+          <button class="btn btn-ghost" data-add="5 Mukhi Rudraksha" data-price="2499">Buy Now</button>
+        </div>
+        <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="format-wa">Need Guidance? WhatsApp Guruji</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT -->
+<section class="checkout-section">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="kicker">Checkout</span>
+      <h2>Simple <em>Checkout</em> Process</h2>
+      <p>Cart → Address → Payment → Order Confirmation — फक्त चार सोपे steps.</p>
+    </div>
+    <div class="checkout-flow">
+      <div class="checkout-step reveal"><span class="n">1</span><h5>Cart</h5><p>तुमची निवडलेली उत्पादने पहा व verify करा.</p></div>
+      <div class="checkout-step reveal"><span class="n">2</span><h5>Address</h5><p>Delivery address आणि contact details भरा.</p></div>
+      <div class="checkout-step reveal"><span class="n">3</span><h5>Payment</h5><p>UPI, Cards, Net Banking, Wallets किंवा COD.</p></div>
+      <div class="checkout-step reveal"><span class="n">4</span><h5>Confirmation</h5><p>Order ID + WhatsApp + Email/SMS confirmation.</p></div>
+    </div>
+    <div class="payment-methods reveal">
+      <span>💳 UPI</span><span>💳 Cards</span><span>🏦 Net Banking</span><span>👛 Wallets</span><span>💵 COD</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#top" class="brand">
+        <span class="brand-mark">ॐ</span>
+        <span><span class="brand-name">ASTRO<em>VEDA</em></span><span class="brand-tag">परंपरा · ज्योतिष · पूजा</span></span>
+      </a>
+      <p>परंपरेतून मार्गदर्शन, श्रद्धेतून समाधान. 25 वर्षांहून अधिक अनुभव — पूजा, ज्योतिष, रत्न, रुद्राक्ष, यंत्र आणि ब्रेसलेट.</p>
+      <div class="foot-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.5 6.5a2.8 2.8 0 00-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.5a2.8 2.8 0 00-2 2A29 29 0 001 12a29 29 0 00.5 5.5 2.8 2.8 0 002 2C5.2 20 12 20 12 20s6.8 0 8.5-.5a2.8 2.8 0 002-2A29 29 0 0023 12a29 29 0 00-.5-5.5z"/><polygon points="10 8 16 12 10 16"/></svg></a>
+        <a href="https://wa.me/919000000000" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9s-.5-.2-.7.2-.8 1-1 1.2-.4.3-.7.1a8 8 0 01-2.4-1.5 9 9 0 01-1.6-2.1c-.2-.3 0-.5.1-.6l.5-.6.3-.5v-.5l-1-2.4c-.2-.6-.5-.5-.7-.5H7a1.4 1.4 0 00-1 .5 4.3 4.3 0 00-1.3 3.2 7.4 7.4 0 001.6 4 17 17 0 006.6 5.8c.9.4 1.6.6 2.2.8a5.3 5.3 0 002.4.1 4 4 0 002.6-1.8 3.2 3.2 0 00.2-1.8c-.1-.2-.3-.3-.6-.4zM12 22a10 10 0 01-5.1-1.4L2 22l1.4-4.8A10 10 0 1112 22z"/></svg></a>
+      </div>
+      <p class="dev">॥ सर्वे भवन्तु सुखिनः ॥</p>
+    </div>
+    <div class="foot-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#top">Home</a></li><li><a href="#shop">Shop</a></li>
+        <li><a href="#puja">Puja Services</a></li><li><a href="#jyotish">Jyotish Consultation</a></li>
+        <li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Customer Support</h5>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li><li><a href="#">Return &amp; Refund Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="#">📷 Instagram</a></li><li><a href="#">📘 Facebook</a></li>
+        <li><a href="#">▶️ YouTube</a></li><li><a href="https://wa.me/919000000000" target="_blank" rel="noopener">📲 WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 AstroVeda · परंपरेतून मार्गदर्शन · श्रद्धेतून समाधान</span>
+    <span>॥ कालः क्रीडति गच्छति ॥</span>
+  </div>
+</footer>
+
+<!-- PANELS & OVERLAYS -->
+<div class="panel-overlay" id="panelOverlay"></div>
+
+<aside class="panel" id="cartPanel" aria-hidden="true">
+  <div class="panel-head">
+    <h3>🛒 Your Cart <span class="count" id="cartHeadCount">0</span></h3>
+    <button class="panel-close" data-close="cart">✕</button>
+  </div>
+  <div class="panel-body" id="cartBody"></div>
+  <div class="panel-foot" id="cartFoot" style="display:none">
+    <div class="subtotal">
+      <span>Subtotal</span>
+      <b id="cartSubtotal">₹0</b>
+    </div>
+    <button class="btn-checkout" onclick="alert('Checkout flow — integrate Razorpay/Cashfree here')">Proceed to Checkout →</button>
+    <a href="#" class="keep-shopping" data-close="cart">Continue Shopping</a>
+  </div>
+</aside>
+
+<aside class="panel" id="wishPanel" aria-hidden="true">
+  <div class="panel-head">
+    <h3>❤️ Your Wishlist <span class="count" id="wishHeadCount">0</span></h3>
+    <button class="panel-close" data-close="wish">✕</button>
+  </div>
+  <div class="panel-body" id="wishBody"></div>
+</aside>
+
+<div class="search-overlay" id="searchOverlay" aria-hidden="true">
+  <button class="search-close" id="searchClose" aria-label="Close">✕</button>
+  <div class="search-inner">
+    <p class="search-title">Search AstroVeda</p>
+    <div class="search-box">
+      <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" id="searchInput" placeholder="Rudraksha, Emerald, Shri Yantra, Bracelet..." autocomplete="off">
+      <button class="go" id="searchGo" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+    <p class="search-suggest-label">Popular Searches</p>
+    <div class="search-chips">
+      <button class="search-chip">5 Mukhi Rudraksha</button>
+      <button class="search-chip">Emerald · Panna</button>
+      <button class="search-chip">Shri Yantra</button>
+      <button class="search-chip">Blue Sapphire</button>
+      <button class="search-chip">Rudraksha Mala</button>
+      <button class="search-chip">Navagraha Bracelet</button>
+      <button class="search-chip">Yellow Sapphire</button>
+      <button class="search-chip">Kuber Yantra</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="mobile-drawer" id="mobileDrawer">
+  <button class="drawer-close" id="drawerClose" aria-label="Close">✕</button>
+  <ul>
+    <li><a href="#top">Home</a></li><li><a href="#shop">Shop</a></li>
+    <li><a href="#puja">Puja Services</a></li><li><a href="#jyotish">Jyotish</a></li>
+    <li><a href="#rudraksha">Rudraksha</a></li><li><a href="#ratna">Ratna</a></li>
+    <li><a href="#yantra">Yantra</a></li><li><a href="#bracelets">Bracelets</a></li>
+    <li><a href="#about">About Guruji</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+</aside>
+
+<!-- WHATSAPP FLOAT + TOAST -->
+<a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9s-.5-.2-.7.2-.8 1-1 1.2-.4.3-.7.1a8 8 0 01-2.4-1.5 9 9 0 01-1.6-2.1c-.2-.3 0-.5.1-.6l.5-.6.3-.5v-.5l-1-2.4c-.2-.6-.5-.5-.7-.5H7a1.4 1.4 0 00-1 .5 4.3 4.3 0 00-1.3 3.2 7.4 7.4 0 001.6 4 17 17 0 006.6 5.8c.9.4 1.6.6 2.2.8a5.3 5.3 0 002.4.1 4 4 0 002.6-1.8 3.2 3.2 0 00.2-1.8c-.1-.2-.3-.3-.6-.4zM12 22a10 10 0 01-5.1-1.4L2 22l1.4-4.8A10 10 0 1112 22z"/></svg>
+</a>
+
+<div class="toast" id="toast">Added to cart</div>
+
+<!-- ============ PRODUCT DETAILS MODAL ============ -->
+<div class="pd-modal-overlay" id="pdOverlay">
+  <div class="pd-modal" id="pdModal">
+    <button class="pd-close" id="pdClose" aria-label="Close">✕</button>
+    <div class="pd-visual" id="pdVisual"></div>
+    <div class="pd-info" id="pdInfo"></div>
+  </div>
+</div>
+
+<script>
+/* ============ UTILITIES ============ */
+const $  = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+/* ============ PETALS ============ */
+(function buildPetals(){
+  const g = document.getElementById('petals');
+  if (!g) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const COUNT = 24;
+  const PETAL_CENTER_R = 133;
+  const PETAL_RY = 33;
+  const PETAL_RX = 15;
+  for (let i = 0; i < COUNT; i++){
+    const angle = (i / COUNT) * 360;
+    const e = document.createElementNS(NS, 'ellipse');
+    e.setAttribute('cx', 200);
+    e.setAttribute('cy', 200 - PETAL_CENTER_R);
+    e.setAttribute('rx', PETAL_RX);
+    e.setAttribute('ry', PETAL_RY);
+    e.setAttribute('transform', `rotate(${angle} 200 200)`);
+    e.setAttribute('fill', 'none');
+    e.setAttribute('stroke', 'rgba(224,176,74,.28)');
+    e.setAttribute('stroke-width', '.7');
+    g.appendChild(e);
+  }
+})();
+
+/* ============ SVG GENERATORS ============ */
+function svgRudraksha(glyph='रु'){
+  return `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="url(#auraGold)" opacity=".5"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#e0b04a" stroke-width="1.6" opacity=".55"/>
+    <g fill="#8a5410" stroke="#e0b04a" stroke-width="1.2">
+      <circle cx="100" cy="42" r="11"/><circle cx="130" cy="52" r="11"/><circle cx="152" cy="76" r="11"/>
+      <circle cx="158" cy="106" r="11"/><circle cx="148" cy="134" r="11"/><circle cx="126" cy="152" r="11"/>
+      <circle cx="100" cy="158" r="11"/><circle cx="74" cy="152" r="11"/><circle cx="52" cy="134" r="11"/>
+      <circle cx="42" cy="106" r="11"/><circle cx="48" cy="76" r="11"/><circle cx="70" cy="52" r="11"/>
+    </g>
+    <text x="100" y="112" text-anchor="middle" font-family="'Tiro Devanagari Sanskrit',serif" font-size="34" fill="#f7dc9a">${glyph}</text></svg>`;
+}
+function svgGem(color, glyph){
+  return `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="url(#auraGold)" opacity=".5"/>
+    <polygon points="100,30 160,75 140,150 60,150 40,75" fill="none" stroke="${color}" stroke-width="2.5" opacity=".9"/>
+    <polygon points="100,50 140,82 125,135 75,135 60,82" fill="none" stroke="${color}" stroke-width="1.4" opacity=".55"/>
+    <polygon points="100,70 122,88 114,120 86,120 78,88" fill="none" stroke="${color}" stroke-width="1" opacity=".4"/>
+    <text x="100" y="112" text-anchor="middle" font-family="'Tiro Devanagari Sanskrit',serif" font-size="30" fill="${color}">${glyph}</text></svg>`;
+}
+function svgYantra(glyph='य'){
+  return `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="url(#auraGold)" opacity=".5"/>
+    <rect x="42" y="42" width="116" height="116" rx="6" fill="none" stroke="#e0b04a" stroke-width="2.4"/>
+    <line x1="42" y1="42" x2="158" y2="158" stroke="#e0b04a" stroke-width="1.2" opacity=".65"/>
+    <line x1="158" y1="42" x2="42" y2="158" stroke="#e0b04a" stroke-width="1.2" opacity=".65"/>
+    <line x1="100" y1="42" x2="100" y2="158" stroke="#e0b04a" stroke-width="1.2" opacity=".65"/>
+    <line x1="42" y1="100" x2="158" y2="100" stroke="#e0b04a" stroke-width="1.2" opacity=".65"/>
+    <circle cx="100" cy="100" r="24" fill="none" stroke="#f7dc9a" stroke-width="1.4"/>
+    <text x="100" y="110" text-anchor="middle" font-family="'Tiro Devanagari Sanskrit',serif" font-size="26" fill="#f7dc9a">${glyph}</text></svg>`;
+}
+function svgBracelet(beads){
+  const cols = beads || ['#C8963E','#3A3A3A','#E8E0C8','#A8C89E','#E89878'];
+  const N = 12, R = 58, cx = 100, cy = 100;
+  let c = '';
+  for (let i = 0; i < N; i++){
+    const a = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R;
+    c += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="10" fill="${cols[i % cols.length]}" stroke="rgba(0,0,0,.4)" stroke-width=".8"/>`;
+  }
+  return `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="url(#auraGold)" opacity=".5"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#e0b04a" stroke-width="1" opacity=".4"/>${c}</svg>`;
+}
+
+/* ============ PRODUCT DATA ============ */
+const FEATURED = [
+  { id:'r5', cat:'Rudraksha · Nepal', title:'5 Mukhi Rudraksha Mala', desc:'108 hand-strung beads, lab-verified Elaeocarpus ganitrus. Energised in Kashi.', price:'₹2,499', priceOld:'₹3,999', save:'38% off', rating:'4.9', reviews:'247', badge:'hot', img: svgRudraksha('रु') },
+  { id:'gem-emerald', cat:'Ratna · Mercury', title:'Panna · Emerald 4.2ct', desc:'Natural, untreated, IGI-certified. Set in Panchdhatu. For focus & communication.', price:'₹8,999', priceOld:'₹12,500', save:'28% off', rating:'4.8', reviews:'186', badge:'lab', img: svgGem('#7ee2b8','प') },
+  { id:'yan-shri', cat:'Yantra · Lakshmi', title:'Shri Yantra · Copper', desc:'Hand-etched 99.4% pure copper. Pran-pratishtha & installation guidance included.', price:'₹3,299', priceOld:'₹4,800', save:'31% off', rating:'4.9', reviews:'124', badge:'new', img: svgYantra('श्री') },
+  { id:'brace-nav', cat:'Bracelet · Mixed', title:'Navagraha Mixed-Stone Bracelet', desc:'Tiger eye, obsidian, moonstone, jade & sunstone. 8mm beads, elastic fit.', price:'₹1,899', priceOld:'₹2,999', save:'37% off', rating:'4.9', reviews:'312', badge:'hot', img: svgBracelet() },
+];
+const RUDRAKSHA = [
+  { cat:'m1', catLabel:'1 Mukhi · Nepal', title:'1 Mukhi Rudraksha', desc:'Rarest form. Signifies Shiva himself. Sun-energy, leadership & clarity.', price:'₹15,999', priceOld:'₹21,000', save:'24% off', rating:'5.0', reviews:'42', badge:'lab', img: svgRudraksha('१') },
+  { cat:'m2', catLabel:'2 Mukhi · Nepal', title:'2 Mukhi Rudraksha', desc:'Ardhanarishwar form. Harmony in relationships & emotional balance.', price:'₹4,999', priceOld:'₹6,999', save:'29% off', rating:'4.8', reviews:'68', badge:'', img: svgRudraksha('२') },
+  { cat:'m3', catLabel:'3 Mukhi · Nepal', title:'3 Mukhi Rudraksha', desc:'Agni deva. Burns past karma, boosts confidence & willpower.', price:'₹3,499', priceOld:'₹4,999', save:'30% off', rating:'4.7', reviews:'94', badge:'', img: svgRudraksha('३') },
+  { cat:'m4', catLabel:'4 Mukhi · Nepal', title:'4 Mukhi Rudraksha', desc:'Brahma swaroop. Memory, creativity & knowledge retention.', price:'₹2,999', priceOld:'₹4,200', save:'29% off', rating:'4.8', reviews:'112', badge:'', img: svgRudraksha('४') },
+  { cat:'m5', catLabel:'5 Mukhi · Nepal', title:'5 Mukhi Rudraksha', desc:'Most widely worn. Peace, health & family harmony. Ideal daily wear.', price:'₹1,299', priceOld:'₹1,899', save:'32% off', rating:'4.9', reviews:'287', badge:'hot', img: svgRudraksha('५') },
+  { cat:'m6', catLabel:'6 Mukhi · Nepal', title:'6 Mukhi Rudraksha', desc:'Kartikeya. Focus, ground reality & material progress.', price:'₹2,699', priceOld:'₹3,800', save:'29% off', rating:'4.7', reviews:'76', badge:'', img: svgRudraksha('६') },
+  { cat:'m7', catLabel:'7 Mukhi · Nepal', title:'7 Mukhi Rudraksha', desc:'Lakshmi swaroop. Wealth, prosperity & financial stability.', price:'₹2,899', priceOld:'₹4,100', save:'29% off', rating:'4.8', reviews:'104', badge:'', img: svgRudraksha('७') },
+  { cat:'mala', catLabel:'Mala · 108 Beads', title:'Siddha Rudraksha Mala · 5 Mukhi', desc:'108 hand-strung beads. Energised in Kashi with full mantra vidhi.', price:'₹2,499', priceOld:'₹3,999', save:'38% off', rating:'4.9', reviews:'247', badge:'hot', img: svgRudraksha('रु') },
+  { cat:'mala', catLabel:'Mala · 108 Beads', title:'Chandan Japa Mala · 108', desc:'Mysore sandalwood. Naturally fragrant for years. For daily japa.', price:'₹1,499', priceOld:'₹2,100', save:'29% off', rating:'4.7', reviews:'89', badge:'', img: svgRudraksha('चं') },
+  { cat:'bracelet', catLabel:'Bracelet · Rudraksha', title:'Rudraksha Wrist Bracelet · 5 Mukhi', desc:'8mm beads, elastic fit. Daily wear, minimal design.', price:'₹899', priceOld:'₹1,299', save:'31% off', rating:'4.8', reviews:'198', badge:'', img: svgBracelet(['#8a5410','#e0b04a']) },
+];
+const RATNA = [
+  { cat:'ruby', catLabel:'Ruby · Sun (Surya)', title:'Manik · Ruby', desc:'Natural, unheated Burmese. For confidence, vitality & leadership.', price:'₹12,999', priceOld:'₹17,500', save:'26% off', rating:'4.8', reviews:'64', badge:'lab', img: svgGem('#ff5f5f','म') },
+  { cat:'pearl', catLabel:'Pearl · Moon', title:'Moti · Natural Pearl', desc:'South Sea cultured. For emotional balance, sleep & mental peace.', price:'₹4,299', priceOld:'₹5,999', save:'28% off', rating:'4.7', reviews:'118', badge:'lab', img: svgGem('#f0e6d0','मो') },
+  { cat:'coral', catLabel:'Red Coral · Mars', title:'Moonga · Red Coral', desc:'Italian coral, untreated. For courage, energy & physical strength.', price:'₹6,499', priceOld:'₹8,999', save:'28% off', rating:'4.8', reviews:'87', badge:'lab', img: svgGem('#ff6b4a','मू') },
+  { cat:'emerald', catLabel:'Emerald · Mercury', title:'Panna · Colombian Emerald', desc:'Natural, untreated, IGI-certified. For focus, communication & intellect.', price:'₹8,999', priceOld:'₹12,500', save:'28% off', rating:'4.9', reviews:'142', badge:'lab', img: svgGem('#7ee2b8','प') },
+  { cat:'yellow-sapphire', catLabel:'Yellow Sapphire · Jupiter', title:'Pukhraj · Yellow Sapphire', desc:'Ceylon origin. For wisdom, marriage & financial growth.', price:'₹10,499', priceOld:'₹14,000', save:'25% off', rating:'4.9', reviews:'156', badge:'lab', img: svgGem('#f7dc9a','पु') },
+  { cat:'diamond', catLabel:'Diamond · Venus', title:'Heera · Natural Diamond', desc:'VVS clarity, natural. For luxury, art, relationships & comfort.', price:'₹28,999', priceOld:'₹38,000', save:'24% off', rating:'4.8', reviews:'38', badge:'lab', img: svgGem('#e0f0ff','ही') },
+  { cat:'blue-sapphire', catLabel:'Blue Sapphire · Saturn', title:'Neelam · Blue Sapphire', desc:'Ceylon, untreated. For discipline, focus & rapid life changes.', price:'₹14,999', priceOld:'₹19,999', save:'25% off', rating:'4.9', reviews:'92', badge:'lab', img: svgGem('#5a8cff','नी') },
+  { cat:'hessonite', catLabel:'Hessonite · Rahu', title:'Gomed · Hessonite', desc:'Ceylon origin. For protection from Rahu effects & clarity.', price:'₹5,499', priceOld:'₹7,400', save:'26% off', rating:'4.7', reviews:'76', badge:'lab', img: svgGem('#c08a2a','गो') },
+];
+const YANTRA = [
+  { cat:'shri', catLabel:'Lakshmi · Abundance', title:'Shri Yantra · Copper', desc:'Hand-etched 99.4% pure copper. Pran-pratishtha & installation guidance.', price:'₹3,299', priceOld:'₹4,800', save:'31% off', rating:'4.9', reviews:'124', badge:'new', img: svgYantra('श्री') },
+  { cat:'kuber', catLabel:'Kuber · Wealth', title:'Kuber Yantra · Copper', desc:'For financial stability & business growth. Traditional Vastu placement.', price:'₹2,599', priceOld:'₹3,600', save:'28% off', rating:'4.8', reviews:'98', badge:'', img: svgYantra('कु') },
+  { cat:'navgraha', catLabel:'9 Planets', title:'Navgraha Yantra · Copper', desc:'All nine planetary bija mantras. Harmonises malefic planetary effects.', price:'₹3,999', priceOld:'₹5,500', save:'27% off', rating:'4.9', reviews:'87', badge:'', img: svgYantra('न') },
+  { cat:'vastu', catLabel:'Vastu Dosha', title:'Vastu Yantra · Copper', desc:'For home & office Vastu correction without structural changes.', price:'₹2,999', priceOld:'₹4,100', save:'27% off', rating:'4.7', reviews:'64', badge:'', img: svgYantra('व') },
+  { cat:'lakshmi', catLabel:'Lakshmi Kuber', title:'Lakshmi Kuber Yantra', desc:'Combined yantra for both prosperity and wealth retention.', price:'₹3,499', priceOld:'₹4,900', save:'29% off', rating:'4.8', reviews:'71', badge:'', img: svgYantra('ल') },
+  { cat:'durga', catLabel:'Durga · Shakti', title:'Durga Yantra · Copper', desc:'For protection, courage and removal of obstacles.', price:'₹2,899', priceOld:'₹4,000', save:'28% off', rating:'4.8', reviews:'58', badge:'', img: svgYantra('दु') },
+  { cat:'mahamrityunjay', catLabel:'Shiva · Healing', title:'Mahamrityunjay Yantra', desc:'For health, longevity and freedom from fear. Traditional Shiva worship.', price:'₹3,199', priceOld:'₹4,500', save:'29% off', rating:'4.9', reviews:'102', badge:'new', img: svgYantra('म') },
+];
+const BRACELETS = [
+  { cat:'rud', catLabel:'Rudraksha Bracelet', title:'5 Mukhi Rudraksha Bracelet', desc:'8mm beads, elastic fit. Daily wear, minimal design.', price:'₹899', priceOld:'₹1,299', save:'31% off', rating:'4.8', reviews:'198', badge:'hot', img: svgBracelet(['#8a5410','#e0b04a']) },
+  { cat:'rud', catLabel:'Rudraksha Bracelet', title:'7 Mukhi Rudraksha Bracelet', desc:'For wealth & stability. Ruled by Lakshmi.', price:'₹1,199', priceOld:'₹1,699', save:'29% off', rating:'4.7', reviews:'82', badge:'', img: svgBracelet(['#8a5410','#c8963e','#e0b04a']) },
+  { cat:'gem', catLabel:'Gemstone Bracelet', title:'Navagraha Mixed-Stone Bracelet', desc:'Tiger eye, obsidian, moonstone, jade & sunstone. 8mm beads.', price:'₹1,899', priceOld:'₹2,999', save:'37% off', rating:'4.9', reviews:'312', badge:'hot', img: svgBracelet() },
+  { cat:'gem', catLabel:'Gemstone Bracelet', title:'Emerald Bracelet · Budh', desc:'Natural Colombian emerald beads. For focus & communication.', price:'₹4,299', priceOld:'₹5,999', save:'28% off', rating:'4.8', reviews:'124', badge:'', img: svgBracelet(['#7ee2b8','#5a8c4b','#a8e2c0']) },
+  { cat:'spi', catLabel:'Spiritual Bracelet', title:'Karungali Bracelet · Ebony', desc:'Traditional Karungali wood. For grounding & protection.', price:'₹799', priceOld:'₹1,199', save:'33% off', rating:'4.8', reviews:'156', badge:'', img: svgBracelet(['#3a2418','#6b4a30','#1c1008']) },
+  { cat:'spi', catLabel:'Spiritual Bracelet', title:'Sphatik Crystal Bracelet', desc:'Himalayan clear quartz. For clarity & mental peace.', price:'₹999', priceOld:'₹1,499', save:'33% off', rating:'4.7', reviews:'108', badge:'', img: svgBracelet(['#e8e0c8','#f0ebd8','#d8d0b0']) },
+  { cat:'combo', catLabel:'Combination', title:'Rudraksha + Sphatik Combo', desc:'5 Mukhi rudraksha with clear quartz. Balance of fire & moon energy.', price:'₹1,499', priceOld:'₹2,100', save:'29% off', rating:'4.9', reviews:'147', badge:'new', img: svgBracelet(['#8a5410','#e8e0c8','#e0b04a','#f0ebd8']) },
+  { cat:'combo', catLabel:'Combination', title:'Panchdhatu Navagraha Combo', desc:'Panchdhatu with nine gemstone beads. Complete planetary balance.', price:'₹2,299', priceOld:'₹3,299', save:'30% off', rating:'4.8', reviews:'76', badge:'', img: svgBracelet(['#c8963e','#ff5f5f','#7ee2b8','#5a8cff','#f7dc9a']) },
+];
+
+/* ============ PRODUCT CARD ============ */
+function productCardHTML(p){
+  const badgeMap = { hot:'badge-hot', new:'badge-new', lab:'badge-lab' };
+  const badge = p.badge ? `<span class="prod-badge ${badgeMap[p.badge]}">${p.badge === 'hot' ? 'Bestseller' : p.badge === 'lab' ? 'Lab Certified' : 'New Drop'}</span>` : '';
+  const priceNum = parseInt(p.price.replace(/[^\d]/g,''), 10) || 0;
+  return `
+  <article class="prod-card reveal">
+    <div class="prod-img">
+      ${badge}
+      <button class="wish" aria-label="Add to wishlist" data-wish="${p.title}" data-price="${priceNum}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 000-7.8z"/></svg>
+      </button>
+      ${p.img}
+    </div>
+    <div class="prod-body">
+      <p class="prod-cat">${p.catLabel}</p>
+      <h3 class="prod-title">${p.title}</h3>
+      <p class="prod-desc">${p.desc}</p>
+      <div class="prod-stars"><span class="s">★★★★★</span><span>${p.rating} · ${p.reviews} reviews</span></div>
+      <div class="prod-price"><span class="now">${p.price}</span><span class="was">${p.priceOld}</span><span class="off">${p.save}</span></div>
+      <div class="prod-actions">
+        <button class="btn-add" data-add="${p.title}" data-price="${priceNum}">🛒 Add to Cart</button>
+        <a href="#" class="btn-view">View Details</a>
+      </div>
+    </div>
+  </article>`;
+}
+function renderGrid(id, arr){
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = arr.map(productCardHTML).join('');
+}
+renderGrid('featuredGrid', FEATURED);
+renderGrid('rudrakshaGrid', RUDRAKSHA);
+renderGrid('ratnaGrid', RATNA);
+renderGrid('yantraGrid', YANTRA);
+renderGrid('braceletGrid', BRACELETS);
+
+/* ============ FILTERS ============ */
+$$('.filter-bar').forEach(bar => {
+  const group = bar.dataset.group;
+  const targetId = group === 'rudraksha' ? 'rudrakshaGrid' : 'braceletGrid';
+  const cards = () => $$(`#${targetId} .prod-card`);
+  bar.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      bar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const f = chip.dataset.filter;
+      const src = group === 'rudraksha' ? RUDRAKSHA : BRACELETS;
+      cards().forEach((card, i) => {
+        const match = (f === 'all' || src[i].cat === f);
+        card.style.transition = 'opacity .35s ease, transform .35s ease';
+        if (match){
+          card.style.display = '';
+          requestAnimationFrame(() => { card.style.opacity = '1'; card.style.transform = 'none'; });
+        } else {
+          card.style.opacity = '0'; card.style.transform = 'scale(.94)';
+          setTimeout(() => { card.style.display = 'none'; }, 320);
+        }
+      });
+    });
+  });
+});
+
+/* ============ CART + WISHLIST STATE ============ */
+const cart = [];
+const wishlist = [];
+
+function findProduct(title){
+  const all = [...FEATURED, ...RUDRAKSHA, ...RATNA, ...YANTRA, ...BRACELETS];
+  return all.find(p => p.title === title);
+}
+
+/* ============ TOAST ============ */
+const toast = document.getElementById('toast');
+let toastTimer = null;
+function showToast(msg){
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+/* ============ PANELS ============ */
+const panelOverlay = document.getElementById('panelOverlay');
+const cartPanel = document.getElementById('cartPanel');
+const wishPanel = document.getElementById('wishPanel');
+const searchOverlay = document.getElementById('searchOverlay');
+
+function closeAllPanels(){
+  cartPanel.classList.remove('open');
+  wishPanel.classList.remove('open');
+  panelOverlay.classList.remove('show');
+  searchOverlay.classList.remove('open');
+}
+function openCart(){
+  closeAllPanels();
+  renderCart();
+  cartPanel.classList.add('open');
+  cartPanel.setAttribute('aria-hidden','false');
+  panelOverlay.classList.add('show');
+}
+function openWishlist(){
+  closeAllPanels();
+  renderWishlist();
+  wishPanel.classList.add('open');
+  wishPanel.setAttribute('aria-hidden','false');
+  panelOverlay.classList.add('show');
+}
+function openSearch(){
+  closeAllPanels();
+  searchOverlay.classList.add('open');
+  searchOverlay.setAttribute('aria-hidden','false');
+  setTimeout(() => document.getElementById('searchInput').focus(), 200);
+}
+
+/* ============ RENDER CART ============ */
+function renderCart(){
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  const headCount = document.getElementById('cartHeadCount');
+  const countBadge = document.getElementById('cartCount');
+  const subEl = document.getElementById('cartSubtotal');
+
+  const totalQty = cart.reduce((s, it) => s + it.qty, 0);
+  headCount.textContent = totalQty;
+  countBadge.textContent = totalQty;
+
+  if (cart.length === 0){
+    body.innerHTML = `
+      <div class="panel-empty">
+        <div class="ico">🛒</div>
+        <h4>Your cart is empty</h4>
+        <p>Browse our collection and add something sacred to your cart.</p>
+      </div>`;
+    foot.style.display = 'none';
+    return;
+  }
+
+  foot.style.display = 'block';
+  let subtotal = 0;
+  body.innerHTML = cart.map((it, i) => {
+    subtotal += it.price * it.qty;
+    return `
+    <div class="panel-item">
+      <div class="thumb">${it.img}</div>
+      <div class="info">
+        <h4>${it.title}</h4>
+        <div class="price">₹${it.price.toLocaleString('en-IN')}</div>
+        <div class="qty">
+          <button data-cart-dec="${i}">−</button>
+          <span>${it.qty}</span>
+          <button data-cart-inc="${i}">+</button>
+        </div>
+      </div>
+      <button class="remove" data-cart-del="${i}" aria-label="Remove">✕</button>
+    </div>`;
+  }).join('');
+  subEl.textContent = '₹' + subtotal.toLocaleString('en-IN');
+}
+
+/* ============ RENDER WISHLIST ============ */
+function renderWishlist(){
+  const body = document.getElementById('wishBody');
+  const headCount = document.getElementById('wishHeadCount');
+  const badge = document.getElementById('wishCount');
+
+  headCount.textContent = wishlist.length;
+  badge.textContent = wishlist.length;
+
+  if (wishlist.length === 0){
+    body.innerHTML = `
+      <div class="panel-empty">
+        <div class="ico">❤️</div>
+        <h4>Your wishlist is empty</h4>
+        <p>Tap the heart on any product to save it here for later.</p>
+      </div>`;
+    return;
+  }
+
+  body.innerHTML = wishlist.map((it, i) => `
+    <div class="panel-item">
+      <div class="thumb">${it.img}</div>
+      <div class="info">
+        <h4>${it.title}</h4>
+        <div class="price">₹${it.price.toLocaleString('en-IN')}</div>
+        <a href="#" class="move-to-cart" data-wish-to-cart="${i}">Move to Cart →</a>
+      </div>
+      <button class="remove" data-wish-del="${i}" aria-label="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+/* ============ GLOBAL CLICK HANDLERS ============ */
+document.addEventListener('click', e => {
+
+  const addBtn = e.target.closest('[data-add]');
+  if (addBtn){
+    e.preventDefault();
+    const title = addBtn.dataset.add;
+    const price = parseInt(addBtn.dataset.price, 10) || 0;
+    const prod = findProduct(title);
+    const existing = cart.find(it => it.title === title);
+    if (existing) existing.qty++;
+    else cart.push({ title, price, qty: 1, img: prod ? prod.img : '' });
+    renderCart();
+    openCart();
+    showToast(`${title} — cart मध्ये जोडले`);
+    return;
+  }
+
+  const wishBtn = e.target.closest('[data-wish]');
+  if (wishBtn){
+    e.preventDefault();
+    const title = wishBtn.dataset.wish;
+    const price = parseInt(wishBtn.dataset.price, 10) || 0;
+    const idx = wishlist.findIndex(it => it.title === title);
+    if (idx === -1){
+      const prod = findProduct(title);
+      wishlist.push({ title, price, img: prod ? prod.img : '' });
+      wishBtn.classList.add('on');
+      showToast(`${title} — wishlist मध्ये जोडले`);
+    } else {
+      wishlist.splice(idx, 1);
+      wishBtn.classList.remove('on');
+      showToast(`${title} — wishlist मधून काढले`);
+    }
+    const badge = document.getElementById('wishCount');
+    if (badge) badge.textContent = wishlist.length;
+    return;
+  }
+
+  const incBtn = e.target.closest('[data-cart-inc]');
+  if (incBtn){
+    const i = parseInt(incBtn.dataset.cartInc, 10);
+    if (cart[i]) { cart[i].qty++; renderCart(); }
+    return;
+  }
+  const decBtn = e.target.closest('[data-cart-dec]');
+  if (decBtn){
+    const i = parseInt(decBtn.dataset.cartDec, 10);
+    if (cart[i]){
+      cart[i].qty--;
+      if (cart[i].qty <= 0) cart.splice(i, 1);
+      renderCart();
+    }
+    return;
+  }
+  const delBtn = e.target.closest('[data-cart-del]');
+  if (delBtn){
+    const i = parseInt(delBtn.dataset.cartDel, 10);
+    cart.splice(i, 1);
+    renderCart();
+    showToast('Item removed from cart');
+    return;
+  }
+
+  const wishDel = e.target.closest('[data-wish-del]');
+  if (wishDel){
+    const i = parseInt(wishDel.dataset.wishDel, 10);
+    const item = wishlist[i];
+    wishlist.splice(i, 1);
+    renderWishlist();
+    document.querySelectorAll(`[data-wish="${CSS.escape(item.title)}"]`).forEach(b => b.classList.remove('on'));
+    showToast('Item removed from wishlist');
+    return;
+  }
+  const wishToCart = e.target.closest('[data-wish-to-cart]');
+  if (wishToCart){
+    e.preventDefault();
+    const i = parseInt(wishToCart.dataset.wishToCart, 10);
+    const item = wishlist[i];
+    const existing = cart.find(it => it.title === item.title);
+    if (existing) existing.qty++;
+    else cart.push({ title: item.title, price: item.price, qty: 1, img: item.img });
+    wishlist.splice(i, 1);
+    renderWishlist(); renderCart();
+    document.querySelectorAll(`[data-wish="${CSS.escape(item.title)}"]`).forEach(b => b.classList.remove('on'));
+    openCart();
+    showToast(`${item.title} — cart मध्ये हलवले`);
+    return;
+  }
+
+  const closeBtn = e.target.closest('[data-close]');
+  if (closeBtn){
+    e.preventDefault();
+    closeAllPanels();
+    return;
+  }
+});
+
+/* ============ NAV HANDLERS ============ */
+document.getElementById('cartBtn')?.addEventListener('click', openCart);
+document.getElementById('wishBtn')?.addEventListener('click', openWishlist);
+document.getElementById('searchBtn')?.addEventListener('click', openSearch);
+document.getElementById('searchClose')?.addEventListener('click', closeAllPanels);
+panelOverlay?.addEventListener('click', closeAllPanels);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllPanels(); });
+
+/* ============ SEARCH ============ */
+function runSearch(query){
+  const q = query.trim().toLowerCase();
+  const resultsEl = document.getElementById('searchResults');
+  if (!q){ resultsEl.innerHTML = ''; return; }
+  const all = [...FEATURED, ...RUDRAKSHA, ...RATNA, ...YANTRA, ...BRACELETS];
+  const matches = all.filter(p =>
+    p.title.toLowerCase().includes(q) ||
+    p.desc.toLowerCase().includes(q) ||
+    (p.catLabel && p.catLabel.toLowerCase().includes(q))
+  ).slice(0, 8);
+  if (matches.length === 0){
+    resultsEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted);font-size:13px;">No products found for "${query}"</div>`;
+    return;
+  }
+  resultsEl.innerHTML = matches.map(p => `
+    <div class="search-result-item" data-search-pick="${p.title}">
+      <div class="sr-thumb">${p.img}</div>
+      <div class="sr-info">
+        <h4>${p.title}</h4>
+        <span>${p.price}</span>
+      </div>
+    </div>
+  `).join('');
+}
+document.getElementById('searchInput')?.addEventListener('input', e => runSearch(e.target.value));
+document.getElementById('searchGo')?.addEventListener('click', () => runSearch(document.getElementById('searchInput').value));
+document.addEventListener('click', e => {
+  const chip = e.target.closest('.search-chip');
+  if (chip){
+    document.getElementById('searchInput').value = chip.textContent;
+    runSearch(chip.textContent);
+  }
+  const pick = e.target.closest('[data-search-pick]');
+  if (pick){
+    closeAllPanels();
+    const prod = findProduct(pick.dataset.searchPick);
+    if (prod && prod.title){
+      const el = [...document.querySelectorAll('.prod-title')].find(t => t.textContent === prod.title);
+      if (el) el.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  }
+});
+document.getElementById('searchInput')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') runSearch(e.target.value);
+});
+
+/* ============ CONSULTATION FORM ============ */
+const consultForm = document.getElementById('consultForm');
+if (consultForm){
+  consultForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = consultForm.querySelector('#f-name').value.trim();
+    const dob  = consultForm.querySelector('#f-dob').value;
+    const place= consultForm.querySelector('#f-place').value.trim();
+    const topic= consultForm.querySelector('#f-topic').value;
+    if (!name || !dob || !place || !topic){
+      showToast('कृपया सर्व आवश्यक माहिती भरा');
+      return;
+    }
+    showToast(`धन्यवाद ${name}! आम्ही 24 तासांत संपर्क करू.`);
+    consultForm.reset();
+  });
+}
+
+/* ============ MOBILE DRAWER ============ */
+(function drawer(){
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const close = document.getElementById('drawerClose');
+  if (!hamburger || !drawer) return;
+  const open = () => { drawer.classList.add('open'); overlay.classList.add('show'); };
+  const shut = () => { drawer.classList.remove('open'); overlay.classList.remove('show'); };
+  hamburger.addEventListener('click', open);
+  overlay.addEventListener('click', shut);
+  close.addEventListener('click', shut);
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', shut));
+})();
+
+/* ============ REVEALS ============ */
+(function reveals(){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  $$('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 5) * 0.06 + 's';
+    io.observe(el);
+  });
+})();
+
+/* =========================================================
+   VIEW DETAILS MODAL
+   ========================================================= */
+(function productDetailsModal(){
+  const pdOverlay = document.getElementById('pdOverlay');
+  const pdVisual  = document.getElementById('pdVisual');
+  const pdInfo    = document.getElementById('pdInfo');
+  const pdClose   = document.getElementById('pdClose');
+  if (!pdOverlay) return;
+
+  const badgeTxt = { hot:'Bestseller', new:'New Drop', lab:'Lab Certified' };
+
+  function rowsFor(title){
+    const t = title.toLowerCase();
+    if (t.includes('rudraksha') || t.includes('mukhi')){
+      const m = title.match(/(\d+)\s*Mukhi/);
+      return [
+        { k:'Mukhi', v: m ? m[1] : '5' },
+        { k:'Size', v:'18 mm' },
+        { k:'Origin', v:'Nepal' },
+        { k:'Certification', v:'Available' }
+      ];
+    }
+    if (t.includes('yantra')){
+      return [
+        { k:'Material', v:'99.4% Pure Copper' },
+        { k:'Size', v:'3 × 3 inch' },
+        { k:'Energised', v:'Pran-Pratishtha done' },
+        { k:'Installation', v:'Guidance included' }
+      ];
+    }
+    if (t.includes('bracelet')){
+      return [
+        { k:'Bead Size', v:'8 mm' },
+        { k:'Fit', v:'Elastic' },
+        { k:'Beads', v:'12 / 108' },
+        { k:'Wearing', v:'Left hand' }
+      ];
+    }
+    if (t.includes('mala')){
+      return [
+        { k:'Beads', v:'108' },
+        { k:'Size', v:'8 mm' },
+        { k:'Type', v:'Traditional' },
+        { k:'Energised', v:'Yes' }
+      ];
+    }
+    return [
+      { k:'Carat', v:'4.2 ct' },
+      { k:'Certification', v:'IGI / GIA' },
+      { k:'Setting', v:'Panchdhatu' },
+      { k:'Origin', v:'Ceylon / Colombian' }
+    ];
+  }
+
+  function openProductModal(title){
+    const p = findProduct(title);
+    if (!p) return;
+    const priceNum = parseInt(p.price.replace(/[^\d]/g,''), 10) || 0;
+    const rows = rowsFor(p.title);
+
+    let badgeStyle = '';
+    if (p.badge === 'hot') badgeStyle = 'background:linear-gradient(100deg,var(--saffron),var(--pink));color:#1a0a0f;border-color:transparent;';
+    else if (p.badge === 'new') badgeStyle = 'background:rgba(96,165,250,.16);color:#a8cdfb;border-color:rgba(96,165,250,.35);';
+
+    pdVisual.innerHTML = `
+      <span class="badge-float" style="${badgeStyle}">✓ ${p.badge ? badgeTxt[p.badge] : 'Authentic'}</span>
+      ${p.img}
+    `;
+
+    pdInfo.innerHTML = `
+      <h3>${p.title}</h3>
+      <div class="pd-price-row">
+        <span class="p1">${p.price}</span>
+        <span class="p2">${p.priceOld}</span>
+        <span class="p3">${p.save}</span>
+      </div>
+      <div class="pd-stars">★★★★★ <span style="color:var(--muted);font-size:12px;font-family:var(--sans);letter-spacing:0">${p.rating} · ${p.reviews} reviews</span></div>
+      <p class="pd-lead">${p.desc}</p>
+      <div class="pd-details">
+        ${rows.map(r => `<div class="row"><span class="k">${r.k}</span><span class="v">${r.v}</span></div>`).join('')}
+      </div>
+      <div class="pd-section">
+        <h5>Traditional Significance</h5>
+        <p>${p.desc} पारंपरिक शास्त्रानुसार धारण करण्याची पद्धत आणि महत्त्व सविस्तर मार्गदर्शनासह दिले जाते.</p>
+      </div>
+      <div class="pd-section">
+        <h5>How to Wear · धारण पद्धत</h5>
+        <p>सकाळी स्नान करून, तांब्याच्या पात्रातील गंगाजलाने शुद्ध करून, योग्य मंत्राने 108 वेळा अभिमंत्रित करून धारण करावे. तज्ञ मार्गदर्शनासाठी WhatsApp वर संपर्क करा.</p>
+      </div>
+      <div class="pd-section">
+        <h5>Mantra · मंत्र</h5>
+        <p class="mantra">ॐ ह्रीं नमः</p>
+      </div>
+      <div class="pd-section">
+        <h5>Care Instructions</h5>
+        <p>पाण्यात भिजवू नका, रासायनिक साबण वापरू नका. महिन्यातून एकदा गंगाजलाने शुद्ध करा.</p>
+      </div>
+      <div class="pd-section">
+        <h5>Shipping &amp; Returns</h5>
+        <p>48 तासांत डिस्पॅच · 7 दिवसांत easy returns · संपूर्ण भारतात मोफत शिपिंग (₹999 वर).</p>
+      </div>
+      <div class="pd-actions">
+        <button class="btn btn-gold" data-add="${p.title}" data-price="${priceNum}">Add to Cart</button>
+        <button class="btn btn-ghost" data-add="${p.title}" data-price="${priceNum}">Buy Now</button>
+      </div>
+      <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="pd-wa">Need Guidance? WhatsApp Guruji</a>
+    `;
+
+    pdOverlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProductModal(){
+    pdOverlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  /* Open modal on View Details click */
+  document.addEventListener('click', e => {
+    const viewBtn = e.target.closest('.btn-view');
+    if (!viewBtn) return;
+    e.preventDefault();
+    const card = viewBtn.closest('.prod-card');
+    if (!card) return;
+    const title = card.querySelector('.prod-title')?.textContent?.trim();
+    if (title) openProductModal(title);
+  });
+
+  /* Close modal when Add to Cart is clicked inside it */
+  pdInfo.addEventListener('click', e => {
+    if (e.target.closest('[data-add]')){
+      setTimeout(closeProductModal, 120);
+    }
+  });
+
+  pdClose?.addEventListener('click', closeProductModal);
+  pdOverlay?.addEventListener('click', e => { if (e.target === pdOverlay) closeProductModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProductModal(); });
+})();
+</script>
+</body>
+</html>
